@@ -121,9 +121,9 @@ namespace MathExtensions.TwoD
 
             a.Circle = new Circle2D(endPointA, pointOnArc, endPointB);
 
-            decimal angleA = default(decimal);
-            decimal angleOnArc = default(decimal);
-            decimal angleB = default(decimal);
+            decimal angleA = 0m;
+            decimal angleOnArc = 0m;
+            decimal angleB = 0m;
 
             angleA = a.Circle.AngleThroughPoint(endPointA);
             angleOnArc = a.Circle.AngleThroughPoint(pointOnArc);
@@ -326,18 +326,16 @@ namespace MathExtensions.TwoD
 
         /// <summary>
         /// Gets a tangent line at the start angle.
-        /// See <see cref="Circle2D.TangentAt">Circle2D.TangentAt</see>
+        /// See <see cref="Circle2D.TangentAt"/>.
         /// </summary>
-        [DebuggerStepThrough()]
         public LineSeg2D TangentAtStart(decimal length, bool clockwise)
         {
             return Circle.TangentAt(_startAngle, length, clockwise);
         }
         /// <summary>
         /// Gets a tangent line at the end angle.
-        /// See <see cref="Circle2D.TangentAt">Circle2D.TangentAt</see>
+        /// See <see cref="Circle2D.TangentAt"/>.
         /// </summary>
-        [DebuggerStepThrough()]
         public LineSeg2D TangentAtEnd(decimal length, bool clockwise)
         {
             return Circle.TangentAt(_endAngle, length, clockwise);

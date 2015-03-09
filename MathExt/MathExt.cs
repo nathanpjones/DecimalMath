@@ -9,18 +9,16 @@ namespace MathExtensions
 {
     public static partial class MathExt
     {
-#if DEBUG
-        private static int maxSqrtIterations;
-#endif
         /// <summary>
-        /// Returns the square root of a specified number using Decimal precision.
-        /// Uses an implementation of the "Babylonian Method".
+        /// Returns the square root of a given number. 
         /// </summary>
-        /// <param name="s">A number.</param>
-        /// <remarks> See http://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Babylonian_method </remarks>
+        /// <param name="s">A non-negative number.</param>
+        /// <remarks> 
+        /// Uses an implementation of the "Babylonian Method".
+        /// See http://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Babylonian_method 
+        /// </remarks>
         public static decimal Sqrt(decimal s)
         {
-
             if (s < 0)
                 throw new ArgumentException("Square root not defined for Decimal data type when less than zero!", "s");
             
@@ -34,11 +32,6 @@ namespace MathExtensions
             var lastX = -1m;
             decimal nextX;
 
-#if DEBUG
-            var iterations = 1;
-            var estimateIterations = 0;
-#endif
-
             // Begin with an estimate for the square root
             var sForEstimate = s;
             var estimateMultiplier = 1m;
@@ -46,13 +39,8 @@ namespace MathExtensions
             {
                 estimateMultiplier *= 10m;
                 sForEstimate /= 100m;
-#if DEBUG
-                estimateIterations++;
-#endif
             }
-#if DEBUG
-            estimateIterations++;
-#endif
+
             if (sForEstimate < 10m)
             {
                 x = 2 * estimateMultiplier;
@@ -72,40 +60,25 @@ namespace MathExtensions
 
                 lastX = x;
                 x = nextX;
-
-#if DEBUG
-                iterations++;
-#endif
             }
-
-#if DEBUG
-            var sqrtIterations = estimateIterations + iterations;
-            Debug.WriteLine("Sqrt: {0} Iterations: {1}+{2}={3}", s, estimateIterations, iterations, sqrtIterations);
-            if (sqrtIterations > maxSqrtIterations)
-            {
-                maxSqrtIterations = sqrtIterations;
-                Debug.WriteLine("  NEW MAX ITERATIONS");
-            }
-#endif
 
             return nextX;
-
         }
 
         /// <summary>
         /// Returns a specified number raised to the specified power.
         /// </summary>
-        /// <param name="x">A decimal-precision floating-point number that specifies a power.</param>
-        /// <param name="y">A decimal-precision floating-point number to be raised to a power.</param>
+        /// <param name="x">A number to be raised to a power.</param>
+        /// <param name="y">A number that specifies a power.</param>
         public static decimal Pow(decimal x, decimal y)
         {
             decimal result;
-            bool reciprocal = false;
-
+            var isNegativeExponent = false;
+            
             // Handle negative exponents
             if (y < 0)
             {
-                reciprocal = true;
+                isNegativeExponent = true;
                 y = Math.Abs(y);
             }
 
@@ -117,37 +90,59 @@ namespace MathExtensions
             {
                 result = x;
             }
-            else if (y == Decimal.Truncate(y)) // Integer powers
+            else
             {
-                // See http://en.wikipedia.org/wiki/Exponentiation_by_squaring
-                decimal multiplier;
+                var t = decimal.Truncate(y);
 
-                result = 1;
-                multiplier = x;
-                while (true)
+                if (y == t) // Integer powers
                 {
-                    if ((y % 2m) == 1m)
-                    {
-                        result *= multiplier;
-                        y -= 1;
-                    }
-
-                    if (y == 0) break;
-
-                    multiplier *= multiplier;
-                    y /= 2;
+                    result = ExpBySquaring(x, y);
+                }
+                else // Fractional power < 1
+                {
+                    // See http://en.wikipedia.org/wiki/Exponent#Real_powers
+                    //result = Exp(y * Log(x));
+                    result = ExpBySquaring(x, t) * Exp((y - t) * Log(x));
                 }
             }
-            else // Fractional power < 1
+
+            if (isNegativeExponent)
             {
-                // See http://en.wikipedia.org/wiki/Exponent#Real_powers
-                result = Exp(y * Log(x));
+                // Note, for IEEE floats this would be Infinity and not an exception...
+                if (result == 0) throw new Exception("Negative power of 0 is undefined!");
+
+                result = 1 / result;
             }
 
-            if (reciprocal)
+            return result;
+        }
+
+        /// <summary>
+        /// Raises one number to an integral power.
+        /// </summary>
+        /// <remarks>
+        /// See http://en.wikipedia.org/wiki/Exponentiation_by_squaring
+        /// </remarks>
+        private static decimal ExpBySquaring(decimal x, decimal y)
+        {
+            Debug.Assert(y >= 0 && decimal.Truncate(y) == y, "Only non-negative, integer powers supported.");
+            if (y < 0) throw new ArgumentOutOfRangeException("y", "Negative exponents not supported!");
+            if (decimal.Truncate(y) != y) throw new ArgumentException("Exponent must be an integer!", "y");
+
+            var result = 1m;
+            var multiplier = x;
+
+            while (y > 0)
             {
-                if (result == 0) throw new Exception("Negative power of 0 is undefined!");
-                result = 1 / result;
+                if ((y % 2) == 1)
+                {
+                    result *= multiplier;
+                    y -= 1;
+                    if (y == 0) break;
+                }
+
+                multiplier *= multiplier;
+                y /= 2;
             }
 
             return result;
@@ -185,22 +180,7 @@ namespace MathExtensions
             }
             else if (d == t)   // Integer power
             {
-                // See http://en.wikipedia.org/wiki/Exponentiation_by_squaring
-                decimal multiplier;
-
-                result = 1;
-                multiplier = E;
-                while (d > 0)
-                {
-                    if ((d % 2m) == 1m)
-                    {
-                        result *= multiplier;
-                        d -= 1;
-                    }
-
-                    multiplier *= multiplier;
-                    d /= 2;
-                }
+                result = ExpBySquaring(E, d);
             }
             else                // Fractional power < 1
             {
@@ -244,7 +224,7 @@ namespace MathExtensions
         /// algorithms that you can find in a historical version of this 
         /// source file. The one I settled on was the best of mediocrity.
         /// </remarks>
-        public static decimal Log(Decimal d)
+        public static decimal Log(decimal d)
         {
             if (d < 0) throw new ArgumentException("Natural logarithm is a complex number for values less than zero!", "d");
             if (d == 0) throw new OverflowException("Natural logarithm is defined as negative infinitiy at zero which the Decimal data type can't represent!");
@@ -333,11 +313,11 @@ namespace MathExtensions
         /// <param name="c">The constant.</param>
         /// <remarks>See http://www.wikihow.com/Factor-Second-Degree-Polynomials-%28Quadratic-Equations%29</remarks>
         public static decimal[] SolveQuadratic(decimal a, decimal b, decimal c)
-		{
+        {
 
-			decimal h = default(decimal);
-			decimal k = default(decimal);
-			decimal sqrtOfBSqMin4AC = default(decimal);
+            decimal h = 0m;
+            decimal k = 0m;
+            decimal sqrtOfBSqMin4AC = 0m;
 
 
             // Horizontal line is either 0 nowhere or everywhere so no solution.
@@ -354,43 +334,43 @@ namespace MathExtensions
             }
 
             // No solution -- shape does not intersect 0. This means that
-			// the endpoints will be the min/max.
+            // the endpoints will be the min/max.
             if (Pow(b, 2) - 4 * a * c < -SmallestNonZeroDec) return new decimal[] { };
 
-			// Since we're solving for  ax^2 + bx + c = 0  then we can
-			// multiply the coefficients by whatever we want until they
-			// are in a range that we can get a square root without 
-			// exceeding the precision of a Decimal value. We'll make
-			// sure here that at least one number is greater than 1
-			// or less than -1.
+            // Since we're solving for  ax^2 + bx + c = 0  then we can
+            // multiply the coefficients by whatever we want until they
+            // are in a range that we can get a square root without 
+            // exceeding the precision of a Decimal value. We'll make
+            // sure here that at least one number is greater than 1
+            // or less than -1.
 
-			while ((-1 < a && a < 1) && (-1 < b && b < 1) && (-1 < c && c < 1)) {
-				a *= 10;
-				b *= 10;
-				c *= 10;
+            while ((-1 < a && a < 1) && (-1 < b && b < 1) && (-1 < c && c < 1)) {
+                a *= 10;
+                b *= 10;
+                c *= 10;
 
-			}
+            }
 
-			sqrtOfBSqMin4AC = Pow(b, 2) - 4 * a * c;
-			if (sqrtOfBSqMin4AC == -SmallestNonZeroDec)
-				sqrtOfBSqMin4AC = 0;
-			sqrtOfBSqMin4AC = Sqrt(sqrtOfBSqMin4AC);
-			h = (-b + sqrtOfBSqMin4AC) / (2 * a);
-			k = (-b - sqrtOfBSqMin4AC) / (2 * a);
+            sqrtOfBSqMin4AC = Pow(b, 2) - 4 * a * c;
+            if (sqrtOfBSqMin4AC == -SmallestNonZeroDec)
+                sqrtOfBSqMin4AC = 0;
+            sqrtOfBSqMin4AC = Sqrt(sqrtOfBSqMin4AC);
+            h = (-b + sqrtOfBSqMin4AC) / (2 * a);
+            k = (-b - sqrtOfBSqMin4AC) / (2 * a);
 
-			// ax^2 + bx + c = (x - h)(x - k) 
-			// (x - h)(x - k) = 0 means h and k are the values for x 
-			//   that will make the equation = 0
-			if (h == k) {
-				return new decimal[] { h };
-			} else {
-				return new decimal[] {
-					h,
-					k
-				};
-			}
+            // ax^2 + bx + c = (x - h)(x - k) 
+            // (x - h)(x - k) = 0 means h and k are the values for x 
+            //   that will make the equation = 0
+            if (h == k) {
+                return new decimal[] { h };
+            } else {
+                return new decimal[] {
+                    h,
+                    k
+                };
+            }
 
-		}
+        }
 
         /// <summary>
         /// Returns the floor of a Decimal value at the given number of digits.
@@ -398,7 +378,6 @@ namespace MathExtensions
         /// <param name="value">A decimal value.</param>
         /// <param name="places">An integer representing the maximum number of digits 
         /// after the decimal point to end up with.</param>
-        [DebuggerStepThrough()]
         public static decimal Floor(decimal value, int places = 0)
         {
             if (places < 0) throw new ArgumentOutOfRangeException("places", "Places must be greater than or equal to 0.");
@@ -408,16 +387,7 @@ namespace MathExtensions
             // At or beyond precision of decimal data type
             if (places >= 28) return value;
 
-            // TODO: Use powers of 10 array?
-            //var factor = 1m;
-            //for (var i = 1; i <= places; i++)
-            //{
-            //    factor *= 10m;
-            //}
-            var factor = PowersOf10[places];
-            
-            return decimal.Floor(value * factor) / factor;
-
+            return decimal.Floor(value * PowersOf10[places]) / PowersOf10[places];
         }
         /// <summary>
         /// Returns the ceiling of a Decimal value at the given number of digits.
@@ -425,11 +395,10 @@ namespace MathExtensions
         /// <param name="value">A decimal value.</param>
         /// <param name="places">An integer representing the maximum number of digits 
         /// after the decimal point to end up with.</param>
-        [DebuggerStepThrough()]
         public static decimal Ceiling(decimal value, int places = 0)
         {
 
-            decimal factor = default(decimal);
+            decimal factor = 0m;
 
             // At or beyond precision of decimal data type
             if (places >= 28)
@@ -449,12 +418,11 @@ namespace MathExtensions
         /// Calculates the greatest common factor of a and b to the highest level of
         /// precision represented by either number.
         /// </summary>
-        [DebuggerStepThrough()]
         public static decimal GCF(decimal a, decimal b)
         {
 
-            decimal decAdj = default(decimal);
-            decimal r = default(decimal);
+            decimal decAdj = 0m;
+            decimal r = 0m;
 
             // Convert both a and b to an integer if necessary, multiplying by 10
             decAdj = 1;
@@ -527,12 +495,11 @@ namespace MathExtensions
         /// natural logarithm: http://en.wikipedia.org/wiki/Natural_logarithm#High_precision
         /// But it didn't yield a precise enough answer.
         /// </remarks>
-        [DebuggerStepThrough()]
         public static decimal AGMean(decimal x, decimal y)
         {
 
-            decimal a = default(decimal);
-            decimal g = default(decimal);
+            decimal a = 0m;
+            decimal g = 0m;
 
 
             do
@@ -633,6 +600,34 @@ namespace MathExtensions
 
         }
 
+        /// <summary>
+        /// Gets the number of decimal places in a decimal value.
+        /// </summary>
+        /// <remarks>
+        /// See http://stackoverflow.com/a/6092298/856595
+        /// </remarks>
+        public static int GetDecimalPlaces(decimal dec, bool countTrailingZeros)
+        {
+            int[] bits = Decimal.GetBits(dec);
+            var result = (bits[3] & 0xFF0000) >> 16;  // extract exponent
+
+            // Return immediately for values without a fractional portion
+            if (countTrailingZeros || (result == 0)) return result;
+
+            // Get a raw version of the decimal's integer
+            bits[3] = bits[3] & ~unchecked((int)0x80FF0000); // clear out exponent
+            var rawValue = new decimal(bits);
+
+            // Account for trailing zeros
+            while ((result > 0) && ((rawValue % 10) == 0))
+            {
+                result--;
+                rawValue /= 10;
+            }
+
+            return result;
+        }
+
         #region Decimal Rounding
 
         // Sign mask for the flags field. A value of zero in this bit indicates a
@@ -668,9 +663,9 @@ namespace MathExtensions
 
         // Does an in-place round the specified number of digits, rounding mid-point values 
         // away from zero 
-        private static void InternalRoundFromZero(ref Decimal d, int decimalCount)
+        private static void InternalRoundFromZero(ref decimal d, int decimalCount)
         {
-            var x = Decimal.GetBits(d);
+            var x = decimal.GetBits(d);
             var flags = x[3];
             Int32 scale = (flags & ScaleMask) >> ScaleShift;
             Int32 scaleDifference = scale - decimalCount;

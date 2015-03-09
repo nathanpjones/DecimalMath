@@ -14,7 +14,6 @@ namespace MathExtensions.TwoD
     /// http://emweb.unl.edu/math/mathweb/vectors/vectors.html
     /// http://www.mathrec.org/vector.html
     /// </remarks>
-    //    <DebuggerStepThrough()> _
     [DebuggerDisplay("X = {X} Y = {Y}")]
     public struct Vector2D
     {
@@ -282,8 +281,8 @@ namespace MathExtensions.TwoD
         public Vector2D ProjectOnto(Vector2D other)
         {
 
-            decimal otherMag = default(decimal);
-            decimal multiplier = default(decimal);
+            decimal otherMag = 0m;
+            decimal multiplier = 0m;
 
             if (other.IsNull)
             {

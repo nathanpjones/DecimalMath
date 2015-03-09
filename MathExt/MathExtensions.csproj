@@ -41,7 +41,7 @@
     <Compile Include="RightTriangleAbstract.cs" />
     <Compile Include="DrawingSupport.cs" />
     <Compile Include="MathExtTrig.cs" />
-    <Compile Include="Constants.cs" />
+    <Compile Include="MathExtConstants.cs" />
     <Compile Include="MathExt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TwoD\Arc2D.cs" />

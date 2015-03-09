@@ -56,7 +56,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="Helper.cs" />
+    <Compile Include="MathExtTests\FloorTests.cs" />
+    <Compile Include="MathExtTests\LogTests.cs" />
+    <Compile Include="MathExtTests\MiscTests.cs" />
+    <Compile Include="MathExtTests\PowTests.cs" />
+    <Compile Include="MathExtTests\SqrtTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

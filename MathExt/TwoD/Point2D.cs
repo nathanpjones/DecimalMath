@@ -76,8 +76,8 @@ namespace MathExtensions.TwoD
         public decimal DistanceTo(decimal x, decimal y)
         {
 
-            decimal xDist = default(decimal);
-            decimal yDist = default(decimal);
+            decimal xDist = 0m;
+            decimal yDist = 0m;
 
             xDist = this.X - x;
             yDist = this.Y - y;
@@ -86,12 +86,10 @@ namespace MathExtensions.TwoD
             return MathExt.Sqrt(xDist * xDist + yDist * yDist);
 
         }
-        [DebuggerStepThrough()]
         public decimal DistanceTo(Circle2D c)
         {
             return c.DistanceTo(this);
         }
-        [DebuggerStepThrough()]
         public decimal DistanceTo(LineSeg2D l, bool treatLineSegmentAsLine = false)
         {
             return l.DistanceTo(this, treatLineSegmentAsLine);

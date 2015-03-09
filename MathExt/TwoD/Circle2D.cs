@@ -177,7 +177,6 @@ namespace MathExtensions.TwoD
         /// <param name="lineB">Second line.</param>
         /// <param name="radius">Radius of the tangent circles.</param>
         /// <returns>Will return no circles if the two lines are parallel or the same line.</returns>
-        [DebuggerStepThrough()]
         public static Circle2D[] FromTangentTangentRadius(LineSeg2D lineA, LineSeg2D lineB, decimal radius)
         {
 
@@ -220,7 +219,6 @@ namespace MathExtensions.TwoD
         /// <param name="line">Line that returned circles should be tangent to.</param>
         /// <param name="radius">Radius of new circles.</param>
         /// <returns>External tangent circles are listed first.</returns>
-        [DebuggerStepThrough()]
         public static Circle2D[] FromTangentTangentRadius(Circle2D circle, LineSeg2D line, decimal radius)
         {
 
@@ -266,7 +264,6 @@ namespace MathExtensions.TwoD
         /// <param name="circle">Circle that returned circles should be tangent to.</param>
         /// <param name="radius">Radius of new circles.</param>
         /// <returns>External tangent circles are listed first.</returns>
-        [DebuggerStepThrough()]
         public static Circle2D[] FromTangentTangentRadius(LineSeg2D line, Circle2D circle, decimal radius)
         {
 
@@ -280,7 +277,6 @@ namespace MathExtensions.TwoD
         /// <param name="circle2">Circle that returned circles should be tangent to.</param>
         /// <param name="radius">Radius of new circles.</param>
         /// <returns>External tangent circles are listed first.</returns>
-        [DebuggerStepThrough()]
         public static Circle2D[] FromTangentTangentRadius(Circle2D circle1, Circle2D circle2, decimal radius)
         {
 
@@ -336,25 +332,25 @@ namespace MathExtensions.TwoD
 
         }
         public static Circle2D[] FromTwoPointsAndRadius(decimal x1, decimal y1, decimal x2, decimal y2, decimal radius)
-		{
+        {
 
-			LineSeg2D pointToPoint = default(LineSeg2D);
-			Point2D midPoint = default(Point2D);
-			Vector2D vPerpBisector = default(Vector2D);
+            LineSeg2D pointToPoint = default(LineSeg2D);
+            Point2D midPoint = default(Point2D);
+            Vector2D vPerpBisector = default(Vector2D);
 
             if (x1 == x2 && y1 == y2) return new Circle2D[] { };
 
-			pointToPoint = new LineSeg2D(x1, y1, x2, y2);
-			midPoint = pointToPoint.MidPoint;
-			vPerpBisector = pointToPoint.PerpendicularBisector().GetVectorP1toP2();
-			vPerpBisector.Magnitude = RightTriangle.GetSideFromSideHyp(pointToPoint.Length / 2, radius);
+            pointToPoint = new LineSeg2D(x1, y1, x2, y2);
+            midPoint = pointToPoint.MidPoint;
+            vPerpBisector = pointToPoint.PerpendicularBisector().GetVectorP1toP2();
+            vPerpBisector.Magnitude = RightTriangle.GetSideFromSideHyp(pointToPoint.Length / 2, radius);
 
-			return new Circle2D[] {
-				new Circle2D(midPoint + vPerpBisector, radius),
-				new Circle2D(midPoint - vPerpBisector, radius)
-			};
+            return new Circle2D[] {
+                new Circle2D(midPoint + vPerpBisector, radius),
+                new Circle2D(midPoint - vPerpBisector, radius)
+            };
 
-		}
+        }
 
         /// <summary>
         /// Returns the circle that is closest to the given points. Distance to
@@ -364,7 +360,6 @@ namespace MathExtensions.TwoD
         /// </summary>
         /// <param name="circles">List of circles to check.</param>
         /// <param name="points">Point or points to use to calculate distance.</param>
-        [DebuggerStepThrough()]
         public static Circle2D? ClosestCircle(Circle2D[] circles, params Point2D[] points)
         {
             if ((circles == null) || (circles.Length == 0))
@@ -443,7 +438,6 @@ namespace MathExtensions.TwoD
         /// whose absolute value is the distance from the outside of the circle.
         /// </summary>
         /// <param name="pt">The point to get distance to.</param>
-        [DebuggerStepThrough()]
         public decimal DistanceTo(Point2D pt)
         {
 
@@ -458,7 +452,6 @@ namespace MathExtensions.TwoD
         /// </summary>
         /// <param name="x">The x value of the point to get distance to.</param>
         /// <param name="y">The y value of the point to get distance to.</param>
-        [DebuggerStepThrough()]
         public decimal DistanceTo(decimal x, decimal y)
         {
 
@@ -473,9 +466,9 @@ namespace MathExtensions.TwoD
         public decimal[] SolveForX(decimal y)
         {
 
-            decimal aCoeff = default(decimal);
-            decimal bCoeff = default(decimal);
-            decimal cCoeff = default(decimal);
+            decimal aCoeff = 0m;
+            decimal bCoeff = 0m;
+            decimal cCoeff = 0m;
 
             // Solve for x
             //  (x - h)^2 + (y - k)^2 = r^2
@@ -510,9 +503,9 @@ namespace MathExtensions.TwoD
             //        Return New Decimal() {_center.Y + height, _center.Y - height}
             //End Select
 
-            decimal aCoeff = default(decimal);
-            decimal bCoeff = default(decimal);
-            decimal cCoeff = default(decimal);
+            decimal aCoeff = 0m;
+            decimal bCoeff = 0m;
+            decimal cCoeff = 0m;
 
             // Solve for y
             //  (x - h)^2 + (y - k)^2 = r^2
@@ -532,50 +525,50 @@ namespace MathExtensions.TwoD
         /// </summary>
         /// <param name="y">Y value.</param>
         public Point2D[] PointsForY(decimal y)
-		{
+        {
 
-			decimal[] xValues = SolveForX(y);
+            decimal[] xValues = SolveForX(y);
 
-			switch (xValues.Length) {
-				case 2:
-					return new Point2D[] {
-						new Point2D(xValues[0], y),
-						new Point2D(xValues[1], y)
-					};
-				case 1:
-					return new Point2D[] { new Point2D(xValues[0], y) };
-				case 0:
-			        return new Point2D[] { };
-				default:
-					throw new Exception("Unexpected number of points returned from SolveForX!");
-			}
+            switch (xValues.Length) {
+                case 2:
+                    return new Point2D[] {
+                        new Point2D(xValues[0], y),
+                        new Point2D(xValues[1], y)
+                    };
+                case 1:
+                    return new Point2D[] { new Point2D(xValues[0], y) };
+                case 0:
+                    return new Point2D[] { };
+                default:
+                    throw new Exception("Unexpected number of points returned from SolveForX!");
+            }
 
-		}
+        }
         /// <summary>
         /// Gets the points on the circle that have the given X value.
         /// Like SolveForY but returning points.
         /// </summary>
         /// <param name="x">X value.</param>
         public Point2D[] PointsForX(decimal x)
-		{
+        {
 
-			decimal[] yValues = SolveForY(ref x);
+            decimal[] yValues = SolveForY(ref x);
 
-			switch (yValues.Length) {
-				case 2:
-					return new Point2D[] {
-						new Point2D(x, yValues[0]),
-						new Point2D(x, yValues[1])
-					};
-				case 1:
-					return new Point2D[] { new Point2D(x, yValues[0]) };
-				case 0:
-			        return new Point2D[] { };
-				default:
-					throw new Exception("Unexpected number of points returned from SolveForY!");
-			}
+            switch (yValues.Length) {
+                case 2:
+                    return new Point2D[] {
+                        new Point2D(x, yValues[0]),
+                        new Point2D(x, yValues[1])
+                    };
+                case 1:
+                    return new Point2D[] { new Point2D(x, yValues[0]) };
+                case 0:
+                    return new Point2D[] { };
+                default:
+                    throw new Exception("Unexpected number of points returned from SolveForY!");
+            }
 
-		}
+        }
 
         /// <summary>
         /// Gets the coordinates of the point on the circle at the given angle.
@@ -642,9 +635,9 @@ namespace MathExtensions.TwoD
                 throw new Exception("Unexpected number of intersects when getting tangents through a point.");
 
             return new LineSeg2D[] {
-				new LineSeg2D(point, intersects[0]),
-				new LineSeg2D(point, intersects[1])
-			};
+                new LineSeg2D(point, intersects[0]),
+                new LineSeg2D(point, intersects[1])
+            };
 
         }
 
@@ -659,7 +652,7 @@ namespace MathExtensions.TwoD
         {
 
             LineSeg2D l = default(LineSeg2D);
-            decimal a = default(decimal);
+            decimal a = 0m;
 
             // Create a right triangle where one side is half the chord length,
             // the other side is from the center of the circle to the midpoint
@@ -783,7 +776,7 @@ namespace MathExtensions.TwoD
         public decimal AngleThroughPoint(Point2D pt)
         {
 
-            decimal a = default(decimal);
+            decimal a = 0m;
 
             // Shift point so it's relative to the origin.
             pt += new Vector2D(-Center.X, -Center.Y);
@@ -849,189 +842,189 @@ namespace MathExtensions.TwoD
         /// if line intersection happens on zero, one, or two points. Default is -1 for 
         /// no rounding.</param>
         public Point2D[] GetIntersect(LineSeg2D l, int decimals = -1)
-		{
+        {
 
-			LineSeg2D centToLine = default(LineSeg2D);
-			decimal centToLineLength = default(decimal);
-			decimal centToLineLengthForComp = default(decimal);
-			decimal radiusForComp = default(decimal);
+            LineSeg2D centToLine = default(LineSeg2D);
+            decimal centToLineLength = 0m;
+            decimal centToLineLengthForComp = 0m;
+            decimal radiusForComp = 0m;
 
-			if (l.IsHorizontal) {
-				// The center to any horizontal line is a vertical line through
-				// the center of the circle.
-				centToLine = new LineSeg2D(this.Center, this.Center + new Vector2D(0, 1));
-			} else {
-				centToLine = LineSeg2D.FromPointSlope(this.Center, l.PerpendicularSlope);
-			}
-			centToLine.Pt2 = l.GetIntersect(centToLine, true).Value;
-			centToLineLength = centToLine.Length;
+            if (l.IsHorizontal) {
+                // The center to any horizontal line is a vertical line through
+                // the center of the circle.
+                centToLine = new LineSeg2D(this.Center, this.Center + new Vector2D(0, 1));
+            } else {
+                centToLine = LineSeg2D.FromPointSlope(this.Center, l.PerpendicularSlope);
+            }
+            centToLine.Pt2 = l.GetIntersect(centToLine, true).Value;
+            centToLineLength = centToLine.Length;
 
-			// Get numbers for comparison, rounding if necessary
-			centToLineLengthForComp = centToLineLength;
-			radiusForComp = _radius;
-			if (decimals >= 0) {
-				centToLineLengthForComp = centToLineLengthForComp.RoundFromZero(decimals);
-				radiusForComp = radiusForComp.RoundFromZero(decimals);
-			}
+            // Get numbers for comparison, rounding if necessary
+            centToLineLengthForComp = centToLineLength;
+            radiusForComp = _radius;
+            if (decimals >= 0) {
+                centToLineLengthForComp = centToLineLengthForComp.RoundFromZero(decimals);
+                radiusForComp = radiusForComp.RoundFromZero(decimals);
+            }
 
-			// See if line is outside of circle
-			if (centToLineLengthForComp > radiusForComp)
-			{
-			    return new Point2D[] { };
-			}
+            // See if line is outside of circle
+            if (centToLineLengthForComp > radiusForComp)
+            {
+                return new Point2D[] { };
+            }
 
-			// See if line is tangent to circle
-			if (centToLineLengthForComp == radiusForComp) {
-				return new Point2D[] { centToLine.Pt2 };
-			}
+            // See if line is tangent to circle
+            if (centToLineLengthForComp == radiusForComp) {
+                return new Point2D[] { centToLine.Pt2 };
+            }
 
-			// Line must intersect in two places
-			Vector2D vCentToChord = default(Vector2D);
-			decimal halfChord = default(decimal);
+            // Line must intersect in two places
+            Vector2D vCentToChord = default(Vector2D);
+            decimal halfChord = 0m;
 
-			// Get a vector from the center to the intersecting chord
-			vCentToChord = centToLine.GetVectorP1toP2();
-
-
-			if (vCentToChord.Magnitude == 0) {
-				Vector2D offsetVector = default(Vector2D);
-
-				// Line goes through circle center
+            // Get a vector from the center to the intersecting chord
+            vCentToChord = centToLine.GetVectorP1toP2();
 
 
-				if (l.IsVertical) {
-					// Slope undefined so just go up the length of the radius
-					offsetVector = new Vector2D(0, _radius);
+            if (vCentToChord.Magnitude == 0) {
+                Vector2D offsetVector = default(Vector2D);
+
+                // Line goes through circle center
 
 
-				} else {
-					offsetVector = new Vector2D(_radius * MathExt.Cos(MathExt.ATan(l.Slope)), _radius * MathExt.Sin(MathExt.ATan(l.Slope)));
-
-				}
-
-				return new Point2D[] {
-					this.Center + offsetVector,
-					this.Center - offsetVector
-				};
+                if (l.IsVertical) {
+                    // Slope undefined so just go up the length of the radius
+                    offsetVector = new Vector2D(0, _radius);
 
 
-			} else {
-				Vector2D vChord = default(Vector2D);
+                } else {
+                    offsetVector = new Vector2D(_radius * MathExt.Cos(MathExt.ATan(l.Slope)), _radius * MathExt.Sin(MathExt.ATan(l.Slope)));
 
-				// Get a vector along the chord
-				vChord = vCentToChord.GetPerpendicular();
+                }
 
-				// Determine the length of half the chord
-				halfChord = RightTriangle.GetSideFromSideHyp(centToLineLength, _radius);
+                return new Point2D[] {
+                    this.Center + offsetVector,
+                    this.Center - offsetVector
+                };
 
-				// Set the magnitude of the vector along the chord
-				// to be half the chord length
-				vChord.Magnitude = halfChord;
 
-				// The two intersecting points are points translated
-				// from the center of the circle to the chord (+vCentToChord)
-				// and then translated to the ends of the chord (+-vChord)
-				return new Point2D[] {
-					this.Center + vCentToChord + vChord,
-					this.Center + vCentToChord - vChord
-				};
+            } else {
+                Vector2D vChord = default(Vector2D);
 
-			}
+                // Get a vector along the chord
+                vChord = vCentToChord.GetPerpendicular();
 
-		}
+                // Determine the length of half the chord
+                halfChord = RightTriangle.GetSideFromSideHyp(centToLineLength, _radius);
+
+                // Set the magnitude of the vector along the chord
+                // to be half the chord length
+                vChord.Magnitude = halfChord;
+
+                // The two intersecting points are points translated
+                // from the center of the circle to the chord (+vCentToChord)
+                // and then translated to the ends of the chord (+-vChord)
+                return new Point2D[] {
+                    this.Center + vCentToChord + vChord,
+                    this.Center + vCentToChord - vChord
+                };
+
+            }
+
+        }
         /// <summary>
         /// Gets the points of intersection between this circle and the line which
         /// contains the given line segment.
         /// </summary>
         /// <param name="l">Line segment used to determine line equation.</param>
         public Point2D[] GetIntersectFast(ref LineSeg2D l)
-		{
+        {
 
-			decimal[] x = new decimal[2];
-			decimal m = default(decimal);
-			decimal b = default(decimal);
-			decimal aCoeff = default(decimal);
-			decimal bCoeff = default(decimal);
-			decimal cCoeff = default(decimal);
-			decimal lineX = default(decimal);
-			decimal t = default(decimal);
-			decimal p = default(decimal);
-			decimal q = default(decimal);
-			Point2D[] pts = null;
+            decimal[] x = new decimal[2];
+            decimal m = 0m;
+            decimal b = 0m;
+            decimal aCoeff = 0m;
+            decimal bCoeff = 0m;
+            decimal cCoeff = 0m;
+            decimal lineX = 0m;
+            decimal t = 0m;
+            decimal p = 0m;
+            decimal q = 0m;
+            Point2D[] pts = null;
 
 
 
-			if (!l.IsVertical) {
-				// Circle    (x - h) ^ 2 + (y - k) ^ 2 = r ^ 2
-				//   Center: (h, k)
-				//   Radius: r
-				// Line      y = m * x + b
+            if (!l.IsVertical) {
+                // Circle    (x - h) ^ 2 + (y - k) ^ 2 = r ^ 2
+                //   Center: (h, k)
+                //   Radius: r
+                // Line      y = m * x + b
 
-				// (x - h) ^ 2 + (m * x + b - k) ^ 2 = r ^ 2
-				// (x - h) * (x - h) + (m * x + b - k) * (m * x + b - k) = r^2
-				// (x^2 - 2 * h * x + h^2) + (m^2 * x^2 + 2 * (b - k) * m * x + (b - k)^2 = r^2
-				// (m^2 + 1) * x^2 + (2 * (b - k) * m - 2 * h) * x + (h^2 + (b - k)^2 - r^2) = 0
+                // (x - h) ^ 2 + (m * x + b - k) ^ 2 = r ^ 2
+                // (x - h) * (x - h) + (m * x + b - k) * (m * x + b - k) = r^2
+                // (x^2 - 2 * h * x + h^2) + (m^2 * x^2 + 2 * (b - k) * m * x + (b - k)^2 = r^2
+                // (m^2 + 1) * x^2 + (2 * (b - k) * m - 2 * h) * x + (h^2 + (b - k)^2 - r^2) = 0
 
-				m = l.Slope;
-				b = l.YIntersect;
+                m = l.Slope;
+                b = l.YIntersect;
 
-				aCoeff = MathExt.Pow(m, 2) + 1;
-				bCoeff = 2 * (b - _center.Y) * m - 2 * _center.X;
-				cCoeff = MathExt.Pow(_center.X, 2) + MathExt.Pow(b - _center.Y, 2) - MathExt.Pow(_radius, 2);
+                aCoeff = MathExt.Pow(m, 2) + 1;
+                bCoeff = 2 * (b - _center.Y) * m - 2 * _center.X;
+                cCoeff = MathExt.Pow(_center.X, 2) + MathExt.Pow(b - _center.Y, 2) - MathExt.Pow(_radius, 2);
 
-				x = MathExt.SolveQuadratic(aCoeff, bCoeff, cCoeff);
+                x = MathExt.SolveQuadratic(aCoeff, bCoeff, cCoeff);
 
-			    if (x.Length == 0) return new Point2D[] { };
+                if (x.Length == 0) return new Point2D[] { };
 
                 pts = new Point2D[x.Length];
 
-				for (var i = 0; i <= x.Length - 1; i++) {
-					pts[i].X = x[i];
-					pts[i].Y = m * x[i] + b;
-				}
+                for (var i = 0; i <= x.Length - 1; i++) {
+                    pts[i].X = x[i];
+                    pts[i].Y = m * x[i] + b;
+                }
 
 
-			} else {
-				// Circle    (x - h) ^ 2 + (y - k) ^ 2 = r ^ 2
-				//   Center: (h, k)
-				//   Radius: r
-				// Line      x = lineX
+            } else {
+                // Circle    (x - h) ^ 2 + (y - k) ^ 2 = r ^ 2
+                //   Center: (h, k)
+                //   Radius: r
+                // Line      x = lineX
 
-				// Got the following from
-				//  http://www.sonoma.edu/users/w/wilsonst/Papers/Geometry/circles/T1--2/T1-3-2.html
-				//  http://www.sonoma.edu/users/w/wilsonst/Papers/Geometry/circles/default.html
+                // Got the following from
+                //  http://www.sonoma.edu/users/w/wilsonst/Papers/Geometry/circles/T1--2/T1-3-2.html
+                //  http://www.sonoma.edu/users/w/wilsonst/Papers/Geometry/circles/default.html
 
-				lineX = l.Pt1.X;
-				t = _radius * _radius - (lineX - _center.X) * (lineX - _center.X);
-
-
-				if (t < 0)
-				{
-				    return new Point2D[] { };
+                lineX = l.Pt1.X;
+                t = _radius * _radius - (lineX - _center.X) * (lineX - _center.X);
 
 
-				} else {
-					p = _center.Y + MathExt.Sqrt(t);
-					q = _center.Y - MathExt.Sqrt(t);
+                if (t < 0)
+                {
+                    return new Point2D[] { };
+
+
+                } else {
+                    p = _center.Y + MathExt.Sqrt(t);
+                    q = _center.Y - MathExt.Sqrt(t);
 
                     pts = new Point2D[1];
-					pts[0].Y = p;
-					pts[0].X = lineX;
+                    pts[0].Y = p;
+                    pts[0].X = lineX;
 
-					// NOTE that P=Q when t=0
-					if (p != q) {
-						Array.Resize(ref pts, 2);
-						pts[1].Y = q;
-						pts[1].X = lineX;
-					}
+                    // NOTE that P=Q when t=0
+                    if (p != q) {
+                        Array.Resize(ref pts, 2);
+                        pts[1].Y = q;
+                        pts[1].X = lineX;
+                    }
 
-				}
+                }
 
-			}
+            }
 
-			return pts;
+            return pts;
 
-		}
+        }
 
         /// <summary>
         /// Gets the points of intersection between this circle and another circle.
@@ -1045,141 +1038,141 @@ namespace MathExtensions.TwoD
         /// negative, returns the point on the smaller circle. If 0, returns the midpoint between these
         /// two points.</param>
         public Point2D[] GetIntersect(Circle2D other, int decimals = -1, int impreciseResult = 0)
-		{
+        {
 
-			Vector2D meToOtherVector = default(Vector2D);
+            Vector2D meToOtherVector = default(Vector2D);
 
-			meToOtherVector = this.Center.GetVectorTo(other.Center);
-
-
-			if (decimals >= 0) {
-				// The only intersection decision that can be made to a given precision is whether
-				// the two circles are tangent to each other, either internally or externally.
+            meToOtherVector = this.Center.GetVectorTo(other.Center);
 
 
-				if (this.IsTangentTo(other, decimals)) {
-					// If the smaller circle is inside the other, then the smaller is
-					// considered internally tangent to the larger.
-
-					if ((this.Radius < other.Radius && this.IsInside(other, decimals)) || (other.Radius < this.Radius && other.IsInside(this, decimals))) {
-						// Internal tangent
-
-						Point2D pointOnLargeCircle = default(Point2D);
-						Point2D pointOnSmallCircle = default(Point2D);
-
-						// Vectors to the two tangent points are both pointing in the same
-						// direction--from the center of the larger circle towards the
-						// center of the smaller circle. Their magnitude is the same as the
-						// radius of the circle whose center they start from.
+            if (decimals >= 0) {
+                // The only intersection decision that can be made to a given precision is whether
+                // the two circles are tangent to each other, either internally or externally.
 
 
-						if (this.Radius > other.Radius) {
-							// Go from center of larger circle, Me, to smaller circle, other.
-							pointOnLargeCircle = this.Center + new Vector2D(meToOtherVector, this.Radius);
-							pointOnSmallCircle = other.Center + new Vector2D(meToOtherVector, other.Radius);
+                if (this.IsTangentTo(other, decimals)) {
+                    // If the smaller circle is inside the other, then the smaller is
+                    // considered internally tangent to the larger.
+
+                    if ((this.Radius < other.Radius && this.IsInside(other, decimals)) || (other.Radius < this.Radius && other.IsInside(this, decimals))) {
+                        // Internal tangent
+
+                        Point2D pointOnLargeCircle = default(Point2D);
+                        Point2D pointOnSmallCircle = default(Point2D);
+
+                        // Vectors to the two tangent points are both pointing in the same
+                        // direction--from the center of the larger circle towards the
+                        // center of the smaller circle. Their magnitude is the same as the
+                        // radius of the circle whose center they start from.
 
 
-						} else {
-							// Go from center of larger circle, other, to smaller circle, Me.
-							pointOnLargeCircle = other.Center - new Vector2D(meToOtherVector, other.Radius);
-							pointOnSmallCircle = this.Center - new Vector2D(meToOtherVector, this.Radius);
-
-						}
+                        if (this.Radius > other.Radius) {
+                            // Go from center of larger circle, Me, to smaller circle, other.
+                            pointOnLargeCircle = this.Center + new Vector2D(meToOtherVector, this.Radius);
+                            pointOnSmallCircle = other.Center + new Vector2D(meToOtherVector, other.Radius);
 
 
-						if (impreciseResult > 0) {
-							// Point on larger
-							return new Point2D[] { pointOnLargeCircle };
+                        } else {
+                            // Go from center of larger circle, other, to smaller circle, Me.
+                            pointOnLargeCircle = other.Center - new Vector2D(meToOtherVector, other.Radius);
+                            pointOnSmallCircle = this.Center - new Vector2D(meToOtherVector, this.Radius);
+
+                        }
 
 
-						} else if (impreciseResult < 0) {
-							// Point on smaller
-							return new Point2D[] { pointOnSmallCircle };
+                        if (impreciseResult > 0) {
+                            // Point on larger
+                            return new Point2D[] { pointOnLargeCircle };
 
 
-						} else {
-							// Split difference
-							LineSeg2D l = new LineSeg2D(pointOnLargeCircle, pointOnSmallCircle);
-							return new Point2D[] { l.MidPoint };
-
-						}
+                        } else if (impreciseResult < 0) {
+                            // Point on smaller
+                            return new Point2D[] { pointOnSmallCircle };
 
 
-					} else {
-						// External tangent
+                        } else {
+                            // Split difference
+                            LineSeg2D l = new LineSeg2D(pointOnLargeCircle, pointOnSmallCircle);
+                            return new Point2D[] { l.MidPoint };
 
-						Point2D pointOnMe = default(Point2D);
-						Point2D pointOnOther = default(Point2D);
-
-						// Vectors to the two tangent points are simply pointing at the other
-						// circle's center with a magnitude of the radius of the circle whose
-						// center it originates in.
-						pointOnMe = this.Center + new Vector2D(meToOtherVector, this.Radius);
-						pointOnOther = other.Center - new Vector2D(meToOtherVector, other.Radius);
+                        }
 
 
-						if (impreciseResult > 0) {
-							// Point on larger
-							return new Point2D[] { (this.Radius > other.Radius ? pointOnMe : pointOnOther) };
+                    } else {
+                        // External tangent
+
+                        Point2D pointOnMe = default(Point2D);
+                        Point2D pointOnOther = default(Point2D);
+
+                        // Vectors to the two tangent points are simply pointing at the other
+                        // circle's center with a magnitude of the radius of the circle whose
+                        // center it originates in.
+                        pointOnMe = this.Center + new Vector2D(meToOtherVector, this.Radius);
+                        pointOnOther = other.Center - new Vector2D(meToOtherVector, other.Radius);
 
 
-						} else if (impreciseResult < 0) {
-							// Point on smaller
-							return new Point2D[] { (this.Radius < other.Radius ? pointOnMe : pointOnOther) };
+                        if (impreciseResult > 0) {
+                            // Point on larger
+                            return new Point2D[] { (this.Radius > other.Radius ? pointOnMe : pointOnOther) };
 
 
-						} else {
-							if (pointOnMe == pointOnOther) {
-								return new Point2D[] { pointOnMe };
-							} else {
-								// Split difference
-								return new Point2D[] { new LineSeg2D(pointOnMe, pointOnOther).MidPoint };
-							}
+                        } else if (impreciseResult < 0) {
+                            // Point on smaller
+                            return new Point2D[] { (this.Radius < other.Radius ? pointOnMe : pointOnOther) };
 
-						}
 
-					}
+                        } else {
+                            if (pointOnMe == pointOnOther) {
+                                return new Point2D[] { pointOnMe };
+                            } else {
+                                // Split difference
+                                return new Point2D[] { new LineSeg2D(pointOnMe, pointOnOther).MidPoint };
+                            }
 
-				}
+                        }
 
-			}
+                    }
 
-			// Detect situations where two points touch
-			decimal a = default(decimal);
-			decimal h = default(decimal);
-			decimal r2mina2 = default(decimal);
-			Vector2D vToIntersectMidPt = default(Vector2D);
-			Vector2D vToIntersect1 = default(Vector2D);
+                }
 
-			// The following two equations are from:
-			//   http://paulbourke.net/geometry/2circle/
-			a = (MathExt.Pow(meToOtherVector.Magnitude, 2) - MathExt.Pow(other.Radius, 2) + MathExt.Pow(this.Radius, 2)) / (2 * meToOtherVector.Magnitude);
+            }
 
-			r2mina2 = MathExt.Pow(this.Radius, 2) - MathExt.Pow(a, 2);
+            // Detect situations where two points touch
+            decimal a = 0m;
+            decimal h = 0m;
+            decimal r2mina2 = 0m;
+            Vector2D vToIntersectMidPt = default(Vector2D);
+            Vector2D vToIntersect1 = default(Vector2D);
 
-			// No intersection points -- one circle is inside or outside the other
+            // The following two equations are from:
+            //   http://paulbourke.net/geometry/2circle/
+            a = (MathExt.Pow(meToOtherVector.Magnitude, 2) - MathExt.Pow(other.Radius, 2) + MathExt.Pow(this.Radius, 2)) / (2 * meToOtherVector.Magnitude);
+
+            r2mina2 = MathExt.Pow(this.Radius, 2) - MathExt.Pow(a, 2);
+
+            // No intersection points -- one circle is inside or outside the other
             if (r2mina2 < 0) return new Point2D[] { };
 
-			vToIntersectMidPt = new Vector2D(this.Center, other.Center);
-			vToIntersectMidPt.Magnitude = a;
+            vToIntersectMidPt = new Vector2D(this.Center, other.Center);
+            vToIntersectMidPt.Magnitude = a;
 
 
-			if (r2mina2 == 0) {
-				// Only one intersection point
-				return new Point2D[] { this.Center + vToIntersectMidPt };
+            if (r2mina2 == 0) {
+                // Only one intersection point
+                return new Point2D[] { this.Center + vToIntersectMidPt };
 
-			}
+            }
 
-			h = MathExt.Sqrt(r2mina2);
-			vToIntersect1 = vToIntersectMidPt.GetPerpendicular();
-			vToIntersect1.Magnitude = h;
+            h = MathExt.Sqrt(r2mina2);
+            vToIntersect1 = vToIntersectMidPt.GetPerpendicular();
+            vToIntersect1.Magnitude = h;
 
-			return new Point2D[] {
-				this.Center + vToIntersectMidPt + vToIntersect1,
-				this.Center + vToIntersectMidPt - vToIntersect1
-			};
+            return new Point2D[] {
+                this.Center + vToIntersectMidPt + vToIntersect1,
+                this.Center + vToIntersectMidPt - vToIntersect1
+            };
 
-		}
+        }
 
         /// <summary>
         /// Determines if this circle is inside the other. Considers this circle inside
@@ -1222,8 +1215,8 @@ namespace MathExtensions.TwoD
         {
             // TODO: Rename to GetIsTangentTo
 
-            decimal minRadius = default(decimal);
-            decimal maxRadius = default(decimal);
+            decimal minRadius = 0m;
+            decimal maxRadius = 0m;
 
 
             if (decimals >= 0)

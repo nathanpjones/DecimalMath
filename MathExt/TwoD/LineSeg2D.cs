@@ -158,7 +158,6 @@ namespace MathExtensions.TwoD
             // TODO: Rename to GetIsZeroLength
             return Length.RoundFromZero(decimals) == 0;
         }
-        [DebuggerStepThrough()]
         private void _CheckIsValid()
         {
             if (Pt1 == Pt2)
@@ -227,7 +226,6 @@ namespace MathExtensions.TwoD
         /// Treats this line segment as a line and solves for X given the specified Y.
         /// </summary>
         /// <param name="y">Y value.</param>
-        [DebuggerStepThrough()]
         public decimal GetX(decimal y)
         {
 
@@ -261,7 +259,6 @@ namespace MathExtensions.TwoD
         /// Treats this line segment as a line and solves for Y given the specified X.
         /// </summary>
         /// <param name="x">X value.</param>
-        [DebuggerStepThrough()]
         public decimal GetY(decimal x)
         {
 
@@ -369,8 +366,8 @@ namespace MathExtensions.TwoD
 
             bool vertical1 = false;
             bool vertical2 = false;
-            decimal m1 = default(decimal);
-            decimal m2 = default(decimal);
+            decimal m1 = 0m;
+            decimal m2 = 0m;
             Point2D pt = default(Point2D);
 
             vertical1 = this.IsVertical;
@@ -431,7 +428,6 @@ namespace MathExtensions.TwoD
         /// <param name="treatLineSegmentAsLine">If True, will return distance to closest
         /// point on the line through the line segment. If False, will return distance to the 
         /// closest point on the segment itself.</param>
-        [DebuggerStepThrough()]
         public decimal DistanceTo(Point2D pt, bool treatLineSegmentAsLine = false)
         {
 
@@ -446,7 +442,6 @@ namespace MathExtensions.TwoD
         /// <param name="treatLineSegmentAsLine">If True, will return closest point on 
         /// the line through the line segment even if it doesn't lie on the segment
         /// itself. If False, will find the closest point on the segment itself.</param>
-        [DebuggerStepThrough()]
         public Point2D ClosestPointTo(Point2D pt, bool treatLineSegmentAsLine = false)
         {
 
@@ -546,7 +541,6 @@ namespace MathExtensions.TwoD
         /// </summary>
         /// <param name="distance">Distance from this line segment that the parallel lines should be.</param>
         /// <returns>Returns two line segments.</returns>
-        [DebuggerStepThrough()]
         public LineSeg2D[] GetParallels(decimal distance)
         {
 
@@ -736,7 +730,6 @@ namespace MathExtensions.TwoD
         /// </summary>
         /// <param name="chamferDistance">The length of the chamfer.</param>
         /// <param name="chamferAngle">The angle of the chamfer in degrees.</param>
-        [DebuggerStepThrough()]
         public static decimal GetChamferDrop(decimal chamferDistance, decimal chamferAngle)
         {
 

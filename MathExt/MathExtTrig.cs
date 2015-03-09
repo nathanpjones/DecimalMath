@@ -92,13 +92,12 @@ namespace MathExtensions
         /// Uses a Taylor series to calculate sine. See 
         /// http://en.wikipedia.org/wiki/Trigonometric_functions for details.
         /// </remarks>
-        [DebuggerStepThrough()]
         public static decimal Sin(decimal x)
         {
 
-            decimal xSquared = default(decimal);
-            decimal result = default(decimal);
-            decimal nextAdd = default(decimal);
+            decimal xSquared = 0m;
+            decimal result = 0m;
+            decimal nextAdd = 0m;
             int iteration = 0;
 
             // Normalize to between -2Pi <= x <= 2Pi
@@ -162,13 +161,12 @@ namespace MathExtensions
         /// Uses a Taylor series to calculate sine. See 
         /// http://en.wikipedia.org/wiki/Trigonometric_functions for details.
         /// </remarks>
-        [DebuggerStepThrough()]
         public static decimal Cos(decimal x)
         {
 
-            decimal xSquared = default(decimal);
-            decimal result = default(decimal);
-            decimal nextAdd = default(decimal);
+            decimal xSquared = 0m;
+            decimal result = 0m;
+            decimal nextAdd = 0m;
             int iteration = 0;
 
             // Normalize to between -2Pi <= x <= 2Pi
@@ -232,7 +230,6 @@ namespace MathExtensions
         /// Uses a Taylor series to calculate sine. See 
         /// http://en.wikipedia.org/wiki/Trigonometric_functions for details.
         /// </remarks>
-        [DebuggerStepThrough()]
         public static decimal Tan(decimal radians)
         {
 
@@ -257,7 +254,6 @@ namespace MathExtensions
         /// around -1 and 1 (millions of iterations) and still ends up being less
         /// accurate than deriving from the ATan function.
         /// </remarks>
-        [DebuggerStepThrough()]
         public static decimal ASin(decimal z)
         {
 
@@ -315,13 +311,12 @@ namespace MathExtensions
         /// See http://mathworld.wolfram.com/InverseTangent.html for faster converging 
         /// series that was used here.
         /// </remarks>
-        [DebuggerStepThrough()]
         public static decimal ATan(decimal x)
         {
 
-            decimal result = default(decimal);
-            decimal y = default(decimal);
-            decimal nextAdd = default(decimal);
+            decimal result = 0m;
+            decimal y = 0m;
+            decimal nextAdd = 0m;
             int iteration = 0;
 
             // Special cases
@@ -382,11 +377,10 @@ namespace MathExtensions
         /// For (x, y) in quadrant 3, -π &lt; θ &lt; -π/2.
         /// For (x, y) in quadrant 4, -π/2 &lt; θ &lt; 0.
         /// </returns>
-        [DebuggerStepThrough()]
         public static decimal ATan2(decimal y, decimal x)
         {
 
-            decimal ret = default(decimal);
+            decimal ret = 0m;
 
 
             if (x == 0 && y == 0)
