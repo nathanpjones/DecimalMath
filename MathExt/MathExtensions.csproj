@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AnglePoint.cs" />
+    <Compile Include="DecimalExtensions.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="MatrixBase.cs" />
     <Compile Include="RightTriangle.cs" />

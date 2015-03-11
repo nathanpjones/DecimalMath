@@ -1,11 +1,12 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 
 namespace MathExtensions.Tests.MathExtTests
 {
 
     public class LogTests
     {
-        public const decimal Tolerance = 10m * MathExt.SmallestNonZeroDec;
+        public const decimal Tolerance = 5m;
 
         public static decimal[][] TestCases =
         {
@@ -18,7 +19,19 @@ namespace MathExtensions.Tests.MathExtTests
         [TestCaseSource("TestCases")]
         public void Test(decimal value, decimal expected, decimal tolerance)
         {
+            tolerance = Helper.GetScaledTolerance(expected, (int)tolerance, true);
             Assert.That(MathExt.Log(value), Is.EqualTo(expected).Within(tolerance));
+        }
+
+        [Test]
+        public void RejectNegativeValue()
+        {
+            Assert.Throws<ArgumentException>(() => MathExt.Log(-1));
+        }
+        [Test]
+        public void RejectZeroValue()
+        {
+            Assert.Throws<OverflowException>(() => MathExt.Log(0));
         }
     }
 

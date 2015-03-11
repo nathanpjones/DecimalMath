@@ -30,7 +30,7 @@ namespace MathExtensions.Tests.MathExtTests
         }
 
         [Test]
-        public void RejectNegativeValueTest()
+        public void RejectNegativeValue()
         {
             Assert.Throws<ArgumentException>(() => MathExt.Sqrt(-1));
         }

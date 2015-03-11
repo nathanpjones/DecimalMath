@@ -101,7 +101,7 @@ namespace MathExtensions
                 else // Fractional power < 1
                 {
                     // See http://en.wikipedia.org/wiki/Exponent#Real_powers
-                    //result = Exp(y * Log(x));
+                    // The next line is an optimization of Exp(y * Log(x)) for better precision
                     result = ExpBySquaring(x, t) * Exp((y - t) * Log(x));
                 }
             }
@@ -109,7 +109,7 @@ namespace MathExtensions
             if (isNegativeExponent)
             {
                 // Note, for IEEE floats this would be Infinity and not an exception...
-                if (result == 0) throw new Exception("Negative power of 0 is undefined!");
+                if (result == 0) throw new OverflowException("Negative power of 0 is undefined!");
 
                 result = 1 / result;
             }
@@ -193,11 +193,11 @@ namespace MathExtensions
                 {
                     if (iteration == 0)
                     {
-                        nextAdd = 1;
+                        nextAdd = 1;               // == Pow(d, 0) / Factorial(0) == 1 / 1 == 1
                     }
                     else
                     {
-                        nextAdd *= d / iteration;
+                        nextAdd *= d / iteration;  // == Pow(d, iteration) / Factorial(iteration)
                     }
 
                     if (nextAdd == 0) break;
@@ -209,10 +209,10 @@ namespace MathExtensions
             }
 
             // Take reciprocal if this was a negative power
+            // Note that result will never be zero at this point.
             if (reciprocal) result = 1 / result;
 
             return result;
-
         }
 
         /// <summary>
@@ -291,18 +291,22 @@ namespace MathExtensions
         /// calculated as follows: n * (n - 1) * (n - 2) * ... * 1
         /// </summary>
         /// <param name="n">An integer.</param>
-        public static decimal Factorial(int n)
+        /// <remarks>
+        /// Only supports non-negative integers.
+        /// </remarks>
+        public static decimal Factorial(decimal n)
         {
+            if (n < 0) throw new ArgumentException("Values less than zero are not supoprted!", "n");
+            if (Decimal.Truncate(n) != n) throw new ArgumentException("Fractional values are not supoprted!", "n");
 
-            decimal ret = 1;
+            var ret = 1m;
 
-            for (int i = n; i >= 2; i += -1)
+            for (var i = n; i >= 2; i += -1)
             {
-                ret *= n;
+                ret *= i;
             }
 
             return ret;
-
         }
 
         /// <summary>
@@ -314,23 +318,17 @@ namespace MathExtensions
         /// <remarks>See http://www.wikihow.com/Factor-Second-Degree-Polynomials-%28Quadratic-Equations%29</remarks>
         public static decimal[] SolveQuadratic(decimal a, decimal b, decimal c)
         {
-
-            decimal h = 0m;
-            decimal k = 0m;
-            decimal sqrtOfBSqMin4AC = 0m;
-
-
             // Horizontal line is either 0 nowhere or everywhere so no solution.
             if ((a == 0) && (b == 0)) return new decimal[] { };
 
-            if ((a == 0)) {
-                // This is actually a linear equation. Quadratic would result in a divide by zero
-                // so use separate equation.
+            if ((a == 0))
+            {
+                // This is actually a linear equation. Using quadratic would result in a
+                // divide by zero so use the following equation.
                 // 0 = b * x + c
                 // -c = b * x
                 // -c / b = x
-                return new decimal[] { -c / b };
-
+                return new[] { -c / b };
             }
 
             // No solution -- shape does not intersect 0. This means that
@@ -343,33 +341,27 @@ namespace MathExtensions
             // exceeding the precision of a Decimal value. We'll make
             // sure here that at least one number is greater than 1
             // or less than -1.
-
-            while ((-1 < a && a < 1) && (-1 < b && b < 1) && (-1 < c && c < 1)) {
+            while ((-1 < a && a < 1) && (-1 < b && b < 1) && (-1 < c && c < 1)) 
+            {
                 a *= 10;
                 b *= 10;
                 c *= 10;
-
             }
 
-            sqrtOfBSqMin4AC = Pow(b, 2) - 4 * a * c;
-            if (sqrtOfBSqMin4AC == -SmallestNonZeroDec)
-                sqrtOfBSqMin4AC = 0;
-            sqrtOfBSqMin4AC = Sqrt(sqrtOfBSqMin4AC);
-            h = (-b + sqrtOfBSqMin4AC) / (2 * a);
-            k = (-b - sqrtOfBSqMin4AC) / (2 * a);
+            var discriminant = Pow(b, 2) - 4 * a * c;
+            if (discriminant == -SmallestNonZeroDec) discriminant = 0;
+            if (discriminant < 0) throw new Exception("Solution is complex which is not supported by Decimal.");
+
+            var sqrtOfDiscriminant = Sqrt(discriminant);
+            var h = (-b + sqrtOfDiscriminant) / (2 * a);
+            var k = (-b - sqrtOfDiscriminant) / (2 * a);
 
             // ax^2 + bx + c = (x - h)(x - k) 
             // (x - h)(x - k) = 0 means h and k are the values for x 
             //   that will make the equation = 0
-            if (h == k) {
-                return new decimal[] { h };
-            } else {
-                return new decimal[] {
-                    h,
-                    k
-                };
-            }
-
+            return h == k
+                       ? new[] { h }
+                       : new[] { h, k };
         }
 
         /// <summary>
@@ -397,36 +389,30 @@ namespace MathExtensions
         /// after the decimal point to end up with.</param>
         public static decimal Ceiling(decimal value, int places = 0)
         {
+            if (places < 0) throw new ArgumentOutOfRangeException("places", "Places must be greater than or equal to 0.");
 
-            decimal factor = 0m;
+            if (places == 0) return decimal.Ceiling(value);
 
             // At or beyond precision of decimal data type
-            if (places >= 28)
-                return value;
+            if (places >= 28) return value;
 
-            factor = 1;
-            for (int i = 1; i <= places; i++)
-            {
-                factor *= 10;
-            }
-
-            return decimal.Ceiling(value * factor) / factor;
-
+            return decimal.Ceiling(value * PowersOf10[places]) / PowersOf10[places];
         }
 
         /// <summary>
         /// Calculates the greatest common factor of a and b to the highest level of
         /// precision represented by either number.
         /// </summary>
+        /// <remarks>
+        /// If either number is not an integer, the factor sought will be at the
+        /// same precision as the most precise value.
+        /// For example, 1.2 and 0.42 will yield 0.06.
+        /// </remarks>
         public static decimal GCF(decimal a, decimal b)
         {
-
-            decimal decAdj = 0m;
-            decimal r = 0m;
-
             // Convert both a and b to an integer if necessary, multiplying by 10
-            decAdj = 1;
-            while ((Floor(a) != a) || (Floor(b) != b))
+            var decAdj = 1;
+            while ((decimal.Truncate(a) != a) || (decimal.Truncate(b) != b))
             {
                 decAdj *= 10;
                 a = a * 10;
@@ -434,53 +420,26 @@ namespace MathExtensions
             }
 
             // Run Euclid's algorithm
-            do
+            while (true)
             {
-                if (b == 0)
-                    break; // TODO: might not be correct. Was : Exit Do
-                r = a % b;
+                if (b == 0) break;
+                var r = a % b;
                 a = b;
                 b = r;
-            } while (true);
+            }
 
             // Return the adjusted value of a
             a = a / decAdj;
 
             return a;
-
         }
 
-        /// Returns a specified number raised to the specified power.
-        /// </summary>
         /// <summary>
-        /// Tests whether or not a given value is within the upper and lower limit, inclusive.
+        /// Gets the greatest common factor of three or more numbers.
         /// </summary>
-        /// <param name="value">The value to test.</param>
-        /// <param name="lowerLimit">The lower limit.</param>
-        /// <param name="upperLimit">The upper limit.</param>
-        public static bool InRangeIncl(decimal value, decimal lowerLimit, decimal upperLimit)
+        public static decimal GCF(decimal a, decimal b, params decimal[] values)
         {
-
-            if (upperLimit < lowerLimit)
-                throw new Exception("Upper limit is less than lower limit!");
-
-            return (value >= lowerLimit) && (value <= upperLimit);
-
-        }
-        /// <summary>
-        /// Tests whether or not a given value is within the upper and lower limit, exclusive.
-        /// </summary>
-        /// <param name="value">The value to test.</param>
-        /// <param name="lowerLimit">The lower limit.</param>
-        /// <param name="upperLimit">The upper limit.</param>
-        public static bool InRangeExcl(decimal value, decimal lowerLimit, decimal upperLimit)
-        {
-
-            if (upperLimit < lowerLimit)
-                throw new Exception("Upper limit is less than lower limit!");
-
-            return (value > lowerLimit) && (value < upperLimit);
-
+            return values.Aggregate(GCF(a, b), (current, value) => GCF(current, value));
         }
 
         /// <summary>
@@ -497,114 +456,54 @@ namespace MathExtensions
         /// </remarks>
         public static decimal AGMean(decimal x, decimal y)
         {
+            decimal a;
+            decimal g;
 
-            decimal a = 0m;
-            decimal g = 0m;
-
-
-            do
+            while (true)
             {
                 a = (x + y) / 2;
                 g = Sqrt(x * y);
 
-                if (a == g)
-                    break; // TODO: might not be correct. Was : Exit Do
-                if (g == y && a == x)
-                    break; // TODO: might not be correct. Was : Exit Do
+                if (a == g) break;
+                if (g == y && a == x) break;
 
                 x = a;
                 y = g;
-
-            } while (true);
+            }
 
             return a;
-
         }
 
-        /// <summary>
-        /// Returns the maximum value in the Decimal array.
-        /// </summary>
-        /// <param name="values">Decimal values.</param>
-        public static decimal Max(params decimal[] values)
-        {
-
-            if (values == null)
-                throw new ArgumentException("Array is null!");
-            if (values.Length == 0)
-                throw new ArgumentException("Array is empty!");
-
-            int highest = 0;
-
-            highest = 0;
-            for (int i = 1; i <= values.Length - 1; i++)
-            {
-                if (values[i] > values[highest])
-                    highest = i;
-            }
-
-            return values[highest];
-
-        }
-        /// <summary>
-        /// Returns the minimum value in the Decimal array.
-        /// </summary>
-        /// <param name="values">Decimal values.</param>
-        public static decimal Min(params decimal[] values)
-        {
-
-            if (values == null)
-                throw new ArgumentException("Array is null!");
-            if (values.Length == 0)
-                throw new ArgumentException("Array is empty!");
-
-            int lowest = 0;
-
-            lowest = 0;
-            for (int i = 1; i <= values.Length - 1; i++)
-            {
-                if (values[i] < values[lowest])
-                    lowest = i;
-            }
-
-            return values[lowest];
-
-        }
         /// <summary>
         /// Calculates the average of the supplied numbers.
         /// </summary>
         /// <param name="values">The numbers to average.</param>
+        /// <remarks>
+        /// Simply uses LINQ's Average function, but switches to a potentially less
+        /// accurate method of summing each value divided by the number of values.
+        /// </remarks>
         public static decimal Average(params decimal[] values)
         {
-
             decimal avg;
 
             try
             {
-                avg = 0;
-                for (int i = 0; i <= values.Length - 1; i++)
-                {
-                    avg += values[i];
-                }
-                avg /= values.Length;
+                avg = values.Average();
             }
             catch (OverflowException ex)
             {
-                avg = 0;
-                for (int i = 0; i <= values.Length - 1; i++)
-                {
-                    avg += values[i] / values.Length;
-                }
+                // Use less accurate method that won't overflow
+                avg = values.Sum(v => v / values.Length);
             }
 
             return avg;
-
         }
 
         /// <summary>
         /// Gets the number of decimal places in a decimal value.
         /// </summary>
         /// <remarks>
-        /// See http://stackoverflow.com/a/6092298/856595
+        /// Started with something found here: http://stackoverflow.com/a/6092298/856595
         /// </remarks>
         public static int GetDecimalPlaces(decimal dec, bool countTrailingZeros)
         {
@@ -698,14 +597,6 @@ namespace MathExtensions
             flags = ((decimalCount << ScaleShift) & ScaleMask) | (flags & SignMask);
         }
 
-        public static decimal RoundFromZero(this decimal d, int decimals)
-        {
-            Contract.Requires<ArgumentNullException>(decimals >= 0);
-
-            var factor = decimals > 0 ? Pow(10m, decimals - 1) : 1m;
-
-            return (d * factor + .5m) / factor;
-        }
 
         #endregion
     }

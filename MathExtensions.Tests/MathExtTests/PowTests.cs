@@ -38,7 +38,7 @@ namespace MathExtensions.Tests.MathExtTests
         [Test]
         public void NegativeExponentOfZero()
         {
-            Assert.Throws<Exception>(() => MathExt.Pow(0, -1));
+            Assert.Throws<OverflowException>(() => MathExt.Pow(0, -1));
         }
     }
 

@@ -56,10 +56,15 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="DecimalExtensionsTest\RoundFromZeroTests.cs" />
     <Compile Include="Helper.cs" />
+    <Compile Include="MathExtTests\GCFTests.cs" />
+    <Compile Include="MathExtTests\FactorialTests.cs" />
+    <Compile Include="MathExtTests\CeilingTests.cs" />
     <Compile Include="MathExtTests\FloorTests.cs" />
     <Compile Include="MathExtTests\LogTests.cs" />
     <Compile Include="MathExtTests\MiscTests.cs" />
+    <Compile Include="MathExtTests\ExpTests.cs" />
     <Compile Include="MathExtTests\PowTests.cs" />
     <Compile Include="MathExtTests\SqrtTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

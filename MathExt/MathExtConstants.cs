@@ -35,7 +35,7 @@ namespace MathExtensions
         public const decimal E = 2.7182818284590452353602874714m;
 
         // Fast access for 10^n
-        private static readonly decimal[] PowersOf10 =
+        internal static readonly decimal[] PowersOf10 =
         {
             1m,
             10m,

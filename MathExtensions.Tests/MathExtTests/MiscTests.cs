@@ -46,5 +46,14 @@ namespace MathExtensions.Tests.MathExtTests
             x = 0.0000m;
             Assert.That(MathExt.GetDecimalPlaces(x, false), Is.EqualTo(0));
         }
+
+        [Test]
+        public void AverageTest()
+        {
+            const decimal halfMax = decimal.MaxValue / 2m;
+            Assert.That(MathExt.Average(halfMax, halfMax, halfMax), Is.EqualTo(halfMax).Within(1m));
+
+            Assert.That(MathExt.Average(5, 10, 34, 8), Is.EqualTo(14.25m));
+        }
     }
 }
