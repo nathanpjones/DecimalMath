@@ -67,6 +67,11 @@
     <Compile Include="MathExtTests\ExpTests.cs" />
     <Compile Include="MathExtTests\PowTests.cs" />
     <Compile Include="MathExtTests\SqrtTests.cs" />
+    <Compile Include="MathExtTrigTests\ATan2Tests.cs" />
+    <Compile Include="MathExtTrigTests\CosTests.cs" />
+    <Compile Include="MathExtTrigTests\ATanTests.cs" />
+    <Compile Include="MathExtTrigTests\NormalizeTests.cs" />
+    <Compile Include="MathExtTrigTests\SinTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

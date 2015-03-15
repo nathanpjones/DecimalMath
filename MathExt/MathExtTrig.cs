@@ -15,8 +15,6 @@ namespace MathExtensions
         /// <param name="degrees">The degrees to convert.</param>
         public static decimal ToRad(decimal degrees)
         {
-            const decimal ratio = Pi / 180m;
-
             if (degrees % 360m == 0)
             {
                 return (degrees / 360m) * TwoPi;
@@ -41,8 +39,8 @@ namespace MathExtensions
             {
                 return (degrees / 15m) * PiTwelfth;
             }
-            
-            return degrees * ratio;
+
+            return degrees * Pi / 180m;
         }
 
         /// <summary>
@@ -62,12 +60,9 @@ namespace MathExtensions
         /// <param name="radians">Angle in radians.</param>
         public static decimal NormalizeAngle(decimal radians)
         {
-            while (radians < 0)
-            {
-                radians += TwoPi;
-            }
-            
-            return radians % TwoPi;
+            radians = radians % TwoPi;
+            if (radians < 0) radians += TwoPi;
+            return radians;
         }
 
         /// <summary>
@@ -76,12 +71,9 @@ namespace MathExtensions
         /// <param name="degrees">Angle in degrees.</param>
         public static decimal NormalizeAngleDeg(decimal degrees)
         {
-            while (degrees < 0)
-            {
-                degrees += 360m;
-            }
-
-            return degrees % 360m;
+            degrees = degrees % 360m;
+            if (degrees < 0) degrees += 360m;
+            return degrees;
         }
 
         /// <summary>
@@ -94,42 +86,30 @@ namespace MathExtensions
         /// </remarks>
         public static decimal Sin(decimal x)
         {
-
-            decimal xSquared = 0m;
-            decimal result = 0m;
-            decimal nextAdd = 0m;
-            int iteration = 0;
-
             // Normalize to between -2Pi <= x <= 2Pi
-            while (x > TwoPi)
-            {
-                x -= TwoPi;
-            }
-            while (x < -TwoPi)
-            {
-                x += TwoPi;
-            }
-            xSquared = x * x;
+            if (x > TwoPi || x < -TwoPi) x = x % TwoPi;
 
             if (x == 0 || x == Pi || x == TwoPi)
             {
                 return 0;
             }
-            else if (x == PiHalf)
+            if (x == PiHalf)
             {
                 return 1;
             }
-            else if (x == Pi + PiHalf)
+            if (x == Pi + PiHalf)
             {
                 return -1;
             }
 
-            nextAdd = 0;
-            iteration = 0;
+            var result = 0m;
+            var doubleIteration = 0; // current iteration * 2
+            var xSquared = x * x;
+            var nextAdd = 0m;
 
-            do
+            while (true)
             {
-                if (iteration == 0)
+                if (doubleIteration == 0)
                 {
                     nextAdd = x;
                 }
@@ -138,21 +118,22 @@ namespace MathExtensions
                     // We multiply by -1 each time so that the sign of the component
                     // changes each time. The first item is positive and it
                     // alternates back and forth after that.
-                    nextAdd *= -1 * xSquared / ((2 * iteration) * (2 * iteration + 1));
+                    // Following is equivalent to: nextAdd *= -1 * x * x / ((2 * iteration) * (2 * iteration + 1));
+                    nextAdd *= -1 * xSquared / (doubleIteration * doubleIteration + doubleIteration);
                 }
 
-                if (nextAdd == 0)
-                    break; // TODO: might not be correct. Was : Exit Do
+                Debug.WriteLine("{0:000}:{1,33:+0.0000000000000000000000000000;-0.0000000000000000000000000000} ->{2,33:+0.0000000000000000000000000000;-0.0000000000000000000000000000}",
+                    doubleIteration / 2, nextAdd, result + nextAdd);
+                if (nextAdd == 0) break;
 
                 result += nextAdd;
 
-                iteration += 1;
-
-            } while (true);
+                doubleIteration += 2;
+            }
 
             return result;
-
         }
+
         /// <summary>
         /// Returns the cosine of the specified angle.
         /// </summary>
@@ -163,42 +144,30 @@ namespace MathExtensions
         /// </remarks>
         public static decimal Cos(decimal x)
         {
-
-            decimal xSquared = 0m;
-            decimal result = 0m;
-            decimal nextAdd = 0m;
-            int iteration = 0;
-
             // Normalize to between -2Pi <= x <= 2Pi
-            while (x > TwoPi)
-            {
-                x -= TwoPi;
-            }
-            while (x < -TwoPi)
-            {
-                x += TwoPi;
-            }
-            xSquared = x * x;
+            if (x > TwoPi || x < -TwoPi) x = x % TwoPi;
 
             if (x == 0 || x == TwoPi)
             {
                 return 1;
             }
-            else if (x == Pi)
+            if (x == Pi)
             {
                 return -1;
             }
-            else if (x == PiHalf || x == Pi + PiHalf)
+            if (x == PiHalf || x == Pi + PiHalf)
             {
                 return 0;
             }
 
-            nextAdd = 0;
-            iteration = 0;
+            var result = 0m;
+            var doubleIteration = 0; // current iteration * 2
+            var xSquared = x * x;
+            var nextAdd = 0m;
 
-            do
+            while (true)
             {
-                if (iteration == 0)
+                if (doubleIteration == 0)
                 {
                     nextAdd = 1;
                 }
@@ -207,21 +176,20 @@ namespace MathExtensions
                     // We multiply by -1 each time so that the sign of the component
                     // changes each time. The first item is positive and it
                     // alternates back and forth after that.
-                    nextAdd *= -1 * xSquared / ((2 * iteration - 1) * (2 * iteration));
+                    // Following is equivalent to: nextAdd *= -1 * x * x / ((2 * iteration - 1) * (2 * iteration));
+                    nextAdd *= -1 * xSquared / (doubleIteration * doubleIteration - doubleIteration);
                 }
 
-                if (nextAdd == 0)
-                    break; // TODO: might not be correct. Was : Exit Do
+                if (nextAdd == 0) break;
 
                 result += nextAdd;
 
-                iteration += 1;
-
-            } while (true);
+                doubleIteration += 2;
+            }
 
             return result;
-
         }
+
         /// <summary>
         /// Returns the tangent of the specified angle.
         /// </summary>
@@ -232,7 +200,6 @@ namespace MathExtensions
         /// </remarks>
         public static decimal Tan(decimal radians)
         {
-
             try
             {
                 return Sin(radians) / Cos(radians);
@@ -241,8 +208,8 @@ namespace MathExtensions
             {
                 throw new Exception("Tangent is undefined at this angle!");
             }
-
         }
+
         /// <summary>
         /// Returns the angle whose sine is the specified number.
         /// </summary>
@@ -256,29 +223,19 @@ namespace MathExtensions
         /// </remarks>
         public static decimal ASin(decimal z)
         {
-
             if (z < -1 || z > 1)
             {
                 throw new ArgumentOutOfRangeException("z", "Argument must be in the range -1 to 1 inclusive.");
             }
 
             // Special cases
-            if (z == -1)
-            {
-                return -PiHalf;
-            }
-            else if (z == 0)
-            {
-                return 0;
-            }
-            else if (z == 1)
-            {
-                return PiHalf;
-            }
+            if (z == -1) return -PiHalf;
+            if (z == 0) return 0;
+            if (z == 1) return PiHalf;
 
             return 2m * ATan(z / (1 + Sqrt(1 - z * z)));
-
         }
+
         /// <summary>
         /// Returns the angle whose cosine is the specified number.
         /// </summary>
@@ -289,7 +246,6 @@ namespace MathExtensions
         /// </remarks>
         public static decimal ACos(decimal z)
         {
-
             if (z < -1 || z > 1)
             {
                 throw new ArgumentOutOfRangeException("z", "Argument must be in the range -1 to 1 inclusive.");
@@ -301,74 +257,68 @@ namespace MathExtensions
             if (z == 1) return 0;
 
             return 2m * ATan(Sqrt(1 - z * z) / (1 + z));
-
         }
+
         /// <summary>
         /// Returns the angle whose tangent is the quotient of two specified numbers.
         /// </summary>
         /// <param name="x">A number representing a tangent.</param>
         /// <remarks>
         /// See http://mathworld.wolfram.com/InverseTangent.html for faster converging 
-        /// series that was used here.
+        /// series from Euler that was used here.
         /// </remarks>
         public static decimal ATan(decimal x)
         {
-
-            decimal result = 0m;
-            decimal y = 0m;
-            decimal nextAdd = 0m;
-            int iteration = 0;
-
             // Special cases
             if (x == -1) return -PiQuarter;
             if (x == 0) return 0;
             if (x == 1) return PiQuarter;
             if (x < -1)
             {
-                // Force down to -1 to 1 interval for better accuracy
+                // Force down to -1 to 1 interval for faster convergence
                 return -PiHalf - ATan(1 / x);
             }
             if (x > 1)
             {
-                // Force down to -1 to 1 interval for better accuracy
+                // Force down to -1 to 1 interval for faster convergence
                 return PiHalf - ATan(1 / x);
             }
 
-            y = (x * x) / (1 + x * x);
-            nextAdd = 0;
-            iteration = 0;
+            var result = 0m;
+            var doubleIteration = 0; // current iteration * 2
+            var y = (x * x) / (1 + x * x);
+            var nextAdd = 0m;
 
-            do
+            while (true)
             {
-                if (iteration == 0)
+                if (doubleIteration == 0)
                 {
-                    nextAdd = y / x;
+                    nextAdd = x / (1 + x * x);  // is = y / x  but this is better for very small numbers where y = 9
                 }
                 else
                 {
                     // We multiply by -1 each time so that the sign of the component
                     // changes each time. The first item is positive and it
                     // alternates back and forth after that.
-                    nextAdd *= y * (iteration * 2) / (iteration * 2 + 1);
+                    // Following is equivalent to: nextAdd *= y * (iteration * 2) / (iteration * 2 + 1);
+                    nextAdd *= y * doubleIteration / (doubleIteration + 1);
                 }
 
-                if (nextAdd == 0)
-                    break; // TODO: might not be correct. Was : Exit Do
+                if (nextAdd == 0) break;
 
                 result += nextAdd;
 
-                iteration += 1;
-
-            } while (true);
+                doubleIteration += 2;
+            }
 
             return result;
-
         }
+
         /// <summary>
         /// Returns the angle whose tangent is the quotient of two specified numbers.
         /// </summary>
-        /// <param name="x">The x coordinate of a point.</param>
         /// <param name="y">The y coordinate of a point.</param>
+        /// <param name="x">The x coordinate of a point.</param>
         /// <returns>
         /// An angle, θ, measured in radians, such that -π≤θ≤π, and tan(θ) = y / x,
         /// where (x, y) is a point in the Cartesian plane. Observe the following: 
@@ -379,77 +329,38 @@ namespace MathExtensions
         /// </returns>
         public static decimal ATan2(decimal y, decimal x)
         {
-
-            decimal ret = 0m;
-
-
             if (x == 0 && y == 0)
             {
-                ret = 0;
-                // X0, Y0
-
-
+                return 0;                   // X0, Y0
             }
-            else if (x == 0)
+            
+            if (x == 0)
             {
-                if (y > 0)
-                {
-                    ret = PiHalf;
-                    // X0, Y+
-                }
-                else
-                {
-                    ret = -PiHalf;
-                    // X0, Y-
-                }
-
-
+                return y > 0
+                           ? PiHalf         // X0, Y+
+                           : -PiHalf;       // X0, Y-
             }
-            else if (y == 0)
+            
+            if (y == 0)
             {
-                if (x > 0)
-                {
-                    ret = 0;
-                    // X+, Y0
-                }
-                else
-                {
-                    ret = Pi;
-                    // X-, Y0
-                }
-
-
+                return x > 0
+                           ? 0              // X+, Y0
+                           : Pi;            // X-, Y0
             }
-            else
+            
+            var quadrant = new Point2D(x, y).Quadrant;
+            var aTan = ATan(y / x);
+            switch (quadrant)
             {
-                switch (new Point2D(x, y).Quadrant)
-                {
-                    case 1:
-                        ret = ATan(y / x);
-                        // X+, Y+
-                        break;
-                    case 2:
-                        ret = Pi + ATan(y / x);
-                        // X-, Y+
-                        break;
-                    case 3:
-                        ret = -(Pi - ATan(y / x));
-                        // X-, Y-
-                        break;
-                    case 4:
-                        ret = ATan(y / x);
-                        // X+, Y-
-                        break;
-                    default:
-                        System.Diagnostics.Debugger.Break();
-                        // should have handled above
-                        break;
-                }
-
+                case 1: return aTan;        // X+, Y+
+                case 2: return aTan + Pi;   // X-, Y+
+                case 3: return aTan - Pi;   // X-, Y-
+                case 4: return aTan;        // X+, Y-
+                default:
+                    // Should never get here
+                    Debug.Assert(false, string.Format("Quadrant {0} is invalid!", quadrant));
+                    throw new Exception(string.Format("Unexpected quadrant: {0}", quadrant));
             }
-
-            return ret;
-
         }
     }
 }

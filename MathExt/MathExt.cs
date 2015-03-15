@@ -411,12 +411,13 @@ namespace MathExtensions
         public static decimal GCF(decimal a, decimal b)
         {
             // Convert both a and b to an integer if necessary, multiplying by 10
-            var decAdj = 1;
-            while ((decimal.Truncate(a) != a) || (decimal.Truncate(b) != b))
+            var decAdj = 1m;
+
+            if ((decimal.Truncate(a) != a) || (decimal.Truncate(b) != b))
             {
-                decAdj *= 10;
-                a = a * 10;
-                b = b * 10;
+                decAdj = PowersOf10[Math.Max(GetDecimalPlaces(a, false), GetDecimalPlaces(b, false))];
+                a = a * decAdj;
+                b = b * decAdj;
             }
 
             // Run Euclid's algorithm
@@ -507,14 +508,18 @@ namespace MathExtensions
         /// </remarks>
         public static int GetDecimalPlaces(decimal dec, bool countTrailingZeros)
         {
+            const int signMask = unchecked((int)0x80000000);
+            const int scaleMask = 0x00FF0000;
+            const int scaleShift = 16;
+
             int[] bits = Decimal.GetBits(dec);
-            var result = (bits[3] & 0xFF0000) >> 16;  // extract exponent
+            var result = (bits[3] & scaleMask) >> scaleShift;  // extract exponent
 
             // Return immediately for values without a fractional portion
             if (countTrailingZeros || (result == 0)) return result;
 
             // Get a raw version of the decimal's integer
-            bits[3] = bits[3] & ~unchecked((int)0x80FF0000); // clear out exponent
+            bits[3] = bits[3] & ~unchecked(signMask | scaleMask); // clear out exponent and negative bit
             var rawValue = new decimal(bits);
 
             // Account for trailing zeros
@@ -526,78 +531,5 @@ namespace MathExtensions
 
             return result;
         }
-
-        #region Decimal Rounding
-
-        // Sign mask for the flags field. A value of zero in this bit indicates a
-        // positive Decimal value, and a value of one in this bit indicates a
-        // negative Decimal value. 
-        private const int SignMask = unchecked((int)0x80000000);
-
-        // Scale mask for the flags field. This byte in the flags field contains
-        // the power of 10 to divide the Decimal value by. The scale byte must 
-        // contain a value between 0 and 28 inclusive.
-        private const int ScaleMask = 0x00FF0000;
-
-        // Number of bits scale is shifted by.
-        private const int ScaleShift = 16;
-
-        // The maximum power of 10 that a 32 bit integer can store
-        private const Int32 MaxInt32Scale = 9;
-
-        // Fast access for 10^n where n is 0-9
-        private static UInt32[] Powers10 = new UInt32[]
-                                           {
-                                               1,
-                                               10,
-                                               100,
-                                               1000,
-                                               10000,
-                                               100000,
-                                               1000000,
-                                               10000000,
-                                               100000000,
-                                               1000000000
-                                           };
-
-        // Does an in-place round the specified number of digits, rounding mid-point values 
-        // away from zero 
-        private static void InternalRoundFromZero(ref decimal d, int decimalCount)
-        {
-            var x = decimal.GetBits(d);
-            var flags = x[3];
-            Int32 scale = (flags & ScaleMask) >> ScaleShift;
-            Int32 scaleDifference = scale - decimalCount;
-            if (scaleDifference <= 0)
-            {
-                return;
-            }
-            // Divide the value by 10^scaleDifference
-            UInt32 lastRemainder;
-            UInt32 lastDivisor;
-            do
-            {
-                Int32 diffChunk = (scaleDifference > MaxInt32Scale) ? MaxInt32Scale : scaleDifference;
-                lastDivisor = Powers10[diffChunk];
-                Debugger.Break();
-                lastRemainder = 0; // remove this line
-                //lastRemainder = InternalDivRemUInt32(ref d, lastDivisor);
-                scaleDifference -= diffChunk;
-            }
-            while (scaleDifference > 0);
-
-            // Round away from zero at the mid point 
-            if (lastRemainder >= (lastDivisor >> 1))
-            {
-                Debugger.Break();
-                //InternalAddUInt32RawUnchecked(ref d, 1);
-            }
-
-            // the scale becomes the desired decimal count
-            flags = ((decimalCount << ScaleShift) & ScaleMask) | (flags & SignMask);
-        }
-
-
-        #endregion
     }
 }
