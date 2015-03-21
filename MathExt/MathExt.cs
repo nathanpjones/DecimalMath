@@ -410,16 +410,6 @@ namespace MathExtensions
         /// </remarks>
         public static decimal GCF(decimal a, decimal b)
         {
-            // Convert both a and b to an integer if necessary, multiplying by 10
-            var decAdj = 1m;
-
-            if ((decimal.Truncate(a) != a) || (decimal.Truncate(b) != b))
-            {
-                decAdj = PowersOf10[Math.Max(GetDecimalPlaces(a, false), GetDecimalPlaces(b, false))];
-                a = a * decAdj;
-                b = b * decAdj;
-            }
-
             // Run Euclid's algorithm
             while (true)
             {
@@ -428,9 +418,6 @@ namespace MathExtensions
                 a = b;
                 b = r;
             }
-
-            // Return the adjusted value of a
-            a = a / decAdj;
 
             return a;
         }
@@ -530,6 +517,40 @@ namespace MathExtensions
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Gets the remainder of one number divided by another number in such a way as to retain maximum precision.
+        /// </summary>
+        public static decimal Remainder(decimal d1, decimal d2)
+        {
+            if (Math.Abs(d1) < Math.Abs(d2)) return d1;
+
+            var timesInto = decimal.Truncate(d1 / d2);
+            var shiftingNumber = d2;
+            var sign = Math.Sign(d1);
+
+            for (var i = 0; i <= GetDecimalPlaces(d2, true); i++)
+            {
+                // Note that first "digit" will be the integer portion of d2
+                var digit = decimal.Truncate(shiftingNumber);
+
+                d1 -= timesInto * (digit / PowersOf10[i]);
+
+                shiftingNumber = (shiftingNumber - digit) * 10m; // remove used digit and shift for next iteration
+                if (shiftingNumber == 0m) break;
+            }
+
+            // If we've crossed zero because of the precision mismatch, 
+            // we need to add a whole d2 to get a correct result.
+            if (d1 != 0 && Math.Sign(d1) != sign)
+            {
+                d1 = Math.Sign(d2) == sign
+                         ? d1 + d2
+                         : d1 - d2;
+            }
+
+            return d1;
         }
     }
 }

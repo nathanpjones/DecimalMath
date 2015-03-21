@@ -66,6 +66,7 @@
     <Compile Include="MathExtTests\MiscTests.cs" />
     <Compile Include="MathExtTests\ExpTests.cs" />
     <Compile Include="MathExtTests\PowTests.cs" />
+    <Compile Include="MathExtTests\RemainderTests.cs" />
     <Compile Include="MathExtTests\SqrtTests.cs" />
     <Compile Include="MathExtTrigTests\ATan2Tests.cs" />
     <Compile Include="MathExtTrigTests\CosTests.cs" />

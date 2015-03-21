@@ -60,7 +60,7 @@ namespace MathExtensions
         /// <param name="radians">Angle in radians.</param>
         public static decimal NormalizeAngle(decimal radians)
         {
-            radians = radians % TwoPi;
+            radians = Remainder(radians, TwoPi);
             if (radians < 0) radians += TwoPi;
             return radians;
         }
@@ -87,7 +87,7 @@ namespace MathExtensions
         public static decimal Sin(decimal x)
         {
             // Normalize to between -2Pi <= x <= 2Pi
-            if (x > TwoPi || x < -TwoPi) x = x % TwoPi;
+            x = Remainder(x, TwoPi);
 
             if (x == 0 || x == Pi || x == TwoPi)
             {
@@ -145,7 +145,7 @@ namespace MathExtensions
         public static decimal Cos(decimal x)
         {
             // Normalize to between -2Pi <= x <= 2Pi
-            if (x > TwoPi || x < -TwoPi) x = x % TwoPi;
+            x = Remainder(x, TwoPi);
 
             if (x == 0 || x == TwoPi)
             {

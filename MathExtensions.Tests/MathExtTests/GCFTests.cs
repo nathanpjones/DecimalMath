@@ -11,10 +11,10 @@ namespace MathExtensions.Tests.MathExtTests
         {
             get
             {
-                yield return new TestCaseData(0.0000000000000000000000823543m, 0.0000000000019626617431640625m).Returns(0.0000000000000000000000000007m);
-                yield return new TestCaseData(decimal.MaxValue / 1000m, .28m).Returns(.02m);
                 yield return new TestCaseData(1.2m, 0.42m).Returns(.06m);
                 yield return new TestCaseData(1071m, 462m).Returns(21m);
+                yield return new TestCaseData(decimal.MaxValue / 1000m, .28m).Returns(.02m);
+                yield return new TestCaseData(0.0000000000000000000000823543m, 0.0000000000019626617431640625m).Returns(0.0000000000000000000000000343m);
             }
         }
 
