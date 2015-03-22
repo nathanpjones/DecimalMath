@@ -447,9 +447,25 @@ namespace MathExtensions
             decimal a;
             decimal g;
 
+            // Handle special case
+            if (x == 0 || y == 0) return 0;
+
+            // Make sure signs match or we'll end up with a complex number
+            var sign = Math.Sign(x);
+            if (sign != Math.Sign(y))
+                throw new Exception("Arithmetic geometric mean of these values is complex and cannot be expressed in Decimal data type!");
+
+            // At this point, both signs match. If they're both negative, evaluate ag mean using them
+            // as positive numbers and multiply result by -1.
+            if (sign == -1)
+            {
+                x = decimal.Negate(x);
+                y = decimal.Negate(y);
+            }
+
             while (true)
             {
-                a = (x + y) / 2;
+                a = x / 2 + y / 2;
                 g = Sqrt(x * y);
 
                 if (a == g) break;
@@ -459,7 +475,7 @@ namespace MathExtensions
                 y = g;
             }
 
-            return a;
+            return sign == -1 ? -a : a;
         }
 
         /// <summary>

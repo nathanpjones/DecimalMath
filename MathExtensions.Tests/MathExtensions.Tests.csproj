@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="DecimalExtensionsTest\RoundFromZeroTests.cs" />
     <Compile Include="Helper.cs" />
+    <Compile Include="MathExtTests\AGMeanTests.cs" />
     <Compile Include="MathExtTests\GCFTests.cs" />
     <Compile Include="MathExtTests\FactorialTests.cs" />
     <Compile Include="MathExtTests\CeilingTests.cs" />
