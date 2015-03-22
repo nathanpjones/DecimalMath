@@ -518,7 +518,7 @@ namespace MathExtensions
             int[] bits = Decimal.GetBits(dec);
             var result = (bits[3] & scaleMask) >> scaleShift;  // extract exponent
 
-            // Return immediately for values without a fractional portion
+            // Return immediately for values without a fractional portion or if we're counting trailing zeros
             if (countTrailingZeros || (result == 0)) return result;
 
             // Get a raw version of the decimal's integer

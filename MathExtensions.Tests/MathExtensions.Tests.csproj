@@ -64,7 +64,8 @@
     <Compile Include="MathExtTests\CeilingTests.cs" />
     <Compile Include="MathExtTests\FloorTests.cs" />
     <Compile Include="MathExtTests\LogTests.cs" />
-    <Compile Include="MathExtTests\MiscTests.cs" />
+    <Compile Include="MathExtTests\GetDecimalPlacesTests.cs" />
+    <Compile Include="MathExtTests\AverageTests.cs" />
     <Compile Include="MathExtTests\ExpTests.cs" />
     <Compile Include="MathExtTests\PowTests.cs" />
     <Compile Include="MathExtTests\RemainderTests.cs" />
