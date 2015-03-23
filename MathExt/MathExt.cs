@@ -315,7 +315,10 @@ namespace MathExtensions
         /// <param name="a">The coefficient of x^2.</param>
         /// <param name="b">The coefficient of x.</param>
         /// <param name="c">The constant.</param>
-        /// <remarks>See http://www.wikihow.com/Factor-Second-Degree-Polynomials-%28Quadratic-Equations%29</remarks>
+        /// <remarks>
+        /// Will return empty results where there is no solution and for complex solutions.
+        /// See http://www.wikihow.com/Factor-Second-Degree-Polynomials-%28Quadratic-Equations%29
+        /// </remarks>
         public static decimal[] SolveQuadratic(decimal a, decimal b, decimal c)
         {
             // Horizontal line is either 0 nowhere or everywhere so no solution.
@@ -331,16 +334,12 @@ namespace MathExtensions
                 return new[] { -c / b };
             }
 
-            // No solution -- shape does not intersect 0. This means that
-            // the endpoints will be the min/max.
-            if (Pow(b, 2) - 4 * a * c < -SmallestNonZeroDec) return new decimal[] { };
-
-            // Since we're solving for  ax^2 + bx + c = 0  then we can
-            // multiply the coefficients by whatever we want until they
-            // are in a range that we can get a square root without 
-            // exceeding the precision of a Decimal value. We'll make
-            // sure here that at least one number is greater than 1
-            // or less than -1.
+            // If all our coefficients have an absolute value less than 1,
+            // then we'll lose precision in calculating the discriminant and
+            // its root. Since we're solving for  ax^2 + bx + c = 0  we can
+            // multiply the coefficients by whatever we want until they are 
+            // in a more favorable range. In this case, we'll make sure here 
+            // that at least one number is greater than 1 or less than -1.
             while ((-1 < a && a < 1) && (-1 < b && b < 1) && (-1 < c && c < 1)) 
             {
                 a *= 10;
@@ -348,13 +347,21 @@ namespace MathExtensions
                 c *= 10;
             }
 
-            var discriminant = Pow(b, 2) - 4 * a * c;
+            var discriminant = b * b - 4 * a * c;
+
+            // Allow for a little rounding error and treat this as 0
             if (discriminant == -SmallestNonZeroDec) discriminant = 0;
-            if (discriminant < 0) throw new Exception("Solution is complex which is not supported by Decimal.");
+
+            // Solution is complex -- shape does not intersect 0.
+            if (discriminant < 0) return new decimal[] { };
 
             var sqrtOfDiscriminant = Sqrt(discriminant);
-            var h = (-b + sqrtOfDiscriminant) / (2 * a);
-            var k = (-b - sqrtOfDiscriminant) / (2 * a);
+
+            // Select quadratic or "citardauq" depending on which one has a matching
+            // sign between -b and the square root. This improves precision, sometimes
+            // dramatically. See: http://math.stackexchange.com/a/56982
+            var h = Math.Sign(b) == -1 ? (-b + sqrtOfDiscriminant) / (2 * a) : (2 * c) / (-b - sqrtOfDiscriminant);
+            var k = Math.Sign(b) == +1 ? (-b - sqrtOfDiscriminant) / (2 * a) : (2 * c) / (-b + sqrtOfDiscriminant);
 
             // ax^2 + bx + c = (x - h)(x - k) 
             // (x - h)(x - k) = 0 means h and k are the values for x 
