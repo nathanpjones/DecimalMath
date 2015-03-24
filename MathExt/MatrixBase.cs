@@ -8,26 +8,30 @@ namespace MathExtensions
     public abstract class MatrixBase
     {
 
-        private readonly Type _t; // TODO: Refactor to generic?
-        protected readonly int _size;
+        private readonly Type _t;
+        protected readonly int Size;
+        protected decimal[,] M;
 
-        protected decimal[,] _m;
-
+        /// <summary>
+        /// Constructs a new matrix with height and width of <paramref name="size"/>.
+        /// </summary>
+        /// <param name="size">Size of matrix.</param>
         protected MatrixBase(int size)
         {
-            _t = this.GetType();
-            _size = size;
+            _t = GetType();
+            Size = size;
 
-            Reset();
+            Reset();    // initialize to identity matrix
         }
 
-        #region "        Matrix Operations"
+        #region  Matrix Operations
 
-
+        /// <summary>
+        /// Resets matrix to the identity matrix.
+        /// </summary>
         public void Reset()
         {
-            _m = _GetIdentityMatrix();
-
+            M = GetIdentityMatrix();
         }
 
         /// <summary>
@@ -37,26 +41,24 @@ namespace MathExtensions
         /// <param name="column">The column at which to get the value.</param>
         public decimal this[int row, int column]
         {
-            get { return _m[row, column]; }
+            get { return M[row, column]; }
         }
 
         /// <summary>
         /// Gets the identity matrix for this size matrix.
         /// </summary>
-        protected decimal[,] _GetIdentityMatrix()
+        protected decimal[,] GetIdentityMatrix()
         {
-
-            decimal[,] m = new decimal[_size, _size];
+            var m = new decimal[Size, Size];
 
             // For an identity matrix, the diagonal (top left to bot right)
             // numbers are 1 and everything else is 0.
-            for (int i = 0; i <= _size - 1; i++)
+            for (var i = 0; i <= Size - 1; i++)
             {
                 m[i, i] = 1;
             }
 
             return m;
-
         }
 
         /// <summary>
@@ -66,73 +68,79 @@ namespace MathExtensions
         /// <param name="other">The other matrix to multiply by.</param>
         public MatrixBase Multiply(MatrixBase other)
         {
-
             var m = (MatrixBase)Activator.CreateInstance(_t);
 
-            m._m = _Multiply(other._m, this._m);
+            m.M = Multiply(other.M, M);
 
             return m;
-
         }
-        protected static decimal[,] _Multiply(decimal[,] m1, decimal[,] m2)
+
+        /// <summary>
+        /// Multiply two square matrices of the same size.
+        /// </summary>
+        /// <param name="m1">A square matrix.</param>
+        /// <param name="m2">A square matrix.</param>
+        protected static decimal[,] Multiply(decimal[,] m1, decimal[,] m2)
         {
+            var size = m1.GetLength(0);
 
-            int size = m1.GetLength(0);
-
-
+            // Verify that matrices are square and of the same size
             if (m1.GetLength(1) != size || m2.GetLength(0) != size || m2.GetLength(1) != size)
             {
-                throw new Exception(string.Format("Can't multiply a {0}x{1} matrix with a {2}x{3} matrix!", m1.GetLength(0), m1.GetLength(1), m2.GetLength(0), m2.GetLength(1)));
+                throw new Exception(string.Format("Can't multiply a {0}x{1} matrix with a {2}x{3} matrix!",
+                                                  m1.GetLength(0), m1.GetLength(1),
+                                                  m2.GetLength(0), m2.GetLength(1)));
 
             }
 
-            decimal[,] m = new decimal[size, size];
-            int r = 0;
-            int c = 0;
-            int i = 0;
+            var m = new decimal[size, size];
 
-
-            for (r = 0; r <= size - 1; r++)
+            // Select destination row
+            for (var r = 0; r < size; r++)
             {
-
-                for (c = 0; c <= size - 1; c++)
+                // Select destination column
+                for (var c = 0; c < size; c++)
                 {
                     m[r, c] = 0;
 
-                    for (i = 0; i <= size - 1; i++)
+                    for (var i = 0; i < size; i++)
                     {
                         m[r, c] += m1[r, i] * m2[i, c];
                     }
-
                 }
-
             }
 
             return m;
-
         }
-        protected static decimal[] _Multiply(decimal[] m1, decimal[,] m2)
+
+        /// <summary>
+        /// Multiplies a column matrix by a square matrix of the same height.
+        /// </summary>
+        /// <param name="m1"></param>
+        /// <param name="m2"></param>
+        /// <returns></returns>
+        protected static decimal[] Multiply(decimal[] m1, decimal[,] m2)
         {
 
-            int size = m1.GetLength(0);
+            var size = m1.GetLength(0);
 
-
+            // Check that the second matrix is square and of the appropriate size
             if (m2.GetLength(0) != size || m2.GetLength(1) != size)
             {
-                throw new Exception(string.Format("Can't multiply a {0}x1 matrix with a {1}x{2} matrix!", m1.GetLength(0), m2.GetLength(0), m2.GetLength(1)));
+                throw new Exception(string.Format("Can't multiply a {0}x1 matrix with a {1}x{2} matrix!", 
+                                                  m1.GetLength(0), 
+                                                  m2.GetLength(0), m2.GetLength(1)));
 
             }
 
-            decimal[] m = new decimal[size];
-            int r = 0;
-            int i = 0;
+            var m = new decimal[size];
 
-
-            for (r = 0; r <= size - 1; r++)
+            // Select row
+            for (var r = 0; r < size; r++)
             {
                 m[r] = 0;
 
-                for (i = 0; i <= size - 1; i++)
+                for (var i = 0; i <= size - 1; i++)
                 {
                     m[r] += m1[i] * m2[r, i];
                 }
@@ -140,20 +148,20 @@ namespace MathExtensions
             }
 
             return m;
-
         }
 
         #endregion
 
-        #region "        Applying To Objects    "
+        #region  Applying To Objects
 
-        /// <summary> Transforms a object and returns the result ByRef. </summary>
+        /// <summary> Transforms an object and returns the result by reference. </summary>
         /// <param name="element">The element to transform.</param>
         public void InPlaceTransform(ref object element)
         {
             element = Transform(element);
         }
-        /// <summary> Transforms objects and returns the results ByRef. </summary>
+
+        /// <summary> Transforms objects and returns the results by reference. </summary>
         /// <param name="element1">A element to transform.</param>
         /// <param name="element2">A element to transform.</param>
         public void InPlaceTransform(ref object element1, ref object element2)
@@ -161,7 +169,7 @@ namespace MathExtensions
             element1 = Transform(element1);
             element2 = Transform(element2);
         }
-        /// <summary> Transforms objects and returns the results ByRef. </summary>
+        /// <summary> Transforms objects and returns the results by reference. </summary>
         /// <param name="element1">A element to transform.</param>
         /// <param name="element2">A element to transform.</param>
         /// <param name="element3">A element to transform.</param>
@@ -171,7 +179,7 @@ namespace MathExtensions
             element2 = Transform(element2);
             element3 = Transform(element3);
         }
-        /// <summary> Transforms objects and returns the results ByRef. </summary>
+        /// <summary> Transforms objects and returns the results by reference. </summary>
         /// <param name="element1">A element to transform.</param>
         /// <param name="element2">A element to transform.</param>
         /// <param name="element3">A element to transform.</param>
@@ -183,7 +191,7 @@ namespace MathExtensions
             element3 = Transform(element3);
             element4 = Transform(element4);
         }
-        /// <summary> Transforms objects and returns the results ByRef. </summary>
+        /// <summary> Transforms objects and returns the results by reference. </summary>
         /// <param name="element1">A element to transform.</param>
         /// <param name="element2">A element to transform.</param>
         /// <param name="element3">A element to transform.</param>
@@ -200,7 +208,7 @@ namespace MathExtensions
 
         /// <summary>
         /// Transforms a geometric element. Must be a supported element (see
-        /// strongly typed overloads).
+        /// strongly typed overloads in inheriting classes).
         /// </summary>
         /// <param name="obj">The element to transform.</param>
         /// <remarks>
@@ -211,20 +219,20 @@ namespace MathExtensions
 
         #endregion
 
-        public object Clone()
+        /// <summary>
+        /// Creates a deep copy of this matrix.
+        /// </summary>
+        public MatrixBase Copy()
         {
-
             var m = (MatrixBase)Activator.CreateInstance(_t);
 
-            if (m._size != _size)
+            if (m.Size != Size)
                 throw new Exception("Parameterless constructor for " + _t.Name + " did not properly set size of matrix!");
 
-            Array.Copy(this._m, m._m, this._m.Length);
+            Array.Copy(M, m.M, M.Length);
 
             return m;
-
         }
-
     }
 
 }

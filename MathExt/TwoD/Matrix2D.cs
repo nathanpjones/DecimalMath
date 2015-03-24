@@ -57,7 +57,7 @@ namespace MathExtensions.TwoD
             r[1, 1] = scaleY;
             r[2, 2] = 1;
 
-            _m = _Multiply(r, _m);
+            M = Multiply(r, M);
 
             return this;
 
@@ -90,7 +90,7 @@ namespace MathExtensions.TwoD
             decimal theta = 0;
             decimal[,] r = null;
 
-            r = _GetIdentityMatrix();
+            r = GetIdentityMatrix();
 
             theta = MathExt.ToRad(degrees);
             if (clockwise)
@@ -106,7 +106,7 @@ namespace MathExtensions.TwoD
             r[1, 0] = MathExt.Sin(theta);
             r[1, 1] = MathExt.Cos(theta);
 
-            _m = _Multiply(r, _m);
+            M = Multiply(r, M);
 
             return this;
 
@@ -168,7 +168,7 @@ namespace MathExtensions.TwoD
                         { 0, 0, 1 }
                     };
 
-            _m = _Multiply(r, _m);
+            M = Multiply(r, M);
 
             // Translate back where we came from
             Translate(l.Pt1.X, l.Pt1.Y);
@@ -199,7 +199,7 @@ namespace MathExtensions.TwoD
 
             decimal[,] t = null;
 
-            t = _GetIdentityMatrix();
+            t = GetIdentityMatrix();
 
             //      0     1    2
             // 0    1     0    x
@@ -209,7 +209,7 @@ namespace MathExtensions.TwoD
             t[0, 2] = x;
             t[1, 2] = y;
 
-            _m = _Multiply(t, _m);
+            M = Multiply(t, M);
 
             return this;
 
@@ -261,12 +261,12 @@ namespace MathExtensions.TwoD
 
             decimal[] transformed = null;
             decimal[] m = {
-				pt.X,
-				pt.Y,
-				1
-			};
+                pt.X,
+                pt.Y,
+                1
+            };
 
-            transformed = _Multiply(m, _m);
+            transformed = Multiply(m, M);
 
             pt.X = transformed[0];
             pt.Y = transformed[1];
