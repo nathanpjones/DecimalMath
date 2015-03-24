@@ -8,8 +8,6 @@ namespace MathExtensions
 {
     public static class DecimalExtensions
     {
-        /// </summary>
-        /// Returns a specified number raised to the specified power.
         /// <summary>
         /// Tests whether or not a given value is within the upper and lower limit, inclusive.
         /// </summary>

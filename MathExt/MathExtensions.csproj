@@ -34,13 +34,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AnglePoint.cs" />
     <Compile Include="DecimalExtensions.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="MatrixBase.cs" />
     <Compile Include="RightTriangle.cs" />
     <Compile Include="RightTriangleAbstract.cs" />
-    <Compile Include="DrawingSupport.cs" />
     <Compile Include="MathExtTrig.cs" />
     <Compile Include="MathExtConstants.cs" />
     <Compile Include="MathExt.cs" />

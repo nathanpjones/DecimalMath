@@ -56,6 +56,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="DecimalExtensionsTest\InRangeTests.cs" />
     <Compile Include="DecimalExtensionsTest\RoundFromZeroTests.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="MathExtTests\AGMeanTests.cs" />
