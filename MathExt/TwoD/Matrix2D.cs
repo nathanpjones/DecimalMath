@@ -18,7 +18,7 @@ namespace MathExtensions.TwoD
     /// and right-multiplies. This other format was chosen because it is more
     /// often used in mathematics and computer science texts (and Wikipedia).
     /// </remarks>
-    public class Matrix2D : MatrixBase
+    public class Matrix2D : MatrixBase<Matrix2D>
     {
 
         // Orientation (translation transformation shown)

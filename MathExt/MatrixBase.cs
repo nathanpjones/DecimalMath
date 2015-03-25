@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MathExtensions
 {
-    public abstract class MatrixBase
-    {
 
-        private readonly Type _t;
-        protected readonly int Size;
+    public abstract class MatrixBase<T> where T : MatrixBase<T>, new()
+    {
+        public readonly int Size;
         protected decimal[,] M;
 
         /// <summary>
@@ -18,7 +18,6 @@ namespace MathExtensions
         /// <param name="size">Size of matrix.</param>
         protected MatrixBase(int size)
         {
-            _t = GetType();
             Size = size;
 
             Reset();    // initialize to identity matrix
@@ -62,15 +61,14 @@ namespace MathExtensions
         }
 
         /// <summary>
-        /// Multiplies this matrix by another matrix (other x this) and returns a third matrix.
-        /// Equivalent to applying all transformations from the other matrix AFTER this matrix.
+        /// Multiplies this matrix by another matrix (this x other) and returns a third matrix.
         /// </summary>
         /// <param name="other">The other matrix to multiply by.</param>
-        public MatrixBase Multiply(MatrixBase other)
+        public T Multiply<TOther>(MatrixBase<TOther> other) where TOther: MatrixBase<TOther>, new()
         {
-            var m = (MatrixBase)Activator.CreateInstance(_t);
+            var m = new T();
 
-            m.M = Multiply(other.M, M);
+            m.M = Multiply(M, other.M);
 
             return m;
         }
@@ -121,7 +119,6 @@ namespace MathExtensions
         /// <returns></returns>
         protected static decimal[] Multiply(decimal[] m1, decimal[,] m2)
         {
-
             var size = m1.GetLength(0);
 
             // Check that the second matrix is square and of the appropriate size
@@ -130,7 +127,6 @@ namespace MathExtensions
                 throw new Exception(string.Format("Can't multiply a {0}x1 matrix with a {1}x{2} matrix!", 
                                                   m1.GetLength(0), 
                                                   m2.GetLength(0), m2.GetLength(1)));
-
             }
 
             var m = new decimal[size];
@@ -222,12 +218,12 @@ namespace MathExtensions
         /// <summary>
         /// Creates a deep copy of this matrix.
         /// </summary>
-        public MatrixBase Copy()
+        public T Copy()
         {
-            var m = (MatrixBase)Activator.CreateInstance(_t);
+            var m = new T();
 
             if (m.Size != Size)
-                throw new Exception("Parameterless constructor for " + _t.Name + " did not properly set size of matrix!");
+                throw new Exception("Parameterless constructor for " + typeof(T).Name + " did not properly set size of matrix!");
 
             Array.Copy(M, m.M, M.Length);
 

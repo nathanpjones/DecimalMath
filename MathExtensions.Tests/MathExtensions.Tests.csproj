@@ -80,6 +80,7 @@
     <Compile Include="MathExtTrigTests\NormalizeAngleTests.cs" />
     <Compile Include="MathExtTrigTests\SinTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MatrixBaseTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MathExt\MathExtensions.csproj">
