@@ -32,9 +32,10 @@ namespace MathExtensions.TwoD
 
         public Matrix2D()
             : base(3)
-        {
-
-        }
+        { }
+        public Matrix2D(decimal[,] values)
+            : base(3, values)
+        { }
 
         #region "        Actual Transformations    "
 
@@ -46,7 +47,7 @@ namespace MathExtensions.TwoD
         public Matrix2D Scale(decimal scaleX, decimal scaleY)
         {
 
-            decimal[,] r = new decimal[3, 3];
+            var r = new Matrix2D();
 
             //      0     1    2
             // 0    Sx    0    0
@@ -57,9 +58,7 @@ namespace MathExtensions.TwoD
             r[1, 1] = scaleY;
             r[2, 2] = 1;
 
-            M = Multiply(r, M);
-
-            return this;
+            return r.Multiply(this);
 
         }
         /// <summary>
@@ -86,15 +85,10 @@ namespace MathExtensions.TwoD
         /// is -, then the rotation will be opposite whatever the + direction is.</param>
         public Matrix2D Rotate(decimal degrees, bool clockwise = false)
         {
+            var r = new Matrix2D();
 
-            decimal theta = 0;
-            decimal[,] r = null;
-
-            r = GetIdentityMatrix();
-
-            theta = MathExt.ToRad(degrees);
-            if (clockwise)
-                theta *= -1;
+            var theta = MathExt.ToRad(degrees);
+            if (clockwise) theta *= -1;
 
             //      0     1    2
             // 0   cos  -sin   0
@@ -106,10 +100,7 @@ namespace MathExtensions.TwoD
             r[1, 0] = MathExt.Sin(theta);
             r[1, 1] = MathExt.Cos(theta);
 
-            M = Multiply(r, M);
-
-            return this;
-
+            return r.Multiply(this);
         }
         /// <summary>
         /// Rotates about a given point. Returns a reference to self.
@@ -151,30 +142,33 @@ namespace MathExtensions.TwoD
 
             // See here: http://planetmath.org/encyclopedia/DerivationOf2DReflectionMatrix.html
 
-            // Translate to origin because mirroring around a vector is relative to the origin.
-            Translate(-l.Pt1.X, -l.Pt1.Y);
-
-            var v = l.GetVectorP1toP2().Normalize();
-
+            
+            // Mirror around origin
+            //
             //         0           1       2
             // 0   x^2 - y^2      2xy      0
             // 1      2xy      y^2 - x^2   0
             // 2       0           0       1
 
-            var r = new decimal[,]
-                    {
-                        { MathExt.Pow(v.X, 2) - MathExt.Pow(v.Y, 2), 2 * v.X * v.Y, 0 },
-                        { 2 * v.X * v.Y, MathExt.Pow(v.Y, 2) - MathExt.Pow(v.X, 2), 0 },
-                        { 0, 0, 1 }
-                    };
+            var v = l.GetVectorP1toP2().Normalize();
+            var mirror = new Matrix2D(
+                new[,]
+                {
+                    { MathExt.Pow(v.X, 2) - MathExt.Pow(v.Y, 2), 2 * v.X * v.Y, 0 },
+                    { 2 * v.X * v.Y, MathExt.Pow(v.Y, 2) - MathExt.Pow(v.X, 2), 0 },
+                    { 0, 0, 1 }
+                });
 
-            M = Multiply(r, M);
+            // Translate to origin because mirroring around a vector is relative to the origin.
+            var r = Translate(-l.Pt1.X, -l.Pt1.Y);
+            
+            // Left multiply this transformation matrix
+            r = mirror.Multiply(r);
 
             // Translate back where we came from
-            Translate(l.Pt1.X, l.Pt1.Y);
+            r = r.Translate(l.Pt1.X, l.Pt1.Y);
 
-            return this;
-
+            return r;
         }
         /// <summary>
         /// Mirrors across line that passes through the given points. Returns a reference to self.
@@ -196,10 +190,7 @@ namespace MathExtensions.TwoD
         /// <param name="y">The Y distance to translate.</param>
         public Matrix2D Translate(decimal x, decimal y)
         {
-
-            decimal[,] t = null;
-
-            t = GetIdentityMatrix();
+            var t = new Matrix2D();
 
             //      0     1    2
             // 0    1     0    x
@@ -209,10 +200,7 @@ namespace MathExtensions.TwoD
             t[0, 2] = x;
             t[1, 2] = y;
 
-            M = Multiply(t, M);
-
-            return this;
-
+            return t.Multiply(this);
         }
 
         #endregion
@@ -258,21 +246,19 @@ namespace MathExtensions.TwoD
         /// <param name="pt">The point to transform.</param>
         public Point2D Transform(Point2D pt)
         {
+            var m = new[]
+                    {
+                        pt.X,
+                        pt.Y,
+                        1
+                    };
 
-            decimal[] transformed = null;
-            decimal[] m = {
-                pt.X,
-                pt.Y,
-                1
-            };
-
-            transformed = Multiply(m, M);
+            var transformed = Transform(m);
 
             pt.X = transformed[0];
             pt.Y = transformed[1];
 
             return pt;
-
         }
         /// <summary>
         /// Transforms a line segment using the matrix and returning a new line segment.

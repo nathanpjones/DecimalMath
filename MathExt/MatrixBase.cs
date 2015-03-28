@@ -20,18 +20,26 @@ namespace MathExtensions
         {
             Size = size;
 
-            Reset();    // initialize to identity matrix
+            // initialize to identity matrix
+            M = GetIdentityMatrix();
+        }
+
+        /// <summary>
+        /// Constructs a new matrix with height and width of <paramref name="size"/>.
+        /// </summary>
+        /// <param name="size">Size of matrix.</param>
+        protected MatrixBase(int size, decimal[,] values)
+        {
+            Size = size;
+
+            if (values.GetLength(0) != size || values.GetLength(1) != size)
+                throw new ArgumentException("Matrix initialization values are not of the correct size!", "values");
+
+            M = new decimal[size, size];
+            Array.Copy(values, M, values.Length);
         }
 
         #region  Matrix Operations
-
-        /// <summary>
-        /// Resets matrix to the identity matrix.
-        /// </summary>
-        public void Reset()
-        {
-            M = GetIdentityMatrix();
-        }
 
         /// <summary>
         /// Gets the direct value of the matrix at the given row and column.
@@ -41,6 +49,18 @@ namespace MathExtensions
         public decimal this[int row, int column]
         {
             get { return M[row, column]; }
+            set { M[row, column] = value; }
+        }
+
+        public void SetRow(int row, decimal[] values)
+        {
+            if (values.Length != Size) 
+                throw new ArgumentException("Number of values does not match number of columns in a row.", "values");
+
+            for (var col = 0; col < Size; col++)
+            {
+                M[row, col] = values[col];
+            }
         }
 
         /// <summary>
@@ -48,16 +68,7 @@ namespace MathExtensions
         /// </summary>
         protected decimal[,] GetIdentityMatrix()
         {
-            var m = new decimal[Size, Size];
-
-            // For an identity matrix, the diagonal (top left to bot right)
-            // numbers are 1 and everything else is 0.
-            for (var i = 0; i <= Size - 1; i++)
-            {
-                m[i, i] = 1;
-            }
-
-            return m;
+            return Matrix.GetIdentityMatrix(Size);
         }
 
         /// <summary>
@@ -68,82 +79,25 @@ namespace MathExtensions
         {
             var m = new T();
 
-            m.M = Multiply(M, other.M);
+            m.M = Matrix.Multiply(M, other.M);
 
             return m;
         }
 
         /// <summary>
-        /// Multiply two square matrices of the same size.
+        /// Applies the transform to a column matrix.
         /// </summary>
-        /// <param name="m1">A square matrix.</param>
-        /// <param name="m2">A square matrix.</param>
-        protected static decimal[,] Multiply(decimal[,] m1, decimal[,] m2)
+        /// <param name="columnMatrix">Column matrix with length equal to <see cref="Size"/>.</param>
+        public decimal[] Transform(decimal[] columnMatrix)
         {
-            var size = m1.GetLength(0);
+            if (columnMatrix.Length != Size)
+                throw new ArgumentException(string.Format("Length of column matrix should be {0} but is {1}.", Size, columnMatrix.Length), "columnMatrix");
+            
+            var twoDArray = Matrix.ToColumn(columnMatrix);
+            var matrixResult = Matrix.Multiply(M, twoDArray);
+            var arrayResult = Matrix.RowOrColumnToArray(matrixResult);
 
-            // Verify that matrices are square and of the same size
-            if (m1.GetLength(1) != size || m2.GetLength(0) != size || m2.GetLength(1) != size)
-            {
-                throw new Exception(string.Format("Can't multiply a {0}x{1} matrix with a {2}x{3} matrix!",
-                                                  m1.GetLength(0), m1.GetLength(1),
-                                                  m2.GetLength(0), m2.GetLength(1)));
-
-            }
-
-            var m = new decimal[size, size];
-
-            // Select destination row
-            for (var r = 0; r < size; r++)
-            {
-                // Select destination column
-                for (var c = 0; c < size; c++)
-                {
-                    m[r, c] = 0;
-
-                    for (var i = 0; i < size; i++)
-                    {
-                        m[r, c] += m1[r, i] * m2[i, c];
-                    }
-                }
-            }
-
-            return m;
-        }
-
-        /// <summary>
-        /// Multiplies a column matrix by a square matrix of the same height.
-        /// </summary>
-        /// <param name="m1"></param>
-        /// <param name="m2"></param>
-        /// <returns></returns>
-        protected static decimal[] Multiply(decimal[] m1, decimal[,] m2)
-        {
-            var size = m1.GetLength(0);
-
-            // Check that the second matrix is square and of the appropriate size
-            if (m2.GetLength(0) != size || m2.GetLength(1) != size)
-            {
-                throw new Exception(string.Format("Can't multiply a {0}x1 matrix with a {1}x{2} matrix!", 
-                                                  m1.GetLength(0), 
-                                                  m2.GetLength(0), m2.GetLength(1)));
-            }
-
-            var m = new decimal[size];
-
-            // Select row
-            for (var r = 0; r < size; r++)
-            {
-                m[r] = 0;
-
-                for (var i = 0; i <= size - 1; i++)
-                {
-                    m[r] += m1[i] * m2[r, i];
-                }
-
-            }
-
-            return m;
+            return arrayResult;
         }
 
         #endregion

@@ -36,6 +36,7 @@
   <ItemGroup>
     <Compile Include="DecimalExtensions.cs" />
     <Compile Include="Helper.cs" />
+    <Compile Include="Matrix.cs" />
     <Compile Include="MatrixBase.cs" />
     <Compile Include="RightTriangle.cs" />
     <Compile Include="RightTriangleAbstract.cs" />
