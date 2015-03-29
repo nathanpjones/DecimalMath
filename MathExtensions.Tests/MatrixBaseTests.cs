@@ -6,21 +6,16 @@ namespace MathExtensions.Tests
 {
     public class MatrixBaseTests
     {
-        private class Matrix2D : MatrixBase<Matrix2D>
+        private class MatrixTestClass : MatrixBase<MatrixTestClass>
         {
-            public Matrix2D():base(3)
+            public MatrixTestClass():base(3)
             { }
-            public Matrix2D(decimal[,] values): base(3, values)
+            public MatrixTestClass(decimal[,] values): base(3, values)
             { }
 
             public decimal[,] GetM()
             {
                 return M;
-            }
-
-            public void SetElement(int row, int col, decimal value)
-            {
-                M[row, col] = value;
             }
 
             public override object Transform(object obj)
@@ -32,8 +27,9 @@ namespace MathExtensions.Tests
         [Test]
         public void TestConstructor()
         {
-            var testMatrix = new Matrix2D();
+            var testMatrix = new MatrixTestClass();
 
+            // Make sure we've initialized to the identity matrix
             Assert.That(testMatrix.GetM(),
                         Is.EqualTo(new[,]
                                    {
@@ -44,25 +40,60 @@ namespace MathExtensions.Tests
         }
 
         [Test]
-        public void TestMultiplySameSize()
+        public void TestConstructorWithValues()
         {
-            var testMatrix1 = new decimal[,]
+            var testMatrix = new MatrixTestClass(new decimal[,]
+                                          {
+                                              { 11, 12, 13 },
+                                              { 21, 22, 23 },
+                                              { 31, 32, 33 }
+                                          });
+
+            Assert.That(testMatrix.GetM(),
+                        Is.EqualTo(new[,]
+                                   {
+                                       { 11, 12, 13 },
+                                       { 21, 22, 23 },
+                                       { 31, 32, 33 }
+                                   }));
+        }
+
+        [Test]
+        public void TestSetRow()
+        {
+            var testMatrix = new MatrixTestClass();
+
+            testMatrix.SetRow(1, new decimal[] { 4, 5, 6 });
+
+            Assert.That(testMatrix.GetM(),
+                        Is.EqualTo(new[,]
+                                   {
+                                       { 1, 0, 0 },
+                                       { 4, 5, 6 }, 
+                                       { 0, 0, 1 }
+                                   }));
+        }
+
+        [Test]
+        public void TestMultiply()
+        {
+            var testMatrix1 = new MatrixTestClass(new decimal[,]
                                            {
                                                { 1, 2, 3 },
                                                { 11, 12, 13 },
                                                { 21, 22, 23 }
-                                           };
+                                           });
 
-            var testMatrix2 = new decimal[,]
+            var testMatrix2 = new MatrixTestClass(new decimal[,]
                                            {
                                                { 31, 32, 33 },
                                                { 34, 35, 36 },
                                                { 37, 38, 39 }
-                                           };
+                                           });
 
-            var testMatrix3 = Matrix.Multiply(testMatrix1, testMatrix2);
+            var testMatrix3 = testMatrix1.Multiply(testMatrix2);
 
-            Assert.That(testMatrix3,
+            Assert.That(testMatrix3.GetM(),
                         Is.EqualTo(new[,]
                                    {
                                        { 210, 216, 222 },
@@ -72,25 +103,14 @@ namespace MathExtensions.Tests
         }
 
         [Test]
-        public void TestMultiplyDifferentSize()
+        public void TestTransform()
         {
-            var testMatrix1 = new decimal[,] { { 1, 0, -2 }, { 0, 3, -1 } };
-            var testMatrix2 = new decimal[,] { { 0, 3 }, { -2, -1 }, { 0, 4 } };
-
-            var testMatrix3 = Matrix.Multiply(testMatrix1, testMatrix2);
-            Assert.That(testMatrix3, Is.EqualTo(new[,] { { 0, -5 }, { -6, -7 } }));
-
-            testMatrix3 = Matrix.Multiply(testMatrix2, testMatrix1);
-            Assert.That(testMatrix3, Is.EqualTo(new[,] { { 0, 9, -3 }, { -2, -3, 5 }, { 0, 12, -4 } }));
-        }
-
-        [Test]
-        public void TestMultiplyWithColumnMatrix()
-        {
-            var testMatrix = new Matrix2D();
-            testMatrix.SetRow(0, new decimal[] { 1, 2, 3 });
-            testMatrix.SetRow(1, new decimal[] { 11, 12, 13 });
-            testMatrix.SetRow(2, new decimal[] { 21, 22, 23 });
+            var testMatrix = new MatrixTestClass(new decimal[,]
+                                           {
+                                               { 1, 2, 3 },
+                                               { 11, 12, 13 },
+                                               { 21, 22, 23 }
+                                           });
 
             var transformed = testMatrix.Transform(new decimal[] { 67, 45, 33 });
 
@@ -100,17 +120,24 @@ namespace MathExtensions.Tests
         [Test]
         public void TestCopy()
         {
-            var testMatrix = new Matrix2D();
-
-            testMatrix.SetRow(0, new decimal[] { 1, 2, 3 });
-            testMatrix.SetRow(1, new decimal[] { 11, 12, 13 });
-            testMatrix.SetRow(2, new decimal[] { 21, 22, 23 });
+            var testMatrix = new MatrixTestClass(new decimal[,]
+                                           {
+                                               { 1, 2, 3 },
+                                               { 11, 12, 13 },
+                                               { 21, 22, 23 }
+                                           });
 
             var copyMatrix = testMatrix.Copy();
 
             Assert.That(!ReferenceEquals(testMatrix, copyMatrix), "Copy matrix is a shallow copy!");
 
-            Assert.That(copyMatrix.GetM(), Is.EqualTo(new[,] { { 1, 2, 3 }, { 11, 12, 13 }, { 21, 22, 23 } }));
+            Assert.That(copyMatrix.GetM(),
+                        Is.EqualTo(new[,]
+                                   {
+                                       { 1, 2, 3 },
+                                       { 11, 12, 13 },
+                                       { 21, 22, 23 }
+                                   }));
         }
     }
 }

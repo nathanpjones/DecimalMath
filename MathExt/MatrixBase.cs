@@ -21,7 +21,7 @@ namespace MathExtensions
             Size = size;
 
             // initialize to identity matrix
-            M = GetIdentityMatrix();
+            M = Matrix.GetIdentityMatrix(Size);
         }
 
         /// <summary>
@@ -61,14 +61,6 @@ namespace MathExtensions
             {
                 M[row, col] = values[col];
             }
-        }
-
-        /// <summary>
-        /// Gets the identity matrix for this size matrix.
-        /// </summary>
-        protected decimal[,] GetIdentityMatrix()
-        {
-            return Matrix.GetIdentityMatrix(Size);
         }
 
         /// <summary>
