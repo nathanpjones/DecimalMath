@@ -20,10 +20,8 @@ namespace MathExtensions.TwoD
         }
         public LineSeg2D(decimal x1, decimal y1, decimal x2, decimal y2)
         {
-            this.Pt1.X = x1;
-            this.Pt1.Y = y1;
-            this.Pt2.X = x2;
-            this.Pt2.Y = y2;
+            Pt1 = new Point2D(x1, y1);
+            Pt2 = new Point2D(x2, y2);
         }
 
         /// <summary>
@@ -68,14 +66,13 @@ namespace MathExtensions.TwoD
 
             set
             {
-                Point2D oldMidPt = this.MidPoint;
+                var oldMidPt = MidPoint;
 
-                Pt1.X = (Pt1.X - oldMidPt.X) + value.X;
-                Pt1.Y = (Pt1.Y - oldMidPt.Y) + value.Y;
+                Pt1 = new Point2D((Pt1.X - oldMidPt.X) + value.X,
+                                  (Pt1.Y - oldMidPt.Y) + value.Y);
 
-                Pt2.X = (Pt2.X - oldMidPt.X) + value.X;
-                Pt2.Y = (Pt2.Y - oldMidPt.Y) + value.Y;
-
+                Pt2 = new Point2D((Pt2.X - oldMidPt.X) + value.X,
+                                  (Pt2.Y - oldMidPt.Y) + value.Y);
             }
         }
         /// <summary>
@@ -100,14 +97,13 @@ namespace MathExtensions.TwoD
             // This is the long-hand of a matrix that rotates
             // the line segment around its midpoint.
 
-            newPt1.X = -Pt1.Y + (pt.X + pt.Y);
-            newPt1.Y = Pt1.X + (-pt.X + pt.Y);
+            newPt1 = new Point2D(-Pt1.Y + (pt.X + pt.Y),
+                                 Pt1.X + (-pt.X + pt.Y));
 
-            newPt2.X = -Pt2.Y + (pt.X + pt.Y);
-            newPt2.Y = Pt2.X + (-pt.X + pt.Y);
+            newPt2 = new Point2D(-Pt2.Y + (pt.X + pt.Y),
+                                 Pt2.X + (-pt.X + pt.Y));
 
             return new LineSeg2D(newPt1, newPt2);
-
         }
         /// <summary>
         /// Gets the slope perpendicular to this line segment's slope. Equal to
@@ -378,22 +374,14 @@ namespace MathExtensions.TwoD
             {
                 // Parallel
                 return null;
-
-
             }
             else if (vertical1)
             {
-                pt.X = this.Pt1.X;
-                pt.Y = other.GetY(pt.X);
-
-
+                pt = new Point2D(this.Pt1.X, other.GetY(pt.X));
             }
             else if (vertical2)
             {
-                pt.X = other.Pt1.X;
-                pt.Y = this.GetY(pt.X);
-
-
+                pt = new Point2D(other.Pt1.X, this.GetY(pt.X));
             }
             else
             {
@@ -404,8 +392,8 @@ namespace MathExtensions.TwoD
                 if (m1 == m2)
                     return null;
 
-                pt.X = (m1 * this.Pt1.X - m2 * other.Pt1.X + other.Pt1.Y - this.Pt1.Y) / (m1 - m2);
-                pt.Y = m1 * pt.X - m1 * this.Pt1.X + this.Pt1.Y;
+                pt = new Point2D((m1 * this.Pt1.X - m2 * other.Pt1.X + other.Pt1.Y - this.Pt1.Y) / (m1 - m2),
+                                 m1 * pt.X - m1 * this.Pt1.X + this.Pt1.Y);
 
                 // If we're not going to treat these segments as lines, then the
                 // matching point must lie on the line segments, i.e. within the
@@ -718,8 +706,8 @@ namespace MathExtensions.TwoD
             LineSeg2D l = default(LineSeg2D);
 
             l.Pt1 = pt;
-            l.Pt2.X = pt.X + xDistance;
-            l.Pt2.Y = pt.Y + slope * xDistance;
+            l.Pt2 = new Point2D(pt.X + xDistance,
+                                pt.Y + slope * xDistance);
 
             return l;
 
@@ -743,6 +731,14 @@ namespace MathExtensions.TwoD
             _CheckIsValid();
 
             return string.Format("{0} {1},{2} {3},{4} {5}", asConstructionLine ? "_xline" : "_line", Pt1.X, Pt1.Y, Pt2.X, Pt2.Y, linefeedTerminate ? "\r\n" : " ");
+
+        }
+        public string ToDraftSightCmd(bool asConstructionLine = false, bool linefeedTerminate = true)
+        {
+
+            _CheckIsValid();
+
+            return string.Format("{0} {1},{2} {3},{4} {5}", asConstructionLine ? "infiniteline" : "line", Pt1.X, Pt1.Y, Pt2.X, Pt2.Y, linefeedTerminate ? "\r\n" : " ");
 
         }
 

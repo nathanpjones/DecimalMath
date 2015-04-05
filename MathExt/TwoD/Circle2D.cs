@@ -397,7 +397,7 @@ namespace MathExtensions.TwoD
             [DebuggerStepThrough()]
             get { return _center.X; }
             [DebuggerStepThrough()]
-            set { _center.X = value; }
+            set { _center = new Point2D(value, _center.Y); }
         }
         /// <summary> Y component of the center of the circle. </summary>
         public decimal Y
@@ -405,7 +405,7 @@ namespace MathExtensions.TwoD
             [DebuggerStepThrough()]
             get { return _center.Y; }
             [DebuggerStepThrough()]
-            set { _center.Y = value; }
+            set { _center = new Point2D(_center.X, value); }
         }
         /// <summary> Radius of the circle. </summary>
         public decimal Radius
@@ -978,9 +978,9 @@ namespace MathExtensions.TwoD
 
                 pts = new Point2D[x.Length];
 
-                for (var i = 0; i <= x.Length - 1; i++) {
-                    pts[i].X = x[i];
-                    pts[i].Y = m * x[i] + b;
+                for (var i = 0; i <= x.Length - 1; i++)
+                {
+                    pts[i] = new Point2D(x[i], m * x[i] + b);
                 }
 
 
@@ -1008,14 +1008,12 @@ namespace MathExtensions.TwoD
                     q = _center.Y - MathExt.Sqrt(t);
 
                     pts = new Point2D[1];
-                    pts[0].Y = p;
-                    pts[0].X = lineX;
+                    pts[0] = new Point2D(lineX, p);
 
                     // NOTE that P=Q when t=0
                     if (p != q) {
                         Array.Resize(ref pts, 2);
-                        pts[1].Y = q;
-                        pts[1].X = lineX;
+                        pts[1] =  new Point2D(lineX, q);
                     }
 
                 }

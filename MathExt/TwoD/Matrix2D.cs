@@ -255,8 +255,7 @@ namespace MathExtensions.TwoD
 
             var transformed = Transform(m);
 
-            pt.X = transformed[0];
-            pt.Y = transformed[1];
+            pt = new Point2D(transformed[0], transformed[1]);
 
             return pt;
         }
