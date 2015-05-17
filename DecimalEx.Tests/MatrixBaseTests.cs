@@ -17,11 +17,6 @@ namespace DecimalEx.Tests
             {
                 return M;
             }
-
-            public override object Transform(object obj)
-            {
-                throw new NotImplementedException();
-            }
         }
 
         [Test]

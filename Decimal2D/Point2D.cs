@@ -8,7 +8,7 @@ using DecimalEx;
 namespace Decimal2D
 {
     [DebuggerDisplay("X = {X} Y = {Y}")]
-    public struct Point2D
+    public struct Point2D: ITransformable<Matrix2D, Point2D>
     {
         public readonly decimal X;
         public readonly decimal Y;
@@ -129,6 +129,24 @@ namespace Decimal2D
         public Point2D RoundTo(int decimals)
         {
             return new Point2D(X.RoundFromZero(decimals), Y.RoundFromZero(decimals));
+        }
+
+        /// <summary>
+        /// Transforms this point using a transformation matrix.
+        /// </summary>
+        /// <param name="matrix">The transformation matrix.</param>
+        public Point2D Transform(Matrix2D matrix)
+        {
+            var m = new[]
+                    {
+                        X,
+                        Y,
+                        1
+                    };
+
+            var transformed = matrix.Transform(m);
+
+            return new Point2D(transformed[0], transformed[1]);
         }
 
         /// <summary>

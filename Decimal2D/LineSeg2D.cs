@@ -8,9 +8,8 @@ using DecimalEx;
 namespace Decimal2D
 {
     [DebuggerDisplay("(X = {Pt1.X} Y = {Pt1.Y}) - (X = {Pt2.X} Y = {Pt2.Y})")]
-    public struct LineSeg2D
+    public struct LineSeg2D: ITransformable<Matrix2D, LineSeg2D>
     {
-
         public Point2D Pt1;
 
         public Point2D Pt2;
@@ -666,6 +665,14 @@ namespace Decimal2D
         }
 
         /// <summary>
+        /// Transforms this line segment using the provided matrix and returning a new line segment.
+        /// </summary>
+        public LineSeg2D Transform(Matrix2D matrix)
+        {
+            return new LineSeg2D(matrix.Transform(Pt1), matrix.Transform(Pt2));
+        }
+
+        /// <summary>
         /// Rotates the line segment around the given point.
         /// </summary>
         /// <param name="rotationPoint">Point to rotate around.</param>
@@ -742,6 +749,5 @@ namespace Decimal2D
             return string.Format("{0} {1},{2} {3},{4} {5}", asConstructionLine ? "infiniteline" : "line", Pt1.X, Pt1.Y, Pt2.X, Pt2.Y, linefeedTerminate ? "\r\n" : " ");
 
         }
-
     }
 }

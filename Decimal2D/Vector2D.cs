@@ -16,12 +16,11 @@ namespace Decimal2D
     /// http://www.mathrec.org/vector.html
     /// </remarks>
     [DebuggerDisplay("X = {X} Y = {Y}")]
-    public struct Vector2D
+    public struct Vector2D: ITransformable<Matrix2D, Vector2D>
     {
-
         public decimal X;
-
         public decimal Y;
+
         /// <summary>
         /// Creates a vector with the supplied X and Y components.
         /// </summary>
@@ -344,6 +343,21 @@ namespace Decimal2D
 
             return new Vector2D(Y, -X);
 
+        }
+
+        /// <summary>
+        /// Transforms this vector, treating it as a line segment starting at the origin and 
+        /// ending at the (X,Y) of the vector elements. Returns a new vector translated back 
+        /// to the origin.
+        /// </summary>
+        public Vector2D Transform(Matrix2D matrix)
+        {
+            // Translate as line segment
+            var basePt = matrix.Transform(Point2D.Origin);
+            var endPt = matrix.Transform(new Point2D(X, Y));
+
+            // Constructor will reset base point to origin
+            return new Vector2D(basePt, endPt);
         }
 
         public override string ToString()

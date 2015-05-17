@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace DecimalEx
 {
 
-    public abstract class MatrixBase<T> where T : MatrixBase<T>, new()
+    public abstract class MatrixBase<TSelf> where TSelf : MatrixBase<TSelf>, new()
     {
         public readonly int Size;
         protected decimal[,] M;
@@ -67,9 +67,9 @@ namespace DecimalEx
         /// Multiplies this matrix by another matrix (this x other) and returns a third matrix.
         /// </summary>
         /// <param name="other">The other matrix to multiply by.</param>
-        public T Multiply<TOther>(MatrixBase<TOther> other) where TOther: MatrixBase<TOther>, new()
+        public TSelf Multiply<TOther>(MatrixBase<TOther> other) where TOther : MatrixBase<TOther>, new()
         {
-            var m = new T();
+            var m = new TSelf();
 
             m.M = Matrix.Multiply(M, other.M);
 
@@ -97,79 +97,83 @@ namespace DecimalEx
         #region  Applying To Objects
 
         /// <summary> Transforms an object and returns the result by reference. </summary>
-        /// <param name="element">The element to transform.</param>
-        public void InPlaceTransform(ref object element)
+        public TSelf InPlaceTransform<TTrans>(ref TTrans element) where TTrans : ITransformable<TSelf, TTrans>
         {
-            element = Transform(element);
+            element = element.Transform((TSelf)this);
+            return (TSelf)this;
         }
 
         /// <summary> Transforms objects and returns the results by reference. </summary>
-        /// <param name="element1">A element to transform.</param>
-        /// <param name="element2">A element to transform.</param>
-        public void InPlaceTransform(ref object element1, ref object element2)
+        public TSelf InPlaceTransform<TTrans1, TTrans2>(ref TTrans1 element1, ref TTrans2 element2)
+             where TTrans1 : ITransformable<TSelf, TTrans1>
+             where TTrans2 : ITransformable<TSelf, TTrans2>
         {
             element1 = Transform(element1);
             element2 = Transform(element2);
+            return (TSelf)this;
         }
+
         /// <summary> Transforms objects and returns the results by reference. </summary>
-        /// <param name="element1">A element to transform.</param>
-        /// <param name="element2">A element to transform.</param>
-        /// <param name="element3">A element to transform.</param>
-        public void InPlaceTransform(ref object element1, ref object element2, ref object element3)
+        public TSelf InPlaceTransform<TTrans1, TTrans2, TTrans3>(ref TTrans1 element1, ref TTrans2 element2, ref TTrans3 element3)
+             where TTrans1 : ITransformable<TSelf, TTrans1>
+             where TTrans2 : ITransformable<TSelf, TTrans2>
+             where TTrans3 : ITransformable<TSelf, TTrans3>
         {
             element1 = Transform(element1);
             element2 = Transform(element2);
             element3 = Transform(element3);
+            return (TSelf)this;
         }
+
         /// <summary> Transforms objects and returns the results by reference. </summary>
-        /// <param name="element1">A element to transform.</param>
-        /// <param name="element2">A element to transform.</param>
-        /// <param name="element3">A element to transform.</param>
-        /// <param name="element4">A element to transform.</param>
-        public void InPlaceTransform(ref object element1, ref object element2, ref object element3, ref object element4)
+        public TSelf InPlaceTransform<TTrans1, TTrans2, TTrans3, TTrans4>(ref TTrans1 element1, ref TTrans2 element2, ref TTrans3 element3, ref TTrans4 element4)
+             where TTrans1 : ITransformable<TSelf, TTrans1>
+             where TTrans2 : ITransformable<TSelf, TTrans2>
+             where TTrans3 : ITransformable<TSelf, TTrans3>
+             where TTrans4 : ITransformable<TSelf, TTrans4>
         {
             element1 = Transform(element1);
             element2 = Transform(element2);
             element3 = Transform(element3);
             element4 = Transform(element4);
+            return (TSelf)this;
         }
+
         /// <summary> Transforms objects and returns the results by reference. </summary>
-        /// <param name="element1">A element to transform.</param>
-        /// <param name="element2">A element to transform.</param>
-        /// <param name="element3">A element to transform.</param>
-        /// <param name="element4">A element to transform.</param>
-        /// <param name="element5">A element to transform.</param>
-        public void InPlaceTransform(ref object element1, ref object element2, ref object element3, ref object element4, ref object element5)
+        public TSelf InPlaceTransform<TTrans1, TTrans2, TTrans3, TTrans4, TTrans5>(ref TTrans1 element1, ref TTrans2 element2, ref TTrans3 element3, ref TTrans4 element4, ref TTrans5 element5)
+             where TTrans1 : ITransformable<TSelf, TTrans1>
+             where TTrans2 : ITransformable<TSelf, TTrans2>
+             where TTrans3 : ITransformable<TSelf, TTrans3>
+             where TTrans4 : ITransformable<TSelf, TTrans4>
+             where TTrans5 : ITransformable<TSelf, TTrans5>
         {
             element1 = Transform(element1);
             element2 = Transform(element2);
             element3 = Transform(element3);
             element4 = Transform(element4);
             element5 = Transform(element5);
+            return (TSelf)this;
         }
 
         /// <summary>
-        /// Transforms a geometric element. Must be a supported element (see
-        /// strongly typed overloads in inheriting classes).
+        /// Transforms an object that supports transformations by this matrix type.
         /// </summary>
-        /// <param name="obj">The element to transform.</param>
-        /// <remarks>
-        /// NOTE: If you add a public Transform routine, make sure its type is added to
-        /// this generic Transform routine.
-        /// </remarks>
-        public abstract object Transform(object obj);
+        public TTransformable Transform<TTransformable>(ITransformable<TSelf, TTransformable> obj)
+        {
+            return obj.Transform((TSelf)this);
+        }
 
         #endregion
 
         /// <summary>
         /// Creates a deep copy of this matrix.
         /// </summary>
-        public T Copy()
+        public TSelf Copy()
         {
-            var m = new T();
+            var m = new TSelf();
 
             if (m.Size != Size)
-                throw new Exception("Parameterless constructor for " + typeof(T).Name + " did not properly set size of matrix!");
+                throw new Exception("Parameterless constructor for " + typeof(TSelf).Name + " did not properly set size of matrix!");
 
             Array.Copy(M, m.M, M.Length);
 

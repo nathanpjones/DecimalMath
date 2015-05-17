@@ -8,7 +8,7 @@ using DecimalEx;
 namespace Decimal2D
 {
     [DebuggerDisplay("Center: (X = {Circle.X} Y = {Circle.Y})  Radius: {Circle.Radius}  Angle: {StartAngle} to {EndAngle}")]
-    public struct Arc2D
+    public struct Arc2D: ITransformable<Matrix2D, Arc2D>
     {
 
         public Circle2D Circle;
@@ -362,6 +362,38 @@ namespace Decimal2D
 
             return new Arc2D(Circle.Shrink(amount), _startAngle, _endAngle);
 
+        }
+
+        /// <summary>
+        /// Attempts to transform this arc by applying the transform to the
+        /// center, start, and end points. If the resulting points do not
+        /// form an arc, for example if they are skewed, then an exception
+        /// is thrown.
+        /// </summary>
+        public Arc2D Transform(Matrix2D matrix)
+        {
+            var centPt = matrix.Transform(Center);
+            var startPt = matrix.Transform(StartPt);
+            var midPt = matrix.Transform(MidPt);
+            var endPt = matrix.Transform(EndPt);
+
+            var newA = new Arc2D(centPt, startPt, endPt);
+
+            // Detect translations that would alter the shape so it's no longer an arc
+            if (centPt.DistanceTo(midPt).RoundFromZero(15) != newA.Radius.RoundFromZero(15))
+            {
+                throw new Exception("Can't transform arc. Distance from transformed midpoint to center does not equal the radius of the arc!");
+            }
+
+            // Check if the start and end angles were flipped in the transform
+            if (!newA.IsAngleOnArc(newA.Circle.AngleThroughPoint(midPt)))
+            {
+                var tmp = newA.StartAngle;
+                newA.StartAngle = newA.EndAngle;
+                newA.EndAngle = tmp;
+            }
+
+            return newA;
         }
 
         public static Arc2D FromLinesCircle(LineSeg2D line1, LineSeg2D line2, Circle2D c, int decimals = -1)

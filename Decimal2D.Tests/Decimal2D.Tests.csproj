@@ -56,6 +56,10 @@
       <Project>{D8244074-A23E-4B7D-87F1-D2F346987C01}</Project>
       <Name>Decimal2D</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DecimalEx\DecimalEx.csproj">
+      <Project>{13287e0a-967f-40ab-bd51-dc5309071ec0}</Project>
+      <Name>DecimalEx</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
