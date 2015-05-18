@@ -8,7 +8,7 @@
     <ProjectGuid>{13287E0A-967F-40AB-BD51-DC5309071EC0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DecimalEx</RootNamespace>
+    <RootNamespace>DecimalMath</RootNamespace>
     <AssemblyName>DecimalEx</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>

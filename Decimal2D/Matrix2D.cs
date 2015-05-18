@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DecimalEx;
-
-namespace Decimal2D
+﻿namespace DecimalMath
 {
     /// <summary>
     /// Provides storage and transformation functions on a 3 x 3 matrix of
@@ -88,7 +82,7 @@ namespace Decimal2D
         {
             var r = new Matrix2D();
 
-            var theta = DecimalEx.DecimalEx.ToRad(degrees);
+            var theta = DecimalEx.ToRad(degrees);
             if (clockwise) theta *= -1;
 
             //      0     1    2
@@ -96,10 +90,10 @@ namespace Decimal2D
             // 1   sin   cos   0
             // 2    0     0    1
 
-            r[0, 0] = DecimalEx.DecimalEx.Cos(theta);
-            r[0, 1] = -DecimalEx.DecimalEx.Sin(theta);
-            r[1, 0] = DecimalEx.DecimalEx.Sin(theta);
-            r[1, 1] = DecimalEx.DecimalEx.Cos(theta);
+            r[0, 0] = DecimalEx.Cos(theta);
+            r[0, 1] = -DecimalEx.Sin(theta);
+            r[1, 0] = DecimalEx.Sin(theta);
+            r[1, 1] = DecimalEx.Cos(theta);
 
             return r.Multiply(this);
         }
@@ -155,8 +149,8 @@ namespace Decimal2D
             var mirror = new Matrix2D(
                 new[,]
                 {
-                    { DecimalEx.DecimalEx.Pow(v.X, 2) - DecimalEx.DecimalEx.Pow(v.Y, 2), 2 * v.X * v.Y, 0 },
-                    { 2 * v.X * v.Y, DecimalEx.DecimalEx.Pow(v.Y, 2) - DecimalEx.DecimalEx.Pow(v.X, 2), 0 },
+                    { DecimalEx.Pow(v.X, 2) - DecimalEx.Pow(v.Y, 2), 2 * v.X * v.Y, 0 },
+                    { 2 * v.X * v.Y, DecimalEx.Pow(v.Y, 2) - DecimalEx.Pow(v.X, 2), 0 },
                     { 0, 0, 1 }
                 });
 

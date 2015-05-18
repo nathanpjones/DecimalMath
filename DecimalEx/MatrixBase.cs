@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DecimalEx
+namespace DecimalMath
 {
 
     public abstract class MatrixBase<TSelf> where TSelf : MatrixBase<TSelf>, new()

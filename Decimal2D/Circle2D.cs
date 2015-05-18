@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using DecimalEx;
 
-namespace Decimal2D
+namespace DecimalMath
 {
     /// <summary>
     /// Circle Equation: (x - H) ^ 2 + (y - K) ^ 2 = R ^ 2 where (H,K) is the center of the circle.
@@ -480,7 +477,7 @@ namespace Decimal2D
             bCoeff = -2 * _center.X;
             cCoeff = _center.X * _center.X + (y - _center.Y) * (y - _center.Y) - _radius * _radius;
 
-            return DecimalEx.DecimalEx.SolveQuadratic(aCoeff, bCoeff, cCoeff);
+            return DecimalEx.SolveQuadratic(aCoeff, bCoeff, cCoeff);
 
         }
         /// <summary>
@@ -517,7 +514,7 @@ namespace Decimal2D
             bCoeff = -2 * _center.Y;
             cCoeff = _center.Y * _center.Y + (x - _center.X) * (x - _center.X) - _radius * _radius;
 
-            return DecimalEx.DecimalEx.SolveQuadratic(aCoeff, bCoeff, cCoeff);
+            return DecimalEx.SolveQuadratic(aCoeff, bCoeff, cCoeff);
 
         }
         /// <summary>
@@ -578,9 +575,9 @@ namespace Decimal2D
         public Point2D PointAt(decimal degrees)
         {
 
-            decimal rad = DecimalEx.DecimalEx.ToRad(degrees);
+            decimal rad = DecimalEx.ToRad(degrees);
 
-            return new Point2D(_center.X + _radius * DecimalEx.DecimalEx.Cos(rad), _center.Y + _radius * DecimalEx.DecimalEx.Sin(rad));
+            return new Point2D(_center.X + _radius * DecimalEx.Cos(rad), _center.Y + _radius * DecimalEx.Sin(rad));
 
         }
         /// <summary>
@@ -592,7 +589,7 @@ namespace Decimal2D
         {
 
             var r = RightTriangleAbstract.FromTwoSides(_radius, length);
-            decimal rad = DecimalEx.DecimalEx.ToRad(degrees + r.AngleA);
+            decimal rad = DecimalEx.ToRad(degrees + r.AngleA);
             LineSeg2D ret = default(LineSeg2D);
 
             Debug.Assert(r.AngleA == RightTriangle.GetAngleFromSides(length, _radius));
@@ -601,11 +598,11 @@ namespace Decimal2D
             ret.Pt1 = PointAt(degrees);
             if (!clockwise)
             {
-                ret.Pt2 = new Point2D(_center.X + r.Hypotenuse * DecimalEx.DecimalEx.Cos(rad), _center.Y + r.Hypotenuse * DecimalEx.DecimalEx.Sin(rad));
+                ret.Pt2 = new Point2D(_center.X + r.Hypotenuse * DecimalEx.Cos(rad), _center.Y + r.Hypotenuse * DecimalEx.Sin(rad));
             }
             else
             {
-                ret.Pt2 = new Point2D(ret.Pt1.X - (_center.X + r.Hypotenuse * DecimalEx.DecimalEx.Cos(rad) - ret.Pt1.X), ret.Pt1.Y - (_center.Y + r.Hypotenuse * DecimalEx.DecimalEx.Sin(rad) - ret.Pt1.Y));
+                ret.Pt2 = new Point2D(ret.Pt1.X - (_center.X + r.Hypotenuse * DecimalEx.Cos(rad) - ret.Pt1.X), ret.Pt1.Y - (_center.Y + r.Hypotenuse * DecimalEx.Sin(rad) - ret.Pt1.Y));
             }
 
             return ret;
@@ -745,7 +742,7 @@ namespace Decimal2D
         public static decimal GetRadiusFromChordLengthSagitta(decimal chordLength, decimal sagitta)
         {
 
-            return (DecimalEx.DecimalEx.Pow(sagitta, 2) + 0.25m * DecimalEx.DecimalEx.Pow(chordLength, 2)) / (2 * sagitta);
+            return (DecimalEx.Pow(sagitta, 2) + 0.25m * DecimalEx.Pow(chordLength, 2)) / (2 * sagitta);
 
         }
         /// <summary>
@@ -817,7 +814,7 @@ namespace Decimal2D
                 }
             }
 
-            a = DecimalEx.DecimalEx.ToDeg(DecimalEx.DecimalEx.ATan(pt.X / pt.Y));
+            a = DecimalEx.ToDeg(DecimalEx.ATan(pt.X / pt.Y));
             switch (pt.Quadrant)
             {
                 case 1:
@@ -899,7 +896,7 @@ namespace Decimal2D
 
 
                 } else {
-                    offsetVector = new Vector2D(_radius * DecimalEx.DecimalEx.Cos(DecimalEx.DecimalEx.ATan(l.Slope)), _radius * DecimalEx.DecimalEx.Sin(DecimalEx.DecimalEx.ATan(l.Slope)));
+                    offsetVector = new Vector2D(_radius * DecimalEx.Cos(DecimalEx.ATan(l.Slope)), _radius * DecimalEx.Sin(DecimalEx.ATan(l.Slope)));
 
                 }
 
@@ -969,11 +966,11 @@ namespace Decimal2D
                 m = l.Slope;
                 b = l.YIntersect;
 
-                aCoeff = DecimalEx.DecimalEx.Pow(m, 2) + 1;
+                aCoeff = DecimalEx.Pow(m, 2) + 1;
                 bCoeff = 2 * (b - _center.Y) * m - 2 * _center.X;
-                cCoeff = DecimalEx.DecimalEx.Pow(_center.X, 2) + DecimalEx.DecimalEx.Pow(b - _center.Y, 2) - DecimalEx.DecimalEx.Pow(_radius, 2);
+                cCoeff = DecimalEx.Pow(_center.X, 2) + DecimalEx.Pow(b - _center.Y, 2) - DecimalEx.Pow(_radius, 2);
 
-                x = DecimalEx.DecimalEx.SolveQuadratic(aCoeff, bCoeff, cCoeff);
+                x = DecimalEx.SolveQuadratic(aCoeff, bCoeff, cCoeff);
 
                 if (x.Length == 0) return new Point2D[] { };
 
@@ -1005,8 +1002,8 @@ namespace Decimal2D
 
 
                 } else {
-                    p = _center.Y + DecimalEx.DecimalEx.Sqrt(t);
-                    q = _center.Y - DecimalEx.DecimalEx.Sqrt(t);
+                    p = _center.Y + DecimalEx.Sqrt(t);
+                    q = _center.Y - DecimalEx.Sqrt(t);
 
                     pts = new Point2D[1];
                     pts[0] = new Point2D(lineX, p);
@@ -1145,9 +1142,9 @@ namespace Decimal2D
 
             // The following two equations are from:
             //   http://paulbourke.net/geometry/2circle/
-            a = (DecimalEx.DecimalEx.Pow(meToOtherVector.Magnitude, 2) - DecimalEx.DecimalEx.Pow(other.Radius, 2) + DecimalEx.DecimalEx.Pow(this.Radius, 2)) / (2 * meToOtherVector.Magnitude);
+            a = (DecimalEx.Pow(meToOtherVector.Magnitude, 2) - DecimalEx.Pow(other.Radius, 2) + DecimalEx.Pow(this.Radius, 2)) / (2 * meToOtherVector.Magnitude);
 
-            r2mina2 = DecimalEx.DecimalEx.Pow(this.Radius, 2) - DecimalEx.DecimalEx.Pow(a, 2);
+            r2mina2 = DecimalEx.Pow(this.Radius, 2) - DecimalEx.Pow(a, 2);
 
             // No intersection points -- one circle is inside or outside the other
             if (r2mina2 < 0) return new Point2D[] { };
@@ -1162,7 +1159,7 @@ namespace Decimal2D
 
             }
 
-            h = DecimalEx.DecimalEx.Sqrt(r2mina2);
+            h = DecimalEx.Sqrt(r2mina2);
             vToIntersect1 = vToIntersectMidPt.GetPerpendicular();
             vToIntersect1.Magnitude = h;
 

@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DecimalEx;
 
-namespace Decimal2D
+namespace DecimalMath
 {
     [Obsolete("Not fully implemented yet!", true)]
     public struct RightTriangle2D

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using DecimalEx;
 
-namespace Decimal2D
+namespace DecimalMath
 {
     /// <summary>
     /// Represents a 2D vector.
@@ -311,7 +307,7 @@ namespace Decimal2D
             // Cos(theta) = DotProduct(v1,v2) / (length(v1) * length(v2))
             // aka theta = acos(v.normalize.dot(other.normalize)), however, the equation
             //   used gives us better precision
-            return DecimalEx.DecimalEx.ToDeg(DecimalEx.DecimalEx.ACos(this.Dot(other) / (this.Magnitude * other.Magnitude)));
+            return DecimalEx.ToDeg(DecimalEx.ACos(this.Dot(other) / (this.Magnitude * other.Magnitude)));
 
         }
         /// <summary>
@@ -321,7 +317,7 @@ namespace Decimal2D
         public decimal Angle()
         {
 
-            return DecimalEx.DecimalEx.ToDeg(DecimalEx.DecimalEx.ATan2(Y, X));
+            return DecimalEx.ToDeg(DecimalEx.ATan2(Y, X));
 
         }
 

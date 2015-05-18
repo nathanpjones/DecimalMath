@@ -7,7 +7,7 @@
     <ProjectGuid>{EE341DA3-CC60-49CB-9493-4CB826D0A3F5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Decimal2D.Tests</RootNamespace>
+    <RootNamespace>Decimal2DTests</RootNamespace>
     <AssemblyName>Decimal2D.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

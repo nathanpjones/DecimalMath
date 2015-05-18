@@ -1,8 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using DecimalMath;
 using NUnit.Framework;
 
-namespace DecimalEx.Tests
+namespace DecimalExTests
 {
     public class MatrixTests
     {

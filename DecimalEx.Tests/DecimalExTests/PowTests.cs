@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Diagnostics;
+using DecimalMath;
 using NUnit.Framework;
 
-namespace DecimalEx.Tests.DecimalExTests
+namespace DecimalExTests.DecimalExTests
 {
 
     public class PowTests

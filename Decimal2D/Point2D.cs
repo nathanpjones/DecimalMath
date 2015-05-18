@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using DecimalEx;
 
-namespace Decimal2D
+namespace DecimalMath
 {
     [DebuggerDisplay("X = {X} Y = {Y}")]
     public struct Point2D: ITransformable<Matrix2D, Point2D>
@@ -64,7 +60,7 @@ namespace Decimal2D
             var xDist = this.X - x;
             var yDist = this.Y - y;
 
-            return DecimalEx.DecimalEx.Sqrt(xDist * xDist + yDist * yDist);
+            return DecimalEx.Sqrt(xDist * xDist + yDist * yDist);
         }
         public decimal DistanceTo(Circle2D c)
         {

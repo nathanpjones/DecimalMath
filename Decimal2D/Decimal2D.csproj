@@ -8,7 +8,7 @@
     <ProjectGuid>{D8244074-A23E-4B7D-87F1-D2F346987C01}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Decimal2D</RootNamespace>
+    <RootNamespace>DecimalMath</RootNamespace>
     <AssemblyName>Decimal2D</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>

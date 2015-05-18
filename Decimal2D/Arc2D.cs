@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using DecimalEx;
 
-namespace Decimal2D
+namespace DecimalMath
 {
     [DebuggerDisplay("Center: (X = {Circle.X} Y = {Circle.Y})  Radius: {Circle.Radius}  Angle: {StartAngle} to {EndAngle}")]
     public struct Arc2D: ITransformable<Matrix2D, Arc2D>
@@ -201,7 +197,7 @@ namespace Decimal2D
             [DebuggerStepThrough()]
             get { return _startAngle; }
             [DebuggerStepThrough()]
-            set { _startAngle = DecimalEx.DecimalEx.NormalizeAngleDeg(value); }
+            set { _startAngle = DecimalEx.NormalizeAngleDeg(value); }
         }
         /// <summary>
         /// The end angle of the arc in degrees. Arc starts at the start
@@ -213,7 +209,7 @@ namespace Decimal2D
             [DebuggerStepThrough()]
             get { return _endAngle; }
             [DebuggerStepThrough()]
-            set { _endAngle = DecimalEx.DecimalEx.NormalizeAngleDeg(value); }
+            set { _endAngle = DecimalEx.NormalizeAngleDeg(value); }
         }
         /// <summary>
         /// The angle in degrees that bisects the arc.
@@ -229,7 +225,7 @@ namespace Decimal2D
                 }
                 else
                 {
-                    return DecimalEx.DecimalEx.NormalizeAngleDeg((_startAngle + (_endAngle + 360m)) / 2m);
+                    return DecimalEx.NormalizeAngleDeg((_startAngle + (_endAngle + 360m)) / 2m);
                 }
 
             }
@@ -241,7 +237,7 @@ namespace Decimal2D
         public bool IsAngleOnArc(decimal angle)
         {
 
-            angle = DecimalEx.DecimalEx.NormalizeAngleDeg(angle);
+            angle = DecimalEx.NormalizeAngleDeg(angle);
 
             if (_startAngle <= _endAngle)
             {
@@ -291,7 +287,7 @@ namespace Decimal2D
         /// <remarks>http://www.mathopenref.com/arclength.html</remarks>
         public decimal ArcLength
         {
-            get { return Circle.Radius * ((2m * DecimalEx.DecimalEx.Pi * CentralAngle) / 360m); }
+            get { return Circle.Radius * ((2m * DecimalEx.Pi * CentralAngle) / 360m); }
         }
 
         /// <summary>

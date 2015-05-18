@@ -1,8 +1,9 @@
 using System;
 using System.Collections;
+using DecimalMath;
 using NUnit.Framework;
 
-namespace DecimalEx.Tests.ExtensionsTest
+namespace DecimalExTests.ExtensionsTest
 {
 
     public class RoundFromZeroTests

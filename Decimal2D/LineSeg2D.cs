@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using DecimalEx;
 
-namespace Decimal2D
+namespace DecimalMath
 {
     [DebuggerDisplay("(X = {Pt1.X} Y = {Pt1.Y}) - (X = {Pt2.X} Y = {Pt2.Y})")]
     public struct LineSeg2D: ITransformable<Matrix2D, LineSeg2D>

@@ -1,7 +1,8 @@
 ﻿using System;
+using DecimalMath;
 using NUnit.Framework;
 
-namespace DecimalEx.Tests.DecimalExTests
+namespace DecimalExTests.DecimalExTests
 {
 
     public class LogTests

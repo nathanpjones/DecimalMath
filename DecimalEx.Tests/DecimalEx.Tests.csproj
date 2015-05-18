@@ -6,7 +6,7 @@
     <ProjectGuid>{5930549A-38DA-4759-A686-A8B8DAAD7E26}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DecimalEx.Tests</RootNamespace>
+    <RootNamespace>DecimalExTests</RootNamespace>
     <AssemblyName>DecimalEx.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Diagnostics;
+﻿using DecimalMath;
 using NUnit.Framework;
 
-namespace DecimalEx.Tests.DecimalExTrigTests
+namespace DecimalExTests.DecimalExTrigTests
 {
 
     public class ATan2Tests

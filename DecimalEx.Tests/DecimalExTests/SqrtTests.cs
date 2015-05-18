@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using DecimalMath;
 using NUnit.Framework;
 
-namespace DecimalEx.Tests.DecimalExTests
+namespace DecimalExTests.DecimalExTests
 {
     /// <summary>
     /// Tests for <see cref="DecimalEx.Sqrt"/>.

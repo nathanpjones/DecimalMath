@@ -1,4 +1,4 @@
-﻿namespace DecimalEx
+﻿namespace DecimalMath
 {
     /// <summary>
     /// Interface that defines an object's ability to transform itself using a given matrix type.

@@ -1,8 +1,8 @@
 ﻿using System;
-using Decimal2D;
+using DecimalMath;
 using NUnit.Framework;
 
-namespace Decimal2D.Tests
+namespace Decimal2DTests
 {
     public class Point2DTests
     {

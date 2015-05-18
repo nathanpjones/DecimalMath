@@ -1,8 +1,8 @@
-using System;
 using System.Collections;
+using DecimalMath;
 using NUnit.Framework;
 
-namespace DecimalEx.Tests.DecimalExTests
+namespace DecimalExTests.DecimalExTests
 {
 
     public class GCFTests

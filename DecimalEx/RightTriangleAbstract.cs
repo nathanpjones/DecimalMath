@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace DecimalEx
+﻿namespace DecimalMath
 {
     /// <summary>
     /// Represents a right triangle without specifying the location of any of its points.
