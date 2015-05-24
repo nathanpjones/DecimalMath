@@ -47,7 +47,8 @@
     <Compile Include="Matrix2D.cs" />
     <Compile Include="Point2D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RightTriangle2D.cs" />
+    <Compile Include="RightTriangle.cs" />
+    <Compile Include="RightTriangleAbstract.cs" />
     <Compile Include="Vector2D.cs" />
   </ItemGroup>
   <ItemGroup>

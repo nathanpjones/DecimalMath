@@ -39,8 +39,6 @@
     <Compile Include="ITransformable.cs" />
     <Compile Include="Matrix.cs" />
     <Compile Include="MatrixBase.cs" />
-    <Compile Include="RightTriangle.cs" />
-    <Compile Include="RightTriangleAbstract.cs" />
     <Compile Include="DecimalExTrig.cs" />
     <Compile Include="DecimalExConstants.cs" />
     <Compile Include="DecimalEx.cs" />
