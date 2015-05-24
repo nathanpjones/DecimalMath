@@ -4,7 +4,7 @@ using System.Diagnostics;
 namespace DecimalMath
 {
     [DebuggerDisplay("X = {X} Y = {Y}")]
-    public struct Point2D: ITransformable<Matrix2D, Point2D>
+    public struct Point2D: ITransformable<Transform2D, Point2D>
     {
         public readonly decimal X;
         public readonly decimal Y;
@@ -131,7 +131,7 @@ namespace DecimalMath
         /// Transforms this point using a transformation matrix.
         /// </summary>
         /// <param name="matrix">The transformation matrix.</param>
-        public Point2D Transform(Matrix2D matrix)
+        public Point2D Transform(Transform2D matrix)
         {
             var m = new[]
                     {

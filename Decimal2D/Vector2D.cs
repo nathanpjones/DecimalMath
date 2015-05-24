@@ -12,7 +12,7 @@ namespace DecimalMath
     /// http://www.mathrec.org/vector.html
     /// </remarks>
     [DebuggerDisplay("X = {X} Y = {Y}")]
-    public struct Vector2D: ITransformable<Matrix2D, Vector2D>
+    public struct Vector2D: ITransformable<Transform2D, Vector2D>
     {
         public decimal X;
         public decimal Y;
@@ -346,7 +346,7 @@ namespace DecimalMath
         /// ending at the (X,Y) of the vector elements. Returns a new vector translated back 
         /// to the origin.
         /// </summary>
-        public Vector2D Transform(Matrix2D matrix)
+        public Vector2D Transform(Transform2D matrix)
         {
             // Translate as line segment
             var basePt = matrix.Transform(Point2D.Origin);

@@ -4,7 +4,7 @@ using System.Diagnostics;
 namespace DecimalMath
 {
     [DebuggerDisplay("(X = {Pt1.X} Y = {Pt1.Y}) - (X = {Pt2.X} Y = {Pt2.Y})")]
-    public struct LineSeg2D: ITransformable<Matrix2D, LineSeg2D>
+    public struct LineSeg2D: ITransformable<Transform2D, LineSeg2D>
     {
         public Point2D Pt1;
 
@@ -663,7 +663,7 @@ namespace DecimalMath
         /// <summary>
         /// Transforms this line segment using the provided matrix and returning a new line segment.
         /// </summary>
-        public LineSeg2D Transform(Matrix2D matrix)
+        public LineSeg2D Transform(Transform2D matrix)
         {
             return new LineSeg2D(matrix.Transform(Pt1), matrix.Transform(Pt2));
         }
@@ -676,7 +676,7 @@ namespace DecimalMath
         public LineSeg2D Rotate(Point2D rotationPoint, decimal degrees)
         {
 
-            Matrix2D m = new Matrix2D();
+            Transform2D m = new Transform2D();
 
             m.RotateAt(rotationPoint, degrees, false);
 

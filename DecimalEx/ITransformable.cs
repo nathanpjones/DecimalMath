@@ -5,7 +5,7 @@
     /// </summary>
     /// <typeparam name="TMatrix">Supported matrix type.</typeparam>
     /// <typeparam name="TSelf">Type that is implementing interface.</typeparam>
-    public interface ITransformable<TMatrix, TSelf> where TMatrix : MatrixBase<TMatrix>, new()
+    public interface ITransformable<TMatrix, TSelf> where TMatrix : TransformationMatrixBase<TMatrix>, new()
     {
         TSelf Transform(TMatrix matrix);
     }

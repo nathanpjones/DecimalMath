@@ -2,8 +2,11 @@
 
 namespace DecimalMath
 {
-
-    public abstract class MatrixBase<TSelf> where TSelf : MatrixBase<TSelf>, new()
+    /// <summary>
+    /// A base class to support implementation of a square matrix to be used for affine transforms.
+    /// </summary>
+    /// <typeparam name="TSelf">Reference to the type inheriting this base class.</typeparam>
+    public abstract class TransformationMatrixBase<TSelf> where TSelf : TransformationMatrixBase<TSelf>, new()
     {
         public readonly int Size;
         protected decimal[,] M;
@@ -12,7 +15,7 @@ namespace DecimalMath
         /// Constructs a new matrix with height and width of <paramref name="size"/>.
         /// </summary>
         /// <param name="size">Size of matrix.</param>
-        protected MatrixBase(int size)
+        protected TransformationMatrixBase(int size)
         {
             Size = size;
 
@@ -24,7 +27,7 @@ namespace DecimalMath
         /// Constructs a new matrix with height and width of <paramref name="size"/>.
         /// </summary>
         /// <param name="size">Size of matrix.</param>
-        protected MatrixBase(int size, decimal[,] values)
+        protected TransformationMatrixBase(int size, decimal[,] values)
         {
             Size = size;
 
@@ -63,7 +66,7 @@ namespace DecimalMath
         /// Multiplies this matrix by another matrix (this x other) and returns a third matrix.
         /// </summary>
         /// <param name="other">The other matrix to multiply by.</param>
-        public TSelf Multiply<TOther>(MatrixBase<TOther> other) where TOther : MatrixBase<TOther>, new()
+        public TSelf Multiply<TOther>(TransformationMatrixBase<TOther> other) where TOther : TransformationMatrixBase<TOther>, new()
         {
             var m = new TSelf();
 

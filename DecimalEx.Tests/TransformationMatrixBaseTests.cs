@@ -3,13 +3,13 @@ using NUnit.Framework;
 
 namespace DecimalExTests
 {
-    public class MatrixBaseTests
+    public class TransformationMatrixBaseTests
     {
-        private class MatrixTestClass : MatrixBase<MatrixTestClass>
+        private class TransformationTester : TransformationMatrixBase<TransformationTester>
         {
-            public MatrixTestClass():base(3)
+            public TransformationTester():base(3)
             { }
-            public MatrixTestClass(decimal[,] values): base(3, values)
+            public TransformationTester(decimal[,] values): base(3, values)
             { }
 
             public decimal[,] GetM()
@@ -21,7 +21,7 @@ namespace DecimalExTests
         [Test]
         public void TestConstructor()
         {
-            var testMatrix = new MatrixTestClass();
+            var testMatrix = new TransformationTester();
 
             // Make sure we've initialized to the identity matrix
             Assert.That(testMatrix.GetM(),
@@ -36,7 +36,7 @@ namespace DecimalExTests
         [Test]
         public void TestConstructorWithValues()
         {
-            var testMatrix = new MatrixTestClass(new decimal[,]
+            var testMatrix = new TransformationTester(new decimal[,]
                                           {
                                               { 11, 12, 13 },
                                               { 21, 22, 23 },
@@ -55,7 +55,7 @@ namespace DecimalExTests
         [Test]
         public void TestSetRow()
         {
-            var testMatrix = new MatrixTestClass();
+            var testMatrix = new TransformationTester();
 
             testMatrix.SetRow(1, new decimal[] { 4, 5, 6 });
 
@@ -71,14 +71,14 @@ namespace DecimalExTests
         [Test]
         public void TestMultiply()
         {
-            var testMatrix1 = new MatrixTestClass(new decimal[,]
+            var testMatrix1 = new TransformationTester(new decimal[,]
                                            {
                                                { 1, 2, 3 },
                                                { 11, 12, 13 },
                                                { 21, 22, 23 }
                                            });
 
-            var testMatrix2 = new MatrixTestClass(new decimal[,]
+            var testMatrix2 = new TransformationTester(new decimal[,]
                                            {
                                                { 31, 32, 33 },
                                                { 34, 35, 36 },
@@ -99,7 +99,7 @@ namespace DecimalExTests
         [Test]
         public void TestTransform()
         {
-            var testMatrix = new MatrixTestClass(new decimal[,]
+            var testMatrix = new TransformationTester(new decimal[,]
                                            {
                                                { 1, 2, 3 },
                                                { 11, 12, 13 },
@@ -114,7 +114,7 @@ namespace DecimalExTests
         [Test]
         public void TestCopy()
         {
-            var testMatrix = new MatrixTestClass(new decimal[,]
+            var testMatrix = new TransformationTester(new decimal[,]
                                            {
                                                { 1, 2, 3 },
                                                { 11, 12, 13 },

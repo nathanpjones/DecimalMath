@@ -4,7 +4,7 @@ using System.Diagnostics;
 namespace DecimalMath
 {
     [DebuggerDisplay("Center: (X = {Circle.X} Y = {Circle.Y})  Radius: {Circle.Radius}  Angle: {StartAngle} to {EndAngle}")]
-    public struct Arc2D: ITransformable<Matrix2D, Arc2D>
+    public struct Arc2D: ITransformable<Transform2D, Arc2D>
     {
 
         public Circle2D Circle;
@@ -366,7 +366,7 @@ namespace DecimalMath
         /// form an arc, for example if they are skewed, then an exception
         /// is thrown.
         /// </summary>
-        public Arc2D Transform(Matrix2D matrix)
+        public Arc2D Transform(Transform2D matrix)
         {
             var centPt = matrix.Transform(Center);
             var startPt = matrix.Transform(StartPt);

@@ -44,7 +44,7 @@
     <Compile Include="Arc2D.cs" />
     <Compile Include="Circle2D.cs" />
     <Compile Include="LineSeg2D.cs" />
-    <Compile Include="Matrix2D.cs" />
+    <Compile Include="Transform2D.cs" />
     <Compile Include="Point2D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RightTriangle.cs" />
