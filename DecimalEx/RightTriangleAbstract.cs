@@ -8,13 +8,26 @@
     /// </remarks>
     public struct RightTriangleAbstract
     {
-
-        private decimal _lengthA;
-        private decimal _angleA;
-        private decimal _lengthB;
-        private decimal _angleB;
-
-        private decimal _hypotenuse;
+        /// <summary>
+        /// Gets the angle adjacent to side A. Angle is in degrees.
+        /// </summary>
+        public decimal AngleA { get; private set; }
+        /// <summary>
+        /// Gets the angle adjacent to side B. Angle is in degrees.
+        /// </summary>
+        public decimal AngleB { get; private set; }
+        /// <summary>
+        /// Gets the length of the hypotenuse.
+        /// </summary>
+        public decimal Hypotenuse { get; private set; }
+        /// <summary>
+        /// Gets the length of side A.
+        /// </summary>
+        public decimal LengthA { get; private set; }
+        /// <summary>
+        /// Gets the length of side B.
+        /// </summary>
+        public decimal LengthB { get; private set; }
 
         /// <summary>
         /// Creates a right triangle from its two sides.
@@ -23,138 +36,91 @@
         /// <param name="lengthB">Length of side B.</param>
         public static RightTriangleAbstract FromTwoSides(decimal lengthA, decimal lengthB)
         {
-            var t = default(RightTriangleAbstract);
-
-            t._FromTwoSides(lengthA, lengthB);
-
+            var t = new RightTriangleAbstract
+                    {
+                        LengthA = lengthA,
+                        LengthB = lengthB,
+                        Hypotenuse = RightTriangle.GetHypFromSides(lengthA, lengthB),
+                        AngleA = RightTriangle.GetAngleFromSides(lengthB, lengthA),
+                        AngleB = RightTriangle.GetAngleFromSides(lengthA, lengthB)
+                    };
             return t;
         }
 
-        private void _FromTwoSides(decimal lengthA, decimal lengthB)
-        {
-            _lengthA = lengthA;
-            _lengthB = lengthB;
-            _hypotenuse = RightTriangle.GetHypFromSides(lengthA, lengthB);
-            _angleA = RightTriangle.GetAngleFromSides(lengthB, lengthA);
-            _angleB = RightTriangle.GetAngleFromSides(lengthA, lengthB);
-
-        }
         /// <summary>
         /// Creates a right triangle from one side and the hypotenuse.
+        /// This side is treated as side A.
         /// </summary>
         /// <param name="lengthA">Length of side A.</param>
         /// <param name="hypotenuse">Length of the hypotenuse.</param>
-        public static object FromSideAHypotenuse(decimal lengthA, decimal hypotenuse)
+        public static RightTriangleAbstract FromSideAHypotenuse(decimal lengthA, decimal hypotenuse)
         {
-
-            RightTriangleAbstract t = default(RightTriangleAbstract);
-
-            t._FromSideAHypotenuse(lengthA, hypotenuse);
-
+            var t = new RightTriangleAbstract
+                    {
+                        LengthA = lengthA,
+                        Hypotenuse = hypotenuse,
+                        LengthB = RightTriangle.GetSideFromSideHyp(lengthA, hypotenuse),
+                        AngleA = RightTriangle.GetAngleFromAdjSideHyp(lengthA, hypotenuse),
+                        AngleB = RightTriangle.GetAngleFromOppSideHyp(lengthA, hypotenuse)
+                    };
             return t;
-
         }
 
-        private void _FromSideAHypotenuse(decimal lengthA, decimal hypotenuse)
-        {
-            _lengthA = lengthA;
-            _hypotenuse = hypotenuse;
-            _lengthB = RightTriangle.GetSideFromSideHyp(lengthA, hypotenuse);
-            _angleA = RightTriangle.GetAngleFromAdjSideHyp(lengthA, hypotenuse);
-            _angleB = RightTriangle.GetAngleFromOppSideHyp(lengthA, hypotenuse);
-
-        }
         /// <summary>
         /// Creates a right triangle from one side and its adjacent angle in degrees.
+        /// This side and angle are treated as side/angle A.
         /// </summary>
         /// <param name="lengthA">Length of side A.</param>
         /// <param name="angleA">Angle adjacent to side A in degrees.</param>
-        public static object FromSideAAngleA(decimal lengthA, decimal angleA)
+        public static RightTriangleAbstract FromSideAAngleA(decimal lengthA, decimal angleA)
         {
-
-            RightTriangleAbstract t = default(RightTriangleAbstract);
-
-            t._FromSideAAngleA(lengthA, angleA);
-
+            var t = new RightTriangleAbstract
+                    {
+                        LengthA = lengthA,
+                        AngleA = angleA,
+                        LengthB = RightTriangle.GetSideFromOppAngleOppSide(angleA, lengthA),
+                        AngleB = RightTriangle.GetAngleFromOtherAngle(angleA),
+                        Hypotenuse = RightTriangle.GetHypFromSideAdjAngle(lengthA, angleA)
+                    };
             return t;
-
         }
 
-        private void _FromSideAAngleA(decimal lengthA, decimal angleA)
-        {
-            _lengthA = lengthA;
-            _angleA = angleA;
-            _lengthB = RightTriangle.GetSideFromOppAngleOppSide(angleA, lengthA);
-            _angleB = RightTriangle.GetAngleFromOtherAngle(angleA);
-            _hypotenuse = RightTriangle.GetHypFromSideAdjAngle(lengthA, angleA);
-
-            // tan(A) = LB / LA
-            // LB = tan(A) * LA
-            _lengthB = DecimalEx.Tan(DecimalEx.ToRad(angleA)) * lengthA;
-            _angleB = 90m - angleA;
-
-            // cos(A) = LA / H
-            // H = LA / cos(A)
-            _hypotenuse = lengthA / DecimalEx.Cos(DecimalEx.ToRad(angleA));
-
-        }
-
-        private void _FromSideBAngleB(decimal lengthB, decimal angleB)
-        {
-            _lengthB = lengthB;
-            _angleB = angleB;
-
-            // tan(B) = LA / LB
-            // LA = tan(B) * LB
-            _lengthA = DecimalEx.Tan(DecimalEx.ToRad(angleB)) * lengthB;
-            _angleA = 90m - angleB;
-
-            // cos(B) = LB / H
-            // H = LB / cos(B)
-            _hypotenuse = lengthB / DecimalEx.Cos(angleB);
-
-        }
         /// <summary>
-        /// Gets or sets the angle adjacent to side A. Angle is in degrees.
+        /// Creates a right triangle from one side and the hypotenuse.
+        /// This side is treated as side B.
         /// </summary>
-        public decimal AngleA
+        /// <param name="lengthA">Length of side B.</param>
+        /// <param name="hypotenuse">Length of the hypotenuse.</param>
+        public static RightTriangleAbstract FromSideBHypotenuse(decimal lengthA, decimal hypotenuse)
         {
-            get { return _angleA; }
-            set { _FromSideAAngleA(_lengthA, value); }
-        }
-        /// <summary>
-        /// Gets or sets the angle adjacent to side B. Angle is in degrees.
-        /// </summary>
-        public decimal AngleB
-        {
-            get { return _angleB; }
-            set { _FromSideBAngleB(_lengthB, value); }
-        }
-        /// <summary>
-        /// Gets or sets the length of the hypotenuse.
-        /// </summary>
-        public decimal Hypotenuse
-        {
-            get { return _hypotenuse; }
-            set { _hypotenuse = value; }
-        }
-        /// <summary>
-        /// Gets or sets the length of side A.
-        /// </summary>
-        public decimal LengthA
-        {
-            get { return _lengthA; }
-            set { _FromSideAAngleA(value, _angleA); }
-        }
-        /// <summary>
-        /// Gets or sets the length of side B.
-        /// </summary>
-        public decimal LengthB
-        {
-            get { return _lengthB; }
-            set { _FromSideBAngleB(value, _angleB); }
+            return FromSideAHypotenuse(lengthA, hypotenuse).SwapSides();
         }
 
+        /// <summary>
+        /// Creates a right triangle from one side and its adjacent angle in degrees.
+        /// This side and angle are treated as side/angle A.
+        /// </summary>
+        /// <param name="lengthB">Length of side B.</param>
+        /// <param name="angleB">Angle adjacent to side B in degrees.</param>
+        public static RightTriangleAbstract FromSideBAngleB(decimal lengthB, decimal angleB)
+        {
+            return FromSideAAngleA(lengthB, angleB).SwapSides();
+        }
+
+        /// <summary>
+        /// Swaps which sides / angles are considered A and B.
+        /// </summary>
+        public RightTriangleAbstract SwapSides()
+        {
+            var t = new RightTriangleAbstract
+                    {
+                        LengthA = LengthB,
+                        AngleA = AngleB,
+                        LengthB = LengthA,
+                        AngleB = AngleA,
+                        Hypotenuse = Hypotenuse,
+                    };
+            return t;
+        }
     }
-
 }
