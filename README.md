@@ -30,7 +30,7 @@ Bridges the gap in .NET support.
 - Functionality for working with Decimal matrices as 2D arrays and a base class for implementing an NxN matrix for use in affine transformations.
 
 #### Decimal2D
-Provides support for high-accuracy geometric calculations.
+Provides support for high-accuracy geometric calculations. *Note: This is still a work in progress. It's been used in production, but it still needs some more grooming (was originally VB code) and unit tests.*
 - Support for 2D geometric objects
   - `Point`, `Line`, and `Vector`
   - `Circle` and `Arc`
