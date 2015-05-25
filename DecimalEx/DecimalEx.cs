@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace DecimalMath
 {
+    /// <summary>
+    /// Contains mathematical operations performed in Decimal precision.
+    /// </summary>
     public static partial class DecimalEx
     {
         /// <summary>
@@ -498,7 +501,7 @@ namespace DecimalMath
             {
                 avg = values.Average();
             }
-            catch (OverflowException ex)
+            catch (OverflowException)
             {
                 // Use less accurate method that won't overflow
                 avg = values.Sum(v => v / values.Length);

@@ -8,7 +8,13 @@ namespace DecimalMath
     /// <typeparam name="TSelf">Reference to the type inheriting this base class.</typeparam>
     public abstract class TransformationMatrixBase<TSelf> where TSelf : TransformationMatrixBase<TSelf>, new()
     {
+        /// <summary>
+        /// The width / height of the square matrix.
+        /// </summary>
         public readonly int Size;
+        /// <summary>
+        /// The raw matrix as a two-dimensional array. Stored as [row, column].
+        /// </summary>
         protected decimal[,] M;
 
         /// <summary>
@@ -27,6 +33,8 @@ namespace DecimalMath
         /// Constructs a new matrix with height and width of <paramref name="size"/>.
         /// </summary>
         /// <param name="size">Size of matrix.</param>
+        /// <param name="values">Values to use to initialize the matrix. These values are not used
+        /// directly, but are rather copied. Addressed as [row, column].</param>
         protected TransformationMatrixBase(int size, decimal[,] values)
         {
             Size = size;
@@ -51,6 +59,11 @@ namespace DecimalMath
             set { M[row, column] = value; }
         }
 
+        /// <summary>
+        /// Sets a row using the given values as if they were a row matrix.
+        /// </summary>
+        /// <param name="row">The row to set.</param>
+        /// <param name="values">Values to set the row. Treated as a row matrix.</param>
         public void SetRow(int row, decimal[] values)
         {
             if (values.Length != Size) 

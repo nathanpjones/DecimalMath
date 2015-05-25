@@ -2,7 +2,10 @@
 
 namespace DecimalMath
 {
-
+    /// <summary>
+    /// Matrix operations against a matrix stored as a two-dimensional Decimal array where values
+    /// are addressed as [row, column].
+    /// </summary>
     public static class Matrix
     {
         /// <summary>

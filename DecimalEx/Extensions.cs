@@ -2,6 +2,9 @@
 
 namespace DecimalMath
 {
+    /// <summary>
+    /// Extension methods for the Decimal data type.
+    /// </summary>
     public static class Extensions
     {
         /// <summary>

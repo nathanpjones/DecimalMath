@@ -1,5 +1,4 @@
 ﻿using DecimalMath;
-using DecimalMath;
 using NUnit.Framework;
 
 namespace DecimalExTests.DecimalExTests

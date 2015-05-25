@@ -200,7 +200,7 @@ namespace DecimalMath
             {
                 return Sin(radians) / Cos(radians);
             }
-            catch (DivideByZeroException ex)
+            catch (DivideByZeroException)
             {
                 throw new Exception("Tangent is undefined at this angle!");
             }

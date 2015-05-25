@@ -7,6 +7,10 @@
     /// <typeparam name="TSelf">Type that is implementing interface.</typeparam>
     public interface ITransformable<TMatrix, TSelf> where TMatrix : TransformationMatrixBase<TMatrix>, new()
     {
+        /// <summary>
+        /// Applies a transform on itself using the given transformation matrix.
+        /// </summary>
+        /// <param name="matrix">The transformation matrix.</param>
         TSelf Transform(TMatrix matrix);
     }
 }
