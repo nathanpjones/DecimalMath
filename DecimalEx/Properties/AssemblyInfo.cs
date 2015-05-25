@@ -7,16 +7,16 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("DecimalEx")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Portable math support for Decimal that Microsoft forgot and more.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Nathan P Jones")]
 [assembly: AssemblyProduct("DecimalEx")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
 
-[assembly: InternalsVisibleTo("Decimal2D")]
+[assembly: InternalsVisibleTo("DecimalMath.Decimal2D")]
 
 // Version information for an assembly consists of the following four values:
 //

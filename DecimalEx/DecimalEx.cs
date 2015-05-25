@@ -545,7 +545,7 @@ namespace DecimalMath
         public static decimal Remainder(decimal d1, decimal d2)
         {
             if (Math.Abs(d1) < Math.Abs(d2)) return d1;
-
+            
             var timesInto = decimal.Truncate(d1 / d2);
             var shiftingNumber = d2;
             var sign = Math.Sign(d1);

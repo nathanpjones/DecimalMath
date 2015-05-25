@@ -7,9 +7,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Decimal2D")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Portable math support for Decimal-based geometric and trigonometric calculations.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Nathan P Jones")]
 [assembly: AssemblyProduct("Decimal2D")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
