@@ -9,6 +9,15 @@ Unfortunately, a lot of the usual number functionality is not provided for .NET.
 
 **Note** All of this I've used in the "real world", but this is also a hobby. Although the library is performant, I've perferred accuracy and readability to raw performance.
 
+## Install
+
+Install via [NuGet](https://www.nuget.org/packages/DecimalMath.DecimalEx) package manager console:
+```
+PM> Install-Package DecimalMath.DecimalEx
+```
+
+Or of course you can clone the repository and pull in the projects directly.
+
 # Libraries
 
 This project contains two portable libraries.
