@@ -12,8 +12,7 @@
     <AssemblyVersion>1.0.1.0</AssemblyVersion>
     <FileVersion>1.0.1.0</FileVersion>
     <VersionPrefix>$(AssemblyVersion)</VersionPrefix>
-    <PackageReleaseNotes>1.0.1 - Converted to .NET Standard
-1.0.0 - Internal</PackageReleaseNotes>
+    <PackageReleaseNotes></PackageReleaseNotes>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 

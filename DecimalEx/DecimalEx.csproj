@@ -16,8 +16,7 @@ Also included is other functionality for working with numbers in Decimal precisi
     <AssemblyVersion>1.0.1.0</AssemblyVersion>
     <FileVersion>1.0.1.0</FileVersion>
     <VersionPrefix>$(AssemblyVersion)</VersionPrefix>
-    <PackageReleaseNotes>1.0.1 - Converted to .NET Standard
-1.0.0 - Initial Release</PackageReleaseNotes>
+    <PackageReleaseNotes>This release is primarily geared at converted to .NET Standard. However, several other minor changes have been made. The performance of the Sqrt function has been dramatically improved by seeding the result from hardware. A Log method accepting a base was added. And Log10 and Log2 methods were also added.</PackageReleaseNotes>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
