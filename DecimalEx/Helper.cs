@@ -1,6 +1,6 @@
 ﻿namespace DecimalMath
 {
-    internal static class Helper
+    public static class Helper
     {
         public static void Swap<T>(ref T lhs, ref T rhs)
         {

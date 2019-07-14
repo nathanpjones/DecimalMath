@@ -188,3 +188,5 @@ FakesAssemblies/
 
 # Packaging temp files
 /packaging/nuget/
+/.vs
+/DecimalEx/DecimalEx.xml

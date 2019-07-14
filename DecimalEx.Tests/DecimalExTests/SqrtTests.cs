@@ -39,7 +39,7 @@ namespace DecimalExTests.DecimalExTests
         /// This test is just to exercise the algorithm so ignore for automatic tests.
         /// </summary>
         [Test]
-        [Ignore]
+        [Ignore("Exercise algorithm.")]
         public void TestRange()
         {
             var reset = new AutoResetEvent(false);
