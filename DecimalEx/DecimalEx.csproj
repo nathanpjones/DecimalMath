@@ -18,6 +18,8 @@ Also included is other functionality for working with numbers in Decimal precisi
     <VersionPrefix>$(AssemblyVersion)</VersionPrefix>
     <PackageReleaseNotes>This release is primarily geared at converted to .NET Standard. However, several other minor changes have been made. The performance of the Sqrt function has been dramatically improved by seeding the result from hardware. A Log method accepting a base was added. And Log10 and Log2 methods were also added.</PackageReleaseNotes>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/nathanpjones/DecimalMath.git</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
