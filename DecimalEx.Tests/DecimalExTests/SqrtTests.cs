@@ -20,10 +20,16 @@ namespace DecimalExTests.DecimalExTests
             new[] { 9m, 3m },
             new[] { 1777m, 42.15447781671598408129937593716m },
             new[] { 982451653m, 31344.084816756095550750189105763m },
+            new[] { 775351687m, 27845.137582709121891734259812835m },
+            new[] { 8137454422m, 90207.840135988180082281179096568m },
+            new[] { 4294967296m, 65536m },
+            new[] { 2199023255551m, 1482910.4003785933391041923650903m },
+            new[] { 2199023255552m, 1482910.4003789305138922795556769m },
+            new[] { 2199023255553m, 1482910.4003792676886803666695989m },
             new[] { decimal.MaxValue, 281474976710655.99999999999999822m },
         };
 
-        [TestCaseSource("TestCases")]
+        [TestCaseSource(nameof(TestCases))]
         public void Test(decimal s, decimal expected)
         {
             Assert.That(DecimalEx.Sqrt(s), Is.EqualTo(expected).Within(0m));

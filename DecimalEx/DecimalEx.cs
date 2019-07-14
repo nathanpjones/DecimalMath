@@ -32,23 +32,9 @@ namespace DecimalMath
             var lastX = -1m;
             decimal nextX;
 
-            // Begin with an estimate for the square root
-            var sForEstimate = s;
-            var estimateMultiplier = 1m;
-            while (sForEstimate >= 100m)
-            {
-                estimateMultiplier *= 10m;
-                sForEstimate /= 100m;
-            }
-
-            if (sForEstimate < 10m)
-            {
-                x = 2 * estimateMultiplier;
-            }
-            else
-            {
-                x = 6 * estimateMultiplier;
-            }
+            // Begin with an estimate for the square root.
+            // Use hardware to get us there quickly.
+            x = (decimal)Math.Sqrt(decimal.ToDouble(s));
 
             while (true)
             {
