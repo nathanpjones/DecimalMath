@@ -213,15 +213,12 @@ namespace DecimalMath
         public static decimal Log(decimal d)
         {
             if (d < 0) throw new ArgumentException("Natural logarithm is a complex number for values less than zero!", "d");
-            if (d == 0) throw new OverflowException("Natural logarithm is defined as negative infinitiy at zero which the Decimal data type can't represent!");
+            if (d == 0) throw new OverflowException("Natural logarithm is defined as negative infinity at zero which the Decimal data type can't represent!");
             
             if (d == 1) return 0;
 
             if (d >= 1)
             {
-                const decimal ln10 = 2.3025850929940456840179914547m;
-                //                   2.30258509299404568401799145468436420760110148862877297603332790096757
-                //                   from http://oeis.org/A002392/constant
                 var power = 0m;
 
                 var x = d;
@@ -231,7 +228,7 @@ namespace DecimalMath
                     power += 1;
                 }
 
-                return Log(x) + power * ln10;
+                return Log(x) + power * Ln10;
             }
             
             // See http://en.wikipedia.org/wiki/Natural_logarithm#Numerical_value
@@ -270,6 +267,55 @@ namespace DecimalMath
 
             return result;
 
+        }
+
+        /// <summary>
+        /// Returns the logarithm of a specified number in a specified base.
+        /// </summary>
+        /// <param name="d">A number whose logarithm is to be found.</param>
+        /// <param name="newBase">The base of the logarithm.</param>
+        /// <remarks>
+        /// This is a relatively naive implementation that simply divides the
+        /// natural log of <paramref name="d"/> by the natural log of the base.
+        /// </remarks>
+        public static decimal Log(decimal d, decimal newBase)
+        {
+            // Short circuit the checks below if d is 1 because
+            // that will yield 0 in the numerator below and give us
+            // 0 for any base, even ones that would yield infinity.
+            if (d == 1) return 0m;
+
+            if (newBase == 1) throw new InvalidOperationException("Logarithm for base 1 is undefined.");
+            if (d < 0) throw new ArgumentException("Logarithm is a complex number for values less than zero!", nameof(d));
+            if (d == 0) throw new OverflowException("Logarithm is defined as negative infinity at zero which the Decimal data type can't represent!");
+            if (newBase < 0) throw new ArgumentException("Logarithm base would be a complex number for values less than zero!", nameof(newBase));
+            if (newBase == 0) throw new OverflowException("Logarithm base would be negative infinity at zero which the Decimal data type can't represent!");
+
+            return Log(d) / Log(newBase);
+        }
+
+        /// <summary>
+        /// Returns the base 10 logarithm of a specified number.
+        /// </summary>
+        /// <param name="d">A number whose logarithm is to be found.</param>
+        public static decimal Log10(decimal d)
+        {
+            if (d < 0) throw new ArgumentException("Logarithm is a complex number for values less than zero!", nameof(d));
+            if (d == 0) throw new OverflowException("Logarithm is defined as negative infinity at zero which the Decimal data type can't represent!");
+
+            return Log(d) / Ln10;
+        }
+
+        /// <summary>
+        /// Returns the base 2 logarithm of a specified number.
+        /// </summary>
+        /// <param name="d">A number whose logarithm is to be found.</param>
+        public static decimal Log2(decimal d)
+        {
+            if (d < 0) throw new ArgumentException("Logarithm is a complex number for values less than zero!", nameof(d));
+            if (d == 0) throw new OverflowException("Logarithm is defined as negative infinity at zero which the Decimal data type can't represent!");
+
+            return Log(d) / Ln2;
         }
 
         /// <summary>

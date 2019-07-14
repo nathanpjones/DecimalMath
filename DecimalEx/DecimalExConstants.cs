@@ -28,6 +28,23 @@
         /// </remarks>
         public const decimal E = 2.7182818284590452353602874714m;
 
+        /// <summary>
+        /// The value of the natural logarithm of 10.
+        /// </summary>
+        /// <remarks>
+        /// Full value is: 2.30258509299404568401799145468436420760110148862877297603332790096757
+        /// From: http://oeis.org/A002392/constant
+        /// </remarks>
+        public const decimal Ln10 = 2.3025850929940456840179914547m;
+        /// <summary>
+        /// The value of the natural logarithm of 2.
+        /// </summary>
+        /// <remarks>
+        /// Full value is: .693147180559945309417232121458176568075500134360255254120680009493393621969694715605863326996418687
+        /// From: http://oeis.org/A002162/constant
+        /// </remarks>
+        public const decimal Ln2 = 0.6931471805599453094172321215m;
+
         // Fast access for 10^n
         internal static readonly decimal[] PowersOf10 =
         {
