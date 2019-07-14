@@ -1,42 +1,35 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <Configurations>Debug;Release</Configurations>
-    <Platforms>AnyCPU;iPhone;iPhoneSimulator;x86</Platforms>    
-    <!--
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>$(VS_SIGNATURE_FILE)</AssemblyOriginatorKeyFile>
-    <DelaySign>false</DelaySign>
-    -->
-    <DocumentationFile>$(OutDir)$(RootNameSpace).xml</DocumentationFile>
-    <OutputPath>$(SolutionDir)bin\</OutputPath>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-    <LangVersion>latest</LangVersion>
-    <NoWarn>7035</NoWarn>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>Portable math support for Decimal that Microsoft forgot and more.
+
+Includes Decimal versions of Sqrt, Pow, Exp, and Log as well as the trig functions Sin, Cos, Tan, ASin, ACos, ATan, ATan2.
+
+Also included is other functionality for working with numbers in Decimal precision.</Description>
+    <Authors>Nathan P Jones</Authors>
+    <PackageId>DecimalMath.DecimalEx</PackageId>
+    <Copyright>Copyright 2015-2019 - Nathan P Jones</Copyright>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/nathanpjones/DecimalMath</PackageProjectUrl>
+    <PackageTags>c# decimal math trigonometry</PackageTags>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
+    <VersionPrefix>$(AssemblyVersion)</VersionPrefix>
+    <PackageReleaseNotes>1.0.1 - Converted to .NET Standard
+1.0.0 - Initial Release</PackageReleaseNotes>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
 
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\$(RootNameSpace).xml</DocumentationFile>
-  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
