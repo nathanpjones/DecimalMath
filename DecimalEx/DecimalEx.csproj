@@ -9,14 +9,14 @@ Includes Decimal versions of Sqrt, Pow, Exp, and Log as well as the trig functio
 Also included is other functionality for working with numbers in Decimal precision.</Description>
     <Authors>Nathan P Jones</Authors>
     <PackageId>DecimalMath.DecimalEx</PackageId>
-    <Copyright>Copyright 2015-2019 - Nathan P Jones</Copyright>
+    <Copyright>Copyright 2015-2020 - Nathan P Jones</Copyright>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/nathanpjones/DecimalMath</PackageProjectUrl>
     <PackageTags>c# decimal math trigonometry</PackageTags>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
-    <FileVersion>1.0.1.0</FileVersion>
+    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+    <FileVersion>1.0.2.0</FileVersion>
     <VersionPrefix>$(AssemblyVersion)</VersionPrefix>
-    <PackageReleaseNotes>This release is primarily geared at converted to .NET Standard. However, several other minor changes have been made. The performance of the Sqrt function has been dramatically improved by seeding the result from hardware. A Log method accepting a base was added. And Log10 and Log2 methods were also added.</PackageReleaseNotes>
+    <PackageReleaseNotes>Added special-case handling for powers of 10 in Log10.</PackageReleaseNotes>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/nathanpjones/DecimalMath.git</RepositoryUrl>
