@@ -303,6 +303,28 @@ namespace DecimalMath
             if (d < 0) throw new ArgumentException("Logarithm is a complex number for values less than zero!", nameof(d));
             if (d == 0) throw new OverflowException("Logarithm is defined as negative infinity at zero which the Decimal data type can't represent!");
 
+            // Shrink precision from the input value and get bits for analysis
+            var parts = decimal.GetBits(d / 1.000000000000000000000000000000000m);
+            var scale = (parts[3] >> 16) & 0x7F;
+
+            // Handle special cases of .1, .01, .001, etc.
+            if (parts[0] == 1 && parts[1] == 0 && parts[2] == 0)
+            {
+                return -1 * scale;
+            }
+
+            // Handle special cases of powers of 10
+            // Note: A binary search was actually found to be faster on average probably because it takes fewer iterations to find no match.
+            //       It's even faster than doing a modulus 10 check first.
+            if (scale == 0)
+            {
+                var powerOf10 = Array.BinarySearch(PowersOf10, d);
+                if (powerOf10 >= 0)
+                {
+                    return powerOf10;
+                }
+            }
+
             return Log(d) / Ln10;
         }
 
