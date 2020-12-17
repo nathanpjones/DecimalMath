@@ -51,6 +51,19 @@ namespace DecimalMath
             return (lineSegA.Pt1 == lineSegB.Pt1) && (lineSegA.Pt2 == lineSegB.Pt2);
         }
 
+        public override bool Equals(object obj)
+        {
+            return obj is LineSeg2D other && other == this;
+        }
+
+        public override int GetHashCode()
+        {
+            int hashCode = -913818983;
+            hashCode = hashCode * -1521134295 + Pt1.GetHashCode();
+            hashCode = hashCode * -1521134295 + Pt2.GetHashCode();
+            return hashCode;
+        }
+
         /// <summary>
         /// Gets or sets the midpoint of the line segment.
         /// </summary>

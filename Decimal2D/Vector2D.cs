@@ -105,6 +105,7 @@ namespace DecimalMath
             }
             return this == (Vector2D)obj;
         }
+
         /// <summary>
         /// Compares this point against another to the given number of decimal places.
         /// </summary>
@@ -122,6 +123,14 @@ namespace DecimalMath
         public static bool operator !=(Vector2D objA, Vector2D objB)
         {
             return objA.X != objB.X || objA.Y != objB.Y;
+        }
+
+        public override int GetHashCode()
+        {
+            int hashCode = 1861411795;
+            hashCode = hashCode * -1521134295 + X.GetHashCode();
+            hashCode = hashCode * -1521134295 + Y.GetHashCode();
+            return hashCode;
         }
 
         /// <summary>
