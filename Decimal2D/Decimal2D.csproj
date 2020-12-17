@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;netcoreapp3.1;net50</TargetFrameworks>
     <Description>Portable math support for Decimal-based geometric and trigonometric calculations.</Description>
     <Authors>Nathan P Jones</Authors>
     <PackageId>DecimalMath.Decimal2D</PackageId>
@@ -16,6 +16,7 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/nathanpjones/DecimalMath.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <AssemblyOriginatorKeyFile>..\sign.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>

@@ -135,6 +135,19 @@ namespace DecimalMath
             return objA.Center != objB.Center || objA._radius != objB._radius;
         }
 
+        public override bool Equals(object obj)
+        {
+            return obj is Circle2D other && other == this;
+        }
+
+        public override int GetHashCode()
+        {
+            int hashCode = 1922506679;
+            hashCode = hashCode * -1521134295 + _center.GetHashCode();
+            hashCode = hashCode * -1521134295 + _radius.GetHashCode();
+            return hashCode;
+        }
+
         /// <summary>
         /// Returns a new circle with a radius equal to this circle's radius
         /// plus the amount specified. Negative amounts are allowed.
@@ -1257,6 +1270,5 @@ namespace DecimalMath
             return string.Format("_circle {0},{1} {2}{3}", _center.X, _center.Y, _radius, (linefeedTerminate ? "\r\n" : " "));
 
         }
-
     }
 }

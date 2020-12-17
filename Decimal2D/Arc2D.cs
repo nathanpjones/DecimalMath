@@ -169,6 +169,19 @@ namespace DecimalMath
             return objA.Circle != objB.Circle || objA._startAngle != objB._startAngle || objA._endAngle != objB._endAngle;
         }
 
+        public override bool Equals(object obj)
+        {
+            return obj is Arc2D other && other == this;
+        }
+        public override int GetHashCode()
+        {
+            int hashCode = 146115040;
+            hashCode = hashCode * -1521134295 + Circle.GetHashCode();
+            hashCode = hashCode * -1521134295 + _startAngle.GetHashCode();
+            hashCode = hashCode * -1521134295 + _endAngle.GetHashCode();
+            return hashCode;
+        }
+
         /// <summary>
         /// Gets or sets the center of the arc as an XY point.
         /// </summary>
@@ -410,6 +423,5 @@ namespace DecimalMath
             return string.Format("_arc {0},{1} c {2},{3} {4},{5}{6}", StartPt.X, StartPt.Y, Circle.Center.X, Circle.Center.Y, EndPt.X, EndPt.Y, (linefeedTerminate ? "\r\n" : " "));
 
         }
-
     }
 }
