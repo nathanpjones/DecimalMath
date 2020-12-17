@@ -20,7 +20,8 @@ Also included is other functionality for working with numbers in Decimal precisi
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/nathanpjones/DecimalMath.git</RepositoryUrl>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\sign.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>

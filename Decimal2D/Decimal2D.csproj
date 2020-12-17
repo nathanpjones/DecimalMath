@@ -16,6 +16,7 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/nathanpjones/DecimalMath.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <AssemblyOriginatorKeyFile>..\sign.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>
