@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 
 namespace DecimalMath
@@ -49,6 +48,15 @@ namespace DecimalMath
             }
 
             return nextX;
+        }
+
+        /// <summary>
+        /// Returns a specified number raised to the power of 2 - squared.
+        /// </summary>
+        /// <param name="x">A number to be squared.</param>
+        public static decimal Sqr(decimal x)
+        {
+            return Pow(x, 2m);
         }
 
         /// <summary>
@@ -111,7 +119,7 @@ namespace DecimalMath
         /// </remarks>
         private static decimal ExpBySquaring(decimal x, decimal y)
         {
-            Debug.Assert(y >= 0 && decimal.Truncate(y) == y, "Only non-negative, integer powers supported.");
+            //Debug.Assert(y >= 0 && decimal.Truncate(y) == y, "Only non-negative, integer powers supported.");
             if (y < 0) throw new ArgumentOutOfRangeException("y", "Negative exponents not supported!");
             if (decimal.Truncate(y) != y) throw new ArgumentException("Exponent must be an integer!", "y");
 
