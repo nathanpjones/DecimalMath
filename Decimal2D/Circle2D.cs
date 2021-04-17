@@ -592,8 +592,8 @@ namespace DecimalMath
             decimal rad = DecimalEx.ToRad(degrees + r.AngleA);
             LineSeg2D ret = default(LineSeg2D);
 
-            Debug.Assert(r.AngleA == RightTriangle.GetAngleFromSides(length, _radius));
-            Debug.Assert(r.Hypotenuse == RightTriangle.GetHypFromSides(length, _radius));
+            //Debug.Assert(r.AngleA == RightTriangle.GetAngleFromSides(length, _radius));
+            //Debug.Assert(r.Hypotenuse == RightTriangle.GetHypFromSides(length, _radius));
 
             ret.Pt1 = PointAt(degrees);
             if (!clockwise)

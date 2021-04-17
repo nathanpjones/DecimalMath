@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 
 namespace DecimalMath
 {
@@ -118,8 +117,8 @@ namespace DecimalMath
                     nextAdd *= -1 * xSquared / (doubleIteration * doubleIteration + doubleIteration);
                 }
 
-                Debug.WriteLine("{0:000}:{1,33:+0.0000000000000000000000000000;-0.0000000000000000000000000000} ->{2,33:+0.0000000000000000000000000000;-0.0000000000000000000000000000}",
-                    doubleIteration / 2, nextAdd, result + nextAdd);
+                //Debug.WriteLine("{0:000}:{1,33:+0.0000000000000000000000000000;-0.0000000000000000000000000000} ->{2,33:+0.0000000000000000000000000000;-0.0000000000000000000000000000}",
+                //    doubleIteration / 2, nextAdd, result + nextAdd);
                 if (nextAdd == 0) break;
 
                 result += nextAdd;
