@@ -118,8 +118,10 @@ namespace DecimalMath
                     nextAdd *= -1 * xSquared / (doubleIteration * doubleIteration + doubleIteration);
                 }
 
+#if DEBUGWITHMESSAGES
                 Debug.WriteLine("{0:000}:{1,33:+0.0000000000000000000000000000;-0.0000000000000000000000000000} ->{2,33:+0.0000000000000000000000000000;-0.0000000000000000000000000000}",
                     doubleIteration / 2, nextAdd, result + nextAdd);
+#endif
                 if (nextAdd == 0) break;
 
                 result += nextAdd;
