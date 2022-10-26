@@ -192,6 +192,71 @@ namespace DecimalExTests.DecimalExTests
         }
 
         #endregion
-    }
+        
+        [Test]
+        public void LnThrowsIfArgZero()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => DecimalEx.Ln(0));
+        }
 
+        [Test]
+        public void LnThrowsIfArgNegative()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => DecimalEx.Ln(-1));
+        }
+
+        [Test]
+        public void LnTest()
+        {
+            decimal m;
+
+            m = 1;
+            Assert.AreEqual(0, DecimalEx.Ln(m));
+
+            m = 2;
+            Assert.AreEqual(Math.Log((double)m), DecimalEx.Ln(m));
+
+            m = 10;
+            Assert.AreEqual(Math.Log((double)m), DecimalEx.Ln(m));
+
+            m = DecimalEx.E;
+            Assert.AreEqual(1, DecimalEx.Ln(m));
+
+            m = decimal.MaxValue;
+            Assert.AreEqual(Math.Log((double)m), DecimalEx.Ln(m));
+
+            m = DecimalEx.SmallestNonZeroDec;
+            Assert.AreEqual(Math.Log((double)m), DecimalEx.Ln(m));
+
+            m = 1.23456789m;
+            Assert.AreEqual(Math.Log((double)m), DecimalEx.Ln(m));
+
+            m = 9.87654321m;
+            Assert.AreEqual(Math.Log((double)m), DecimalEx.Ln(m));
+
+            m = 123456789m;
+            Assert.AreEqual(Math.Log((double)m), DecimalEx.Ln(m));
+
+            m = 9876543210m;
+            Assert.AreEqual(Math.Log((double)m), DecimalEx.Ln(m));
+
+            m = 0.00000000000000000123456789m;
+            Assert.AreEqual(Math.Log((double)m), DecimalEx.Ln(m));
+
+            m = 0.00000000000000000987654321m;
+            Assert.AreEqual(Math.Log((double)m), DecimalEx.Ln(m));
+        }
+
+        [Test]
+        public void Log1Base0Returns0()
+        {
+            Assert.AreEqual(0, DecimalEx.Log(1, 0));
+        }
+
+        [Test]
+        public void LogThrowsIfBase1()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => DecimalEx.Log(1.234m, 1));
+        }
+    }
 }

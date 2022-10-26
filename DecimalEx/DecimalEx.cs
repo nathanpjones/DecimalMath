@@ -202,143 +202,169 @@ namespace DecimalMath
         }
 
         /// <summary>
-        /// Returns the natural (base e) logarithm of a specified number.
+        /// Calculate the natural logarithm of a decimal.
+        /// Algorithm from:
+        /// <see href="https://en.wikipedia.org/wiki/Natural_logarithm" />
+        /// I prefer this method name to "Log", but I've provided Log() as an alias.
+        /// <see cref="DecimalEx.Log(decimal)" />
+        /// <see cref="Math.Log(double)" />
         /// </summary>
-        /// <param name="d">A number whose logarithm is to be found.</param>
-        /// <remarks>
-        /// I'm still not satisfied with the speed. I tried several different
-        /// algorithms that you can find in a historical version of this 
-        /// source file. The one I settled on was the best of mediocrity.
-        /// </remarks>
-        public static decimal Log(decimal d)
+        /// <param name="m">A decimal value.</param>
+        /// <returns>The natural logarithm of the given value.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// If the argument is less than or equal to 0.
+        /// </exception>
+        public static decimal Ln(decimal m)
         {
-            if (d < 0) throw new ArgumentException("Natural logarithm is a complex number for values less than zero!", "d");
-            if (d == 0) throw new OverflowException("Natural logarithm is defined as negative infinity at zero which the Decimal data type can't represent!");
-            
-            if (d == 1) return 0;
-
-            if (d >= 1)
+            // Guards.
+            if (m == 0)
             {
-                var power = 0m;
-
-                var x = d;
-                while (x > 1)
-                {
-                    x /= 10;
-                    power += 1;
-                }
-
-                return Log(x) + power * Ln10;
+                throw new ArgumentOutOfRangeException(nameof(m),
+                    "The logarithm of 0 is undefined. Math.Log(0) returns -Infinity, but the decimal type doesn't provide a way to represent this.");
             }
-            
-            // See http://en.wikipedia.org/wiki/Natural_logarithm#Numerical_value
-            // for more information on this faster-converging series.
 
-            decimal y;
-            decimal ySquared;
+            if (m < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(m),
+                    "The logarithm of a negative value is a complex number. Use DecimalComplex.Ln().");
+            }
 
-            var iteration = 0;
-            var exponent = 0m;
-            var nextAdd = 0m;
-            var result = 0m;
+            // Optimizations.
+            switch (m)
+            {
+                case 1: return 0;
+                case 2: return Ln2;
+                case 10: return Ln10;
+                case E: return 1;
+            }
 
-            y = (d - 1) / (d + 1);
-            ySquared = y * y;
+            // Scale the value to the range (0..1) so the Taylor series converges
+            // quickly and to avoid overflow. Using double methods for speed.
+            int scale = (int)Math.Floor(Math.Log10((double)m)) + 1;
+            decimal x;
 
+            // Some cleverness to avoid overflow if scale == 29.
+            if (scale <= 28)
+            {
+                x = m / Pow10(scale);
+            }
+            else
+            {
+                x = m / 1e28m / Pow10(scale - 28);
+            }
+
+            // Use the Taylor series.
+            x--;
+            decimal xx = x;
+            int n = 1;
+            int s = 1;
+            decimal oldValue = 0;
+            decimal newValue = 0;
             while (true)
             {
-                if (iteration == 0)
+                // Calculate the next term in the series.
+                decimal term = s * xx / n;
+                
+                // Check if done.
+                if (term == 0m)
                 {
-                    exponent = 2 * y;
-                }
-                else
-                {
-                    exponent = exponent * ySquared;
+                    break;
                 }
                 
-                nextAdd = exponent / (2 * iteration + 1);
-
-                if (nextAdd == 0) break;
-
-                result += nextAdd;
-
-                iteration += 1;
+                // Add the term.
+                newValue = oldValue + term;
+                
+                // Prepare to calculate the next term.
+                s = -s;
+                xx *= x;
+                n++;
+                oldValue = newValue;
             }
 
-            return result;
-
+            // Scale back.
+            return newValue + scale * Ln10;
         }
 
         /// <summary>
-        /// Returns the logarithm of a specified number in a specified base.
+        /// Calculate the natural logarithm.
+        /// Alias for Ln() to match method names used elsewhere.
+        /// <see cref="DecimalEx.Log(decimal)" />
+        /// <see cref="Math.Log(double)" />
         /// </summary>
-        /// <param name="d">A number whose logarithm is to be found.</param>
-        /// <param name="newBase">The base of the logarithm.</param>
-        /// <remarks>
-        /// This is a relatively naive implementation that simply divides the
-        /// natural log of <paramref name="d"/> by the natural log of the base.
-        /// </remarks>
-        public static decimal Log(decimal d, decimal newBase)
-        {
-            // Short circuit the checks below if d is 1 because
-            // that will yield 0 in the numerator below and give us
-            // 0 for any base, even ones that would yield infinity.
-            if (d == 1) return 0m;
-
-            if (newBase == 1) throw new InvalidOperationException("Logarithm for base 1 is undefined.");
-            if (d < 0) throw new ArgumentException("Logarithm is a complex number for values less than zero!", nameof(d));
-            if (d == 0) throw new OverflowException("Logarithm is defined as negative infinity at zero which the Decimal data type can't represent!");
-            if (newBase < 0) throw new ArgumentException("Logarithm base would be a complex number for values less than zero!", nameof(newBase));
-            if (newBase == 0) throw new OverflowException("Logarithm base would be negative infinity at zero which the Decimal data type can't represent!");
-
-            return Log(d) / Log(newBase);
-        }
+        /// <param name="m">A decimal value.</param>
+        /// <returns>The natural log of the given value.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// If the argument is less than or equal to 0.
+        /// </exception>
+        public static decimal Log(decimal m) => Ln(m);
 
         /// <summary>
-        /// Returns the base 10 logarithm of a specified number.
+        /// Logarithm of a decimal in a specified base.
+        /// <see cref="Math.Log(double, double)" />
+        /// <see cref="DecimalEx.Log(decimal, decimal)" />
         /// </summary>
-        /// <param name="d">A number whose logarithm is to be found.</param>
-        public static decimal Log10(decimal d)
+        /// <param name="m">The decimal value.</param>
+        /// <param name="b">The base.</param>
+        /// <returns>The logarithm of z in base b.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// If the number is less than or equal to 0.
+        /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// If the base is less than or equal to 0, or equal to 1.
+        /// </exception>
+        public static decimal Log(decimal m, decimal b)
         {
-            if (d < 0) throw new ArgumentException("Logarithm is a complex number for values less than zero!", nameof(d));
-            if (d == 0) throw new OverflowException("Logarithm is defined as negative infinity at zero which the Decimal data type can't represent!");
-
-            // Shrink precision from the input value and get bits for analysis
-            var parts = decimal.GetBits(d / 1.000000000000000000000000000000000m);
-            var scale = (parts[3] >> 16) & 0x7F;
-
-            // Handle special cases of .1, .01, .001, etc.
-            if (parts[0] == 1 && parts[1] == 0 && parts[2] == 0)
+            if (b == 1)
             {
-                return -1 * scale;
+                throw new ArgumentOutOfRangeException(nameof(b), 
+                    "Logarithms are undefined for a base of 1.");
             }
 
-            // Handle special cases of powers of 10
-            // Note: A binary search was actually found to be faster on average probably because it takes fewer iterations to find no match.
-            //       It's even faster than doing a modulus 10 check first.
-            if (scale == 0)
+            // 0^0 == 1. Mimics Math.Log().
+            if (m == 1 && b == 0)
             {
-                var powerOf10 = Array.BinarySearch(PowersOf10, d);
-                if (powerOf10 >= 0)
-                {
-                    return powerOf10;
-                }
+                return 0;
             }
 
-            return Log(d) / Ln10;
+            // This will throw if m <= 0 || b <= 0.
+            return Ln(m) / Ln(b);
         }
 
         /// <summary>
-        /// Returns the base 2 logarithm of a specified number.
+        /// Logarithm of a decimal in base 10.
+        /// <see cref="Math.Log10" />
+        /// <see cref="DecimalEx.Log10" />
         /// </summary>
-        /// <param name="d">A number whose logarithm is to be found.</param>
-        public static decimal Log2(decimal d)
-        {
-            if (d < 0) throw new ArgumentException("Logarithm is a complex number for values less than zero!", nameof(d));
-            if (d == 0) throw new OverflowException("Logarithm is defined as negative infinity at zero which the Decimal data type can't represent!");
+        /// <param name="m">The decimal value.</param>
+        /// <returns>The logarithm of the number in base 10.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// If the number is less than or equal to 0.
+        /// </exception>
+        public static decimal Log10(decimal m) => Log(m, 10);
 
-            return Log(d) / Ln2;
-        }
+        /// <summary>
+        /// Calculate 10 raised to a decimal power.
+        /// </summary>
+        /// <param name="m">A decimal value.</param>
+        /// <returns>10^d</returns>
+        public static decimal Pow10(decimal m) => Pow(10, m);
+
+        /// <summary>
+        /// Logarithm of a decimal in base 2.
+        /// </summary>
+        /// <param name="m">The decimal value.</param>
+        /// <returns>The logarithm of the number in base 2.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// If the number is less than or equal to 0.
+        /// </exception>
+        public static decimal Log2(decimal m) => Log(m, 2);
+
+        /// <summary>
+        /// Calculate 2 raised to a decimal power.
+        /// </summary>
+        /// <param name="m">A decimal value.</param>
+        /// <returns>2^d</returns>
+        public static decimal Pow2(decimal m) => Pow(2, m);
 
         /// <summary>
         /// Returns the factorial of a number n expressed as n!. Factorial is
