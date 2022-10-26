@@ -233,9 +233,9 @@ namespace DecimalMath
             switch (m)
             {
                 case 1: return 0;
-                case 2: return DecimalEx.Ln2;
-                case 10: return DecimalEx.Ln10;
-                case DecimalEx.E: return 1;
+                case 2: return Ln2;
+                case 10: return Ln10;
+                case E: return 1;
             }
 
             // Scale the value to the range (0..1) so the Taylor series converges
@@ -282,7 +282,7 @@ namespace DecimalMath
             }
 
             // Scale back.
-            return newValue + scale * DecimalEx.Ln10;
+            return newValue + scale * Ln10;
         }
 
         /// <summary>
@@ -347,7 +347,7 @@ namespace DecimalMath
         /// </summary>
         /// <param name="m">A decimal value.</param>
         /// <returns>10^d</returns>
-        public static decimal Pow10(decimal m) => DecimalEx.Pow(10, m);
+        public static decimal Pow10(decimal m) => Pow(10, m);
 
         /// <summary>
         /// Logarithm of a decimal in base 2.
@@ -364,7 +364,7 @@ namespace DecimalMath
         /// </summary>
         /// <param name="m">A decimal value.</param>
         /// <returns>2^d</returns>
-        public static decimal Pow2(decimal m) => DecimalEx.Pow(2, m);
+        public static decimal Pow2(decimal m) => Pow(2, m);
 
         /// <summary>
         /// Returns the factorial of a number n expressed as n!. Factorial is
