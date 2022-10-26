@@ -1,0 +1,3 @@
+is_global = true
+build_property.RootNamespace = DecimalEx.Tests
+build_property.ProjectDir = /Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/DecimalEx.Tests/

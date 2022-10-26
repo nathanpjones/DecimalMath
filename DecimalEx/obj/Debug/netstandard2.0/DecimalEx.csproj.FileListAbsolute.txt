@@ -1,0 +1,20 @@
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/DecimalEx/bin/Debug/netstandard2.0/DecimalEx.deps.json
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/DecimalEx/bin/Debug/netstandard2.0/DecimalEx.dll
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/DecimalEx/bin/Debug/netstandard2.0/DecimalEx.pdb
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/DecimalEx/obj/Debug/netstandard2.0/DecimalEx.csproj.AssemblyReference.cache
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/DecimalEx/obj/Debug/netstandard2.0/DecimalEx.GeneratedMSBuildEditorConfig.editorconfig
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/DecimalEx/obj/Debug/netstandard2.0/DecimalEx.AssemblyInfoInputs.cache
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/DecimalEx/obj/Debug/netstandard2.0/DecimalEx.AssemblyInfo.cs
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/DecimalEx/obj/Debug/netstandard2.0/DecimalEx.csproj.CoreCompileInputs.cache
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/DecimalEx/obj/Debug/netstandard2.0/DecimalEx.dll
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/DecimalEx/obj/Debug/netstandard2.0/DecimalEx.pdb
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/DecimalEx/bin/Debug/netstandard2.0/DecimalEx.deps.json
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/DecimalEx/bin/Debug/netstandard2.0/DecimalEx.dll
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/DecimalEx/bin/Debug/netstandard2.0/DecimalEx.pdb
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/DecimalEx/obj/Debug/netstandard2.0/DecimalEx.csproj.AssemblyReference.cache
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/DecimalEx/obj/Debug/netstandard2.0/DecimalEx.GeneratedMSBuildEditorConfig.editorconfig
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/DecimalEx/obj/Debug/netstandard2.0/DecimalEx.AssemblyInfoInputs.cache
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/DecimalEx/obj/Debug/netstandard2.0/DecimalEx.AssemblyInfo.cs
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/DecimalEx/obj/Debug/netstandard2.0/DecimalEx.csproj.CoreCompileInputs.cache
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/DecimalEx/obj/Debug/netstandard2.0/DecimalEx.dll
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/DecimalEx/obj/Debug/netstandard2.0/DecimalEx.pdb

@@ -1,0 +1,26 @@
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D/bin/Debug/netstandard2.0/Decimal2D.deps.json
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D/bin/Debug/netstandard2.0/Decimal2D.dll
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D/bin/Debug/netstandard2.0/Decimal2D.pdb
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D/bin/Debug/netstandard2.0/DecimalEx.dll
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D/bin/Debug/netstandard2.0/DecimalEx.pdb
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D/obj/Debug/netstandard2.0/Decimal2D.csproj.AssemblyReference.cache
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D/obj/Debug/netstandard2.0/Decimal2D.GeneratedMSBuildEditorConfig.editorconfig
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D/obj/Debug/netstandard2.0/Decimal2D.AssemblyInfoInputs.cache
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D/obj/Debug/netstandard2.0/Decimal2D.AssemblyInfo.cs
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D/obj/Debug/netstandard2.0/Decimal2D.csproj.CoreCompileInputs.cache
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D/obj/Debug/netstandard2.0/Decimal2D.csproj.CopyComplete
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D/obj/Debug/netstandard2.0/Decimal2D.dll
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D/obj/Debug/netstandard2.0/Decimal2D.pdb
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D/bin/Debug/netstandard2.0/Decimal2D.deps.json
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D/bin/Debug/netstandard2.0/Decimal2D.dll
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D/bin/Debug/netstandard2.0/Decimal2D.pdb
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D/bin/Debug/netstandard2.0/DecimalEx.dll
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D/bin/Debug/netstandard2.0/DecimalEx.pdb
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D/obj/Debug/netstandard2.0/Decimal2D.csproj.AssemblyReference.cache
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D/obj/Debug/netstandard2.0/Decimal2D.GeneratedMSBuildEditorConfig.editorconfig
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D/obj/Debug/netstandard2.0/Decimal2D.AssemblyInfoInputs.cache
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D/obj/Debug/netstandard2.0/Decimal2D.AssemblyInfo.cs
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D/obj/Debug/netstandard2.0/Decimal2D.csproj.CoreCompileInputs.cache
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D/obj/Debug/netstandard2.0/Decimal2D.csproj.CopyComplete
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D/obj/Debug/netstandard2.0/Decimal2D.dll
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D/obj/Debug/netstandard2.0/Decimal2D.pdb

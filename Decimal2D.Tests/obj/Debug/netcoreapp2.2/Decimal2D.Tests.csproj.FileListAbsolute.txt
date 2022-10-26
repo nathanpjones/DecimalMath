@@ -1,0 +1,42 @@
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D.Tests/bin/Debug/netcoreapp2.2/NUnit3.TestAdapter.dll
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D.Tests/bin/Debug/netcoreapp2.2/NUnit3.TestAdapter.pdb
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D.Tests/bin/Debug/netcoreapp2.2/nunit.engine.netstandard.dll
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D.Tests/bin/Debug/netcoreapp2.2/Decimal2D.Tests.deps.json
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D.Tests/bin/Debug/netcoreapp2.2/Decimal2D.Tests.runtimeconfig.json
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D.Tests/bin/Debug/netcoreapp2.2/Decimal2D.Tests.runtimeconfig.dev.json
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D.Tests/bin/Debug/netcoreapp2.2/Decimal2D.Tests.dll
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D.Tests/bin/Debug/netcoreapp2.2/Decimal2D.Tests.pdb
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D.Tests/bin/Debug/netcoreapp2.2/Decimal2D.dll
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D.Tests/bin/Debug/netcoreapp2.2/DecimalEx.dll
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D.Tests/bin/Debug/netcoreapp2.2/Decimal2D.pdb
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D.Tests/bin/Debug/netcoreapp2.2/DecimalEx.pdb
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D.Tests/obj/Debug/netcoreapp2.2/Decimal2D.Tests.csproj.AssemblyReference.cache
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D.Tests/obj/Debug/netcoreapp2.2/Decimal2D.Tests.GeneratedMSBuildEditorConfig.editorconfig
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D.Tests/obj/Debug/netcoreapp2.2/Decimal2D.Tests.AssemblyInfoInputs.cache
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D.Tests/obj/Debug/netcoreapp2.2/Decimal2D.Tests.AssemblyInfo.cs
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D.Tests/obj/Debug/netcoreapp2.2/Decimal2D.Tests.csproj.CoreCompileInputs.cache
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D.Tests/obj/Debug/netcoreapp2.2/Decimal2D.Tests.csproj.CopyComplete
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D.Tests/obj/Debug/netcoreapp2.2/Decimal2D.Tests.dll
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D.Tests/obj/Debug/netcoreapp2.2/Decimal2D.Tests.pdb
+/Users/shaun/Documents/Web & software development/C#/Projects/3rd party/MyDecimalMath/Decimal2D.Tests/obj/Debug/netcoreapp2.2/Decimal2D.Tests.genruntimeconfig.cache
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D.Tests/bin/Debug/netcoreapp2.2/NUnit3.TestAdapter.dll
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D.Tests/bin/Debug/netcoreapp2.2/NUnit3.TestAdapter.pdb
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D.Tests/bin/Debug/netcoreapp2.2/nunit.engine.netstandard.dll
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D.Tests/bin/Debug/netcoreapp2.2/Decimal2D.Tests.deps.json
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D.Tests/bin/Debug/netcoreapp2.2/Decimal2D.Tests.runtimeconfig.json
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D.Tests/bin/Debug/netcoreapp2.2/Decimal2D.Tests.runtimeconfig.dev.json
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D.Tests/bin/Debug/netcoreapp2.2/Decimal2D.Tests.dll
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D.Tests/bin/Debug/netcoreapp2.2/Decimal2D.Tests.pdb
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D.Tests/bin/Debug/netcoreapp2.2/Decimal2D.dll
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D.Tests/bin/Debug/netcoreapp2.2/DecimalEx.dll
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D.Tests/bin/Debug/netcoreapp2.2/Decimal2D.pdb
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D.Tests/bin/Debug/netcoreapp2.2/DecimalEx.pdb
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D.Tests/obj/Debug/netcoreapp2.2/Decimal2D.Tests.csproj.AssemblyReference.cache
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D.Tests/obj/Debug/netcoreapp2.2/Decimal2D.Tests.GeneratedMSBuildEditorConfig.editorconfig
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D.Tests/obj/Debug/netcoreapp2.2/Decimal2D.Tests.AssemblyInfoInputs.cache
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D.Tests/obj/Debug/netcoreapp2.2/Decimal2D.Tests.AssemblyInfo.cs
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D.Tests/obj/Debug/netcoreapp2.2/Decimal2D.Tests.csproj.CoreCompileInputs.cache
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D.Tests/obj/Debug/netcoreapp2.2/Decimal2D.Tests.csproj.CopyComplete
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D.Tests/obj/Debug/netcoreapp2.2/Decimal2D.Tests.dll
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D.Tests/obj/Debug/netcoreapp2.2/Decimal2D.Tests.pdb
+/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D.Tests/obj/Debug/netcoreapp2.2/Decimal2D.Tests.genruntimeconfig.cache

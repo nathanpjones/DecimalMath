@@ -1,0 +1,208 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D.Tests/Decimal2D.Tests.csproj": {}
+  },
+  "projects": {
+    "/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D.Tests/Decimal2D.Tests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D.Tests/Decimal2D.Tests.csproj",
+        "projectName": "Decimal2D.Tests",
+        "projectPath": "/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D.Tests/Decimal2D.Tests.csproj",
+        "packagesPath": "/Users/shaun/.nuget/packages/",
+        "outputPath": "/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D.Tests/obj/",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "/Users/shaun/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "/usr/local/share/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "targetAlias": "netcoreapp2.2",
+            "projectReferences": {
+              "/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D/Decimal2D.csproj": {
+                "projectPath": "/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D/Decimal2D.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "targetAlias": "netcoreapp2.2",
+          "dependencies": {
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[16.2.0, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            },
+            "NUnit": {
+              "target": "Package",
+              "version": "[3.12.0, )"
+            },
+            "NUnit3TestAdapter": {
+              "target": "Package",
+              "version": "[3.13.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.402/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D/Decimal2D.csproj": {
+      "version": "1.0.1",
+      "restore": {
+        "projectUniqueName": "/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D/Decimal2D.csproj",
+        "projectName": "DecimalMath.Decimal2D",
+        "projectPath": "/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D/Decimal2D.csproj",
+        "packagesPath": "/Users/shaun/.nuget/packages/",
+        "outputPath": "/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D/obj/",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "/Users/shaun/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "/usr/local/share/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
+            "projectReferences": {
+              "/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/DecimalEx/DecimalEx.csproj": {
+                "projectPath": "/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/DecimalEx/DecimalEx.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
+          "dependencies": {
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.402/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/DecimalEx/DecimalEx.csproj": {
+      "version": "1.0.2",
+      "restore": {
+        "projectUniqueName": "/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/DecimalEx/DecimalEx.csproj",
+        "projectName": "DecimalMath.DecimalEx",
+        "projectPath": "/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/DecimalEx/DecimalEx.csproj",
+        "packagesPath": "/Users/shaun/.nuget/packages/",
+        "outputPath": "/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/DecimalEx/obj/",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "/Users/shaun/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "/usr/local/share/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
+          "dependencies": {
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.402/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

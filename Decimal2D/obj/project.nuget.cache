@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "NlVQCqm8D7bRVLxOBPLpYccMmK6Y6+Fu1z1s9YNGI3rI0rbWtmtu/6MDoEd301mky9i/cEWKmAGb7QX1w9FpCQ==",
+  "success": true,
+  "projectFilePath": "/Users/shaun/Documents/Web & software development/C#/Projects/MyDecimalMath/Decimal2D/Decimal2D.csproj",
+  "expectedPackageFiles": [
+    "/usr/local/share/dotnet/sdk/NuGetFallbackFolder/microsoft.netcore.platforms/1.1.0/microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "/usr/local/share/dotnet/sdk/NuGetFallbackFolder/netstandard.library/2.0.3/netstandard.library.2.0.3.nupkg.sha512",
+    "/Users/shaun/.nuget/packages/decimalmath.decimalex/1.0.2/decimalmath.decimalex.1.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}
