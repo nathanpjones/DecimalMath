@@ -629,5 +629,31 @@ namespace DecimalMath
 
             return d1;
         }
+        
+        /// <summary>
+        /// Hyperbolic sine.
+        /// </summary>
+        /// <param name="x">The hyperbolic angle.</param>
+        /// <returns>The hyperbolic sine of the given angle.</returns>
+        public static decimal Sinh(decimal x) => (Exp(x) - Exp(-x)) / 2;
+
+        /// <summary>
+        /// Hyperbolic cosine.
+        /// </summary>
+        /// <param name="x">The hyperbolic angle.</param>
+        /// <returns>The hyperbolic cosine of the given angle.</returns>
+        public static decimal Cosh(decimal x) => (Exp(x) + Exp(-x)) / 2;
+
+        /// <summary>
+        /// Hyperbolic tangent.
+        /// </summary>
+        /// <param name="x">The hyperbolic angle.</param>
+        /// <returns>The hyperbolic tangent of the given angle.</returns>
+        public static decimal Tanh(decimal x)
+        {
+            decimal a = Exp(x);
+            decimal b = Exp(-x);
+            return (a - b) / (a + b);
+        }
     }
 }
