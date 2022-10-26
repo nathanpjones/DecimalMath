@@ -310,8 +310,8 @@ namespace DecimalMath
         /// If the number is less than or equal to 0.
         /// </exception>
         /// <exception cref="ArgumentOutOfRangeException">
-        /// If the base is less than or equal to 0, or
-        /// equal to 1.</exception>
+        /// If the base is less than or equal to 0, or equal to 1.
+        /// </exception>
         public static decimal Log(decimal m, decimal b)
         {
             if (b == 1)
